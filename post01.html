@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post do Blog</title>
+    <title>Artigo 01</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -14,10 +14,24 @@
         }
 
         header {
-            background-color: #333;
-            color: #fff;
+            background-image: url('https://thiagopx1.github.io/blog/img1.webp');
+            background-size: cover;
+            background-position: center;
+            height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 20px 0;
+            font-weight: bold;
+            font-size: 2em;
+            letter-spacing: 2px;
+            color: #fff;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: 'Cursive', sans-serif;
         }
 
         main {
@@ -34,6 +48,7 @@
 
         h1 {
             color: #333;
+            font-weight: bold;
         }
 
         p {
@@ -46,12 +61,27 @@
             background-color: #333;
             color: #fff;
         }
+
+        .home-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #ff0066;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Padrão</h1>
+        <h1>Artigo 01</h1>
     </header>
 
     <main>
@@ -66,6 +96,8 @@
     <footer>
         &copy; 2024 Meu Blog
     </footer>
+
+    <button class="home-button">Home</button>
 
 </body>
 </html>
