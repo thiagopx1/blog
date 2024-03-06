@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Post</title>
+    <style>
+        /* Adicione estilos conforme necessário para o formulário */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #ff0066;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="blogForm">
+        <label for="title">Título do Post:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="date">Data do Post:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="content">Conteúdo do Post:</label>
+        <textarea id="content" name="content" rows="4" required></textarea>
+
+        <label for="image">Imagem do Banner:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <button type="button" onclick="publishPost()">Publicar</button>
+    </form>
+
+    <script>
+        function publishPost() {
+            // Implemente o código para enviar os dados para o GitHub e fazer o deploy.
+            // Use AJAX, Fetch API ou outra abordagem para enviar os dados para um servidor Node.js.
+            // Após o envio bem-sucedido, você pode chamar a função de deploy.
+        }
+    </script>
+
+</body>
+</html>
