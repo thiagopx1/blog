@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domingo de Potes — Meal Prep da Semana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F1F5EA;
+    --card: #FFFDF8;
+    --ink: #232B1E;
+    --ink-soft: #5B6650;
+    --green: #2F5233;
+    --green-light: #6B8E5A;
+    --green-pale: #E3EBD9;
+    --gold: #E8A93A;
+    --gold-dark: #C98A1F;
+    --red: #C1432A;
+    --red-pale: #F4DFD8;
+    --line: #D8DECB;
+    --radius-card: 18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    line-height:1.5;
+    padding:0 0 60px;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',Georgia,serif;
+    color:var(--green);
+    margin:0 0 8px;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px;}
+
+  /* header */
+  header.hero{
+    background:var(--green);
+    color:#FDF8EC;
+    padding:36px 20px 78px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute;
+    right:-40px; top:-60px;
+    width:220px; height:220px;
+    background:var(--gold);
+    opacity:.16;
+    border-radius:50%;
+  }
+  header.hero .wrap{position:relative;}
+  header.hero h1{
+    color:#FDF8EC;
+    font-size:clamp(28px,5vw,42px);
+    font-weight:700;
+    max-width:520px;
+  }
+  header.hero p{
+    color:#D9E4CC;
+    font-size:16px;
+    max-width:460px;
+    margin:0;
+  }
+
+  /* tabs */
+  nav.tabs{
+    max-width:920px;
+    margin:-46px auto 0;
+    padding:0 20px;
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    white-space:nowrap;
+    padding:14px 18px;
+    border:none;
+    border-radius:14px 14px 0 0;
+    background:#DCE6CC;
+    color:var(--green);
+    cursor:pointer;
+    opacity:.75;
+    transition:transform .15s ease, opacity .15s ease;
+  }
+  nav.tabs button:hover{opacity:1;}
+  nav.tabs button.active{
+    background:var(--card);
+    opacity:1;
+    transform:translateY(2px);
+    box-shadow:0 -2px 0 var(--gold) inset;
+  }
+
+  main{
+    max-width:920px;
+    margin:0 auto;
+    padding:28px 20px 0;
+    background:var(--card);
+    border-radius:0 18px 18px 18px;
+    min-height:400px;
+  }
+  section.tabpanel{display:none;padding:8px 0 36px;}
+  section.tabpanel.active{display:block;}
+
+  .lead{color:var(--ink-soft);font-size:15px;max-width:600px;margin:0 0 22px;}
+
+  /* progress bar */
+  .progress-track{
+    background:var(--green-pale);
+    border-radius:99px;
+    height:10px;
+    overflow:hidden;
+    margin:6px 0 18px;
+  }
+  .progress-fill{
+    background:var(--gold);
+    height:100%;
+    border-radius:99px;
+    transition:width .3s ease;
+    width:0%;
+  }
+  .progress-label{font-size:13.5px;color:var(--ink-soft);font-weight:600;}
+
+  /* category groups */
+  .category{margin-bottom:26px;}
+  .category h3{
+    font-size:15px;
+    color:var(--ink-soft);
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:8px;
+    margin-bottom:10px;
+  }
+  .item-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 4px;
+    border-bottom:1px dashed var(--line);
+  }
+  .item-row:last-child{border-bottom:none;}
+  .item-row label{
+    flex:1;
+    font-size:15px;
+    cursor:pointer;
+  }
+  .item-row label.checked-label{
+    text-decoration:line-through;
+    color:var(--ink-soft);
+  }
+  .item-row input[type=checkbox]{
+    width:20px;height:20px;
+    accent-color:var(--green);
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .qty-badge{
+    background:var(--green-pale);
+    color:var(--green);
+    font-size:13px;
+    font-weight:700;
+    padding:4px 10px;
+    border-radius:99px;
+    white-space:nowrap;
+  }
+
+  /* calculator */
+  table.calc{width:100%;border-collapse:collapse;font-size:14.5px;}
+  table.calc th{
+    text-align:left;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-weight:700;
+    padding:0 4px 8px;
+    border-bottom:2px solid var(--line);
+  }
+  table.calc td{
+    padding:10px 4px;
+    border-bottom:1px dashed var(--line);
+    vertical-align:middle;
+  }
+  table.calc input[type=number]{
+    width:88px;
+    padding:7px 8px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    font-size:14.5px;
+    font-family:'Inter',sans-serif;
+    text-align:right;
+  }
+  table.calc input[type=number]:focus{outline:2px solid var(--gold-dark);border-color:transparent;}
+  .subtotal-cell{font-weight:700;color:var(--green);white-space:nowrap;}
+  .price-prefix{color:var(--ink-soft);}
+  .calc-summary{
+    margin-top:22px;
+    background:var(--green);
+    color:#FDF8EC;
+    border-radius:var(--radius-card);
+    padding:22px 24px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .calc-summary .big{font-family:'Fraunces',serif;font-size:32px;font-weight:700;}
+  .calc-summary .diff{font-size:14px;padding:4px 12px;border-radius:99px;font-weight:700;}
+  .diff.up{background:var(--red-pale);color:var(--red);}
+  .diff.down{background:#DCEFD0;color:#2F6B2F;}
+  .diff.flat{background:rgba(255,255,255,.15);color:#FDF8EC;}
+  .reset-btn{
+    background:transparent;
+    border:1.5px solid var(--line);
+    color:var(--ink-soft);
+    font-size:13px;
+    font-weight:600;
+    padding:8px 14px;
+    border-radius:99px;
+    cursor:pointer;
+    margin-top:10px;
+  }
+  .reset-btn:hover{border-color:var(--red);color:var(--red);}
+
+  /* recipes */
+  .converter-box{
+    background:var(--green-pale);
+    border-radius:var(--radius-card);
+    padding:18px 20px;
+    margin-bottom:28px;
+  }
+  .converter-box h3{margin-bottom:4px;font-size:17px;}
+  .converter-box p.small{color:var(--ink-soft);font-size:13.5px;margin:0 0 12px;}
+  .converter-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .converter-row select, .converter-row input{
+    padding:9px 10px;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+  }
+  .converter-result{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:20px;
+    color:var(--green);
+  }
+
+  .recipe-card{
+    background:#FFFFFF;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:22px 24px;
+    margin-bottom:20px;
+  }
+  .recipe-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .recipe-head h3{font-size:20px;margin:0;}
+  .yield-badge{
+    background:var(--gold);
+    color:#3A2A05;
+    font-weight:700;
+    font-size:13px;
+    padding:5px 12px;
+    border-radius:99px;
+    white-space:nowrap;
+  }
+  .recipe-card table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;}
+  .recipe-card table td{padding:6px 4px;border-bottom:1px dashed var(--line);}
+  .recipe-card table td:last-child{text-align:right;font-weight:700;color:var(--green);}
+  .recipe-card ol{margin:10px 0 14px;padding-left:20px;font-size:14.5px;}
+  .recipe-card ol li{margin-bottom:6px;}
+  .tip{
+    background:var(--green-pale);
+    border-left:4px solid var(--green-light);
+    padding:10px 14px;
+    border-radius:0 10px 10px 0;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+
+  /* potes checklist */
+  .day-block{margin-bottom:22px;}
+  .day-block h3{
+    font-size:17px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .day-count{
+    font-size:12.5px;
+    background:var(--green-pale);
+    color:var(--green);
+    padding:3px 10px;
+    border-radius:99px;
+    font-weight:700;
+  }
+  .pote-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .pote-card{
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+    background:#FFFFFF;
+  }
+  .pote-card.done{
+    background:var(--green-pale);
+    border-color:var(--green-light);
+  }
+  .pote-card .meal{font-size:12px;color:var(--ink-soft);font-weight:700;margin-bottom:3px;}
+  .pote-card .dish{font-size:13.5px;font-weight:600;}
+  .pote-card.done .dish{text-decoration:line-through;color:var(--ink-soft);}
+  .pote-card .check{float:right;width:18px;height:18px;accent-color:var(--green);}
+
+  .celebrate{
+    display:none;
+    background:var(--gold);
+    color:#3A2A05;
+    text-align:center;
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:17px;
+    padding:16px;
+    border-radius:var(--radius-card);
+    margin-top:10px;
+  }
+  .celebrate.show{display:block;}
+
+  .save-note{font-size:12.5px;color:var(--ink-soft);margin-top:16px;}
+
+  @media (max-width:640px){
+    .pote-grid{grid-template-columns:repeat(2,1fr);}
+    table.calc{font-size:13px;}
+    table.calc input[type=number]{width:70px;}
+    .recipe-head h3{font-size:18px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Domingo de potes 🥡</h1>
+    <p>Seu plano de 20 refeições da semana: compra, preço, receita e checklist, tudo num lugar só.</p>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab-btn active" data-tab="compras">🛒 Lista de compras</button>
+  <button class="tab-btn" data-tab="calculadora">🧮 Calculadora</button>
+  <button class="tab-btn" data-tab="receitas">👩‍🍳 Receitas</button>
+  <button class="tab-btn" data-tab="potes">✅ Check-list dos potes</button>
+</nav>
+
+<main class="wrap">
+
+  <!-- LISTA DE COMPRAS -->
+  <section class="tabpanel active" id="tab-compras">
+    <p class="lead">Tudo que você precisa comprar para fechar os 20 potes da semana. Marque conforme for colocando no carrinho.</p>
+    <div class="progress-label" id="compras-progress-label">0 de 11 itens no carrinho</div>
+    <div class="progress-track"><div class="progress-fill" id="compras-progress-fill"></div></div>
+    <div id="compras-list"></div>
+  </section>
+
+  <!-- CALCULADORA -->
+  <section class="tabpanel" id="tab-calculadora">
+    <p class="lead">Digite o preço que você encontrar no mercado (por kg, litro ou unidade) e veja o total do carrinho em tempo real.</p>
+    <table class="calc">
+      <thead>
+        <tr><th>Item</th><th>Precisa de</th><th>Preço unitário</th><th>Subtotal</th></tr>
+      </thead>
+      <tbody id="calc-body"></tbody>
+    </table>
+    <div class="calc-summary">
+      <div>
+        <div style="font-size:13px;opacity:.8;">Total do carrinho essa semana</div>
+        <div class="big" id="calc-total">R$ 0,00</div>
+        <div style="font-size:13px;opacity:.8;margin-top:4px;">Projeção mensal (×4,3 semanas): <strong id="calc-monthly">R$ 0,00</strong></div>
+      </div>
+      <div>
+        <span class="diff flat" id="calc-diff">comparando com a estimativa...</span>
+      </div>
+    </div>
+    <button class="reset-btn" id="calc-reset">Restaurar preços de referência</button>
+    <p class="save-note">Os preços que você digitar ficam salvos para a próxima vez que abrir esta página.</p>
+  </section>
+
+  <!-- RECEITAS -->
+  <section class="tabpanel" id="tab-receitas">
+    <p class="lead">As 5 receitas que preenchem os 20 potes. Quantidades sempre em cru — é o que você compra e cozinha de uma vez só.</p>
+
+    <div class="converter-box">
+      <h3>Conversor: cru → cozido</h3>
+      <p class="small">Não confia no olho pra saber quanto de arroz ou massa render depois de cozido? Calcule aqui.</p>
+      <div class="converter-row">
+        <input type="number" id="conv-input" placeholder="gramas cru" min="0" style="width:120px;">
+        <select id="conv-select">
+          <option value="2.5">Arroz</option>
+          <option value="2.2">Massa (macarrão)</option>
+          <option value="2.3">Feijão</option>
+          <option value="2.3">Lentilha</option>
+        </select>
+        <span>=</span>
+        <span class="converter-result" id="conv-result">0 g cozido</span>
+      </div>
+    </div>
+
+    <div id="recipes-list"></div>
+  </section>
+
+  <!-- CHECKLIST DOS POTES -->
+  <section class="tabpanel" id="tab-potes">
+    <p class="lead">20 potes, 5 dias, 4 refeições cada. Marque cada um assim que encher e tampar.</p>
+    <div class="progress-label" id="potes-progress-label">0 de 20 potes prontos</div>
+    <div class="progress-track"><div class="progress-fill" id="potes-progress-fill"></div></div>
+    <div id="potes-list"></div>
+    <div class="celebrate" id="celebrate-msg">Semana garantida! Os 20 potes estão prontos e no congelador 🎉</div>
+  </section>
+
+</main>
+
+<script>
+/* ---------- dados ---------- */
+const groceryItems = [
+  {id:'frango_peito', nome:'Peito de frango', categoria:'Proteínas', emoji:'🍗', qtd:1, unidade:'kg', precoRef:25.00},
+  {id:'coxa_sobrecoxa', nome:'Coxa e sobrecoxa (sem pele)', categoria:'Proteínas', emoji:'🍗', qtd:1.1, unidade:'kg', precoRef:18.00},
+  {id:'sardinha', nome:'Sardinha em lata', categoria:'Proteínas', emoji:'🐟', qtd:2, unidade:'lata', precoRef:8.00},
+  {id:'ovos', nome:'Ovos', categoria:'Laticínios e ovos', emoji:'🥚', qtd:15, unidade:'un', precoRef:0.92},
+  {id:'queijo', nome:'Queijo prato', categoria:'Laticínios e ovos', emoji:'🧀', qtd:0.17, unidade:'kg', precoRef:42.00},
+  {id:'leite', nome:'Leite semidesnatado', categoria:'Laticínios e ovos', emoji:'🥛', qtd:0.05, unidade:'L', precoRef:5.50},
+  {id:'brocolis', nome:'Brócolis', categoria:'Hortifruti', emoji:'🥦', qtd:1.42, unidade:'kg', precoRef:8.00},
+  {id:'milho', nome:'Milho (lata ~200g)', categoria:'Mercearia', emoji:'🌽', qtd:1, unidade:'lata', precoRef:4.00},
+  {id:'arroz', nome:'Arroz', categoria:'Mercearia', emoji:'🍚', qtd:0.16, unidade:'kg', precoRef:6.00},
+  {id:'temperos', nome:'Temperos diversos', categoria:'Mercearia', emoji:'🧂', qtd:1, unidade:'kit semanal', precoRef:5.00},
+  {id:'pao', nome:'Pão francês', categoria:'Padaria', emoji:'🥖', qtd:5, unidade:'un', precoRef:0.90},
+];
+
+const recipes = [
+  {
+    id:'cafe', emoji:'🍳', nome:'Muffins de ovo com queijo e brócolis', rende:5,
+    ingredientes:[
+      {n:'Ovos inteiros', q:'4 unidades'},
+      {n:'Claras', q:'8 unidades'},
+      {n:'Brócolis picado (cozido)', q:'150 g'},
+      {n:'Queijo prato ralado', q:'80 g'},
+      {n:'Leite semidesnatado', q:'50 ml'},
+      {n:'Temperos', q:'a gosto'},
+    ],
+    passos:[
+      'Bata os ovos e as claras com o leite e os temperos.',
+      'Misture o brócolis picado e o queijo ralado.',
+      'Distribua em 10-12 forminhas de muffin untadas.',
+      'Asse a 180°C por 20-25 minutos, até firmar.',
+      'Deixe esfriar por completo antes de congelar — 2 unidades por pote.',
+    ],
+    dica:'Sirva com 1 pão francês fresco à parte — pão não vai para o congelador.'
+  },
+  {
+    id:'almoco', emoji:'🍗', nome:'Frango desfiado com brócolis, milho e arroz', rende:5,
+    ingredientes:[
+      {n:'Peito de frango cru', q:'750 g'},
+      {n:'Brócolis', q:'500 g'},
+      {n:'Milho', q:'150 g'},
+      {n:'Arroz cru', q:'160 g (rende ~400 g cozido)'},
+      {n:'Temperos', q:'a gosto'},
+    ],
+    passos:[
+      'Cozinhe o frango em água temperada e desfie.',
+      'Cozinhe o arroz separadamente (use o conversor abaixo se tiver dúvida na proporção).',
+      'Refogue o frango desfiado com alho e cebola, junte o milho e o brócolis.',
+      'Misture o arroz cozido por último.',
+      'Divida em 5 potes de ~415 kcal cada.',
+    ],
+    dica:'Cozinhe o frango deste lote junto com o do lanche (receita abaixo) — economiza tempo e panela.'
+  },
+  {
+    id:'lanche_frango', emoji:'🥪', nome:'Patê de frango desfiado com ovo e queijo', rende:3,
+    ingredientes:[
+      {n:'Peito de frango cru (do mesmo lote do almoço)', q:'260 g'},
+      {n:'Ovos', q:'3 unidades'},
+      {n:'Queijo prato ralado', q:'90 g'},
+      {n:'Brócolis picado', q:'150 g'},
+      {n:'Temperos', q:'a gosto'},
+    ],
+    passos:[
+      'Cozinhe os ovos e pique.',
+      'Misture com o frango desfiado, o queijo e o brócolis.',
+      'Tempere a gosto e divida em 3 potes pequenos.',
+    ],
+    dica:'Vai para o lanche de segunda, quarta e sexta.'
+  },
+  {
+    id:'lanche_sardinha', emoji:'🐟', nome:'Sardinha com legumes', rende:2,
+    ingredientes:[
+      {n:'Sardinha em lata (escorrida)', q:'2 latas'},
+      {n:'Brócolis', q:'120 g'},
+      {n:'Milho', q:'60 g'},
+      {n:'Temperos', q:'a gosto'},
+    ],
+    passos:[
+      'Escorra bem o óleo ou água da sardinha.',
+      'Misture com o brócolis e o milho já cozidos.',
+      'Tempere a gosto e divida em 2 potes.',
+    ],
+    dica:'Vai para o lanche de terça e quinta — não acrescente sal extra, a sardinha já é salgada.'
+  },
+  {
+    id:'jantar', emoji:'🍗', nome:'Coxa e sobrecoxa assada sem pele com brócolis', rende:5,
+    ingredientes:[
+      {n:'Coxa e sobrecoxa sem pele', q:'1,1 kg cru'},
+      {n:'Brócolis', q:'500 g'},
+      {n:'Temperos', q:'a gosto'},
+    ],
+    passos:[
+      'Tempere a carne com alho, limão, páprica e ervas.',
+      'Asse a 200°C por 35-40 minutos, virando na metade.',
+      'Cozinhe o brócolis no vapor à parte.',
+      'Divida em 5 potes.',
+    ],
+    dica:'Sem pele é o que garante o corte mais magro dessa receita.'
+  },
+];
+
+const potesSchedule = [
+  {dia:'Segunda', refeicoes:[{meal:'Café',rid:'cafe'},{meal:'Almoço',rid:'almoco'},{meal:'Lanche',rid:'lanche_frango'},{meal:'Jantar',rid:'jantar'}]},
+  {dia:'Terça', refeicoes:[{meal:'Café',rid:'cafe'},{meal:'Almoço',rid:'almoco'},{meal:'Lanche',rid:'lanche_sardinha'},{meal:'Jantar',rid:'jantar'}]},
+  {dia:'Quarta', refeicoes:[{meal:'Café',rid:'cafe'},{meal:'Almoço',rid:'almoco'},{meal:'Lanche',rid:'lanche_frango'},{meal:'Jantar',rid:'jantar'}]},
+  {dia:'Quinta', refeicoes:[{meal:'Café',rid:'cafe'},{meal:'Almoço',rid:'almoco'},{meal:'Lanche',rid:'lanche_sardinha'},{meal:'Jantar',rid:'jantar'}]},
+  {dia:'Sexta', refeicoes:[{meal:'Café',rid:'cafe'},{meal:'Almoço',rid:'almoco'},{meal:'Lanche',rid:'lanche_frango'},{meal:'Jantar',rid:'jantar'}]},
+];
+
+/* ---------- estado ---------- */
+let comprasChecked = {};
+let potesChecked = {};
+let precosUsuario = {};
+
+function fmt(n){
+  return 'R$ ' + n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+/* ---------- storage helpers ---------- */
+async function loadJSON(key){
+  try{
+    const res = await window.storage.get(key, false);
+    return res && res.value ? JSON.parse(res.value) : {};
+  }catch(e){
+    return {};
+  }
+}
+async function saveJSON(key, obj){
+  try{
+    await window.storage.set(key, JSON.stringify(obj), false);
+  }catch(e){
+    console.warn('Não foi possível salvar', key, e);
+  }
+}
+
+/* ---------- render: lista de compras ---------- */
+function renderCompras(){
+  const container = document.getElementById('compras-list');
+  container.innerHTML = '';
+  const categorias = [...new Set(groceryItems.map(i=>i.categoria))];
+  categorias.forEach(cat=>{
+    const catDiv = document.createElement('div');
+    catDiv.className = 'category';
+    const items = groceryItems.filter(i=>i.categoria===cat);
+    catDiv.innerHTML = `<h3>${items[0].emoji} ${cat}</h3>`;
+    items.forEach(item=>{
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      const checked = !!comprasChecked[item.id];
+      row.innerHTML = `
+        <input type="checkbox" id="chk-${item.id}" ${checked?'checked':''}>
+        <label for="chk-${item.id}" class="${checked?'checked-label':''}">${item.nome}</label>
+        <span class="qty-badge">${formatQty(item)}</span>
+      `;
+      catDiv.appendChild(row);
+    });
+    container.appendChild(catDiv);
+  });
+  categorias.forEach(()=>{});
+  groceryItems.forEach(item=>{
+    const cb = document.getElementById('chk-'+item.id);
+    cb.addEventListener('change', ()=>{
+      comprasChecked[item.id] = cb.checked;
+      cb.nextElementSibling.classList.toggle('checked-label', cb.checked);
+      updateComprasProgress();
+      saveJSON('compras-checked', comprasChecked);
+    });
+  });
+  updateComprasProgress();
+}
+function formatQty(item){
+  if(item.unidade==='kg') return (item.qtd).toLocaleString('pt-BR',{maximumFractionDigits:2}) + ' kg';
+  if(item.unidade==='L') return (item.qtd*1000).toLocaleString('pt-BR') + ' ml';
+  return item.qtd + ' ' + item.unidade;
+}
+function updateComprasProgress(){
+  const total = groceryItems.length;
+  const done = Object.values(comprasChecked).filter(Boolean).length;
+  document.getElementById('compras-progress-label').textContent = `${done} de ${total} itens no carrinho`;
+  document.getElementById('compras-progress-fill').style.width = (done/total*100)+'%';
+}
+
+/* ---------- render: calculadora ---------- */
+function renderCalculadora(){
+  const tbody = document.getElementById('calc-body');
+  tbody.innerHTML = '';
+  groceryItems.forEach(item=>{
+    const preco = precosUsuario[item.id] !== undefined ? precosUsuario[item.id] : item.precoRef;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.emoji} ${item.nome}</td>
+      <td>${formatQty(item)}</td>
+      <td><span class="price-prefix">R$</span> <input type="number" min="0" step="0.01" id="price-${item.id}" value="${preco.toFixed(2)}"> /${item.unidade==='kg'?'kg':item.unidade==='L'?'L':'un'}</td>
+      <td class="subtotal-cell" id="subtotal-${item.id}">${fmt(item.qtd*preco)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  groceryItems.forEach(item=>{
+    const input = document.getElementById('price-'+item.id);
+    input.addEventListener('input', ()=>{
+      const val = parseFloat(input.value);
+      precosUsuario[item.id] = isNaN(val) ? 0 : val;
+      document.getElementById('subtotal-'+item.id).textContent = fmt(item.qtd*(precosUsuario[item.id]||0));
+      updateCalcSummary();
+    });
+    input.addEventListener('change', ()=>{ saveJSON('precos-usuario', precosUsuario); });
+  });
+  updateCalcSummary();
+}
+function currentTotal(){
+  return groceryItems.reduce((sum,item)=>{
+    const preco = precosUsuario[item.id] !== undefined ? precosUsuario[item.id] : item.precoRef;
+    return sum + item.qtd*preco;
+  },0);
+}
+function referenceTotal(){
+  return groceryItems.reduce((sum,item)=> sum + item.qtd*item.precoRef, 0);
+}
+function updateCalcSummary(){
+  const total = currentTotal();
+  const ref = referenceTotal();
+  document.getElementById('calc-total').textContent = fmt(total);
+  document.getElementById('calc-monthly').textContent = fmt(total*4.3);
+  const diffEl = document.getElementById('calc-diff');
+  const diff = total - ref;
+  if(Math.abs(diff) < 0.5){
+    diffEl.className = 'diff flat';
+    diffEl.textContent = 'igual à estimativa de referência';
+  } else if(diff > 0){
+    diffEl.className = 'diff up';
+    diffEl.textContent = `${fmt(diff)} acima da estimativa`;
+  } else {
+    diffEl.className = 'diff down';
+    diffEl.textContent = `${fmt(-diff)} abaixo da estimativa`;
+  }
+}
+document.getElementById('calc-reset').addEventListener('click', ()=>{
+  precosUsuario = {};
+  saveJSON('precos-usuario', precosUsuario);
+  renderCalculadora();
+});
+
+/* ---------- render: receitas ---------- */
+function renderReceitas(){
+  const container = document.getElementById('recipes-list');
+  container.innerHTML = '';
+  recipes.forEach(r=>{
+    const card = document.createElement('div');
+    card.className = 'recipe-card';
+    const ingredientesHTML = r.ingredientes.map(i=>`<tr><td>${i.n}</td><td>${i.q}</td></tr>`).join('');
+    const passosHTML = r.passos.map(p=>`<li>${p}</li>`).join('');
+    card.innerHTML = `
+      <div class="recipe-head">
+        <h3>${r.emoji} ${r.nome}</h3>
+        <span class="yield-badge">rende ${r.rende} potes</span>
+      </div>
+      <table>${ingredientesHTML}</table>
+      <ol>${passosHTML}</ol>
+      <div class="tip">${r.dica}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+/* conversor cru -> cozido */
+function updateConverter(){
+  const grams = parseFloat(document.getElementById('conv-input').value) || 0;
+  const factor = parseFloat(document.getElementById('conv-select').value);
+  const result = Math.round(grams*factor);
+  document.getElementById('conv-result').textContent = result + ' g cozido';
+}
+document.getElementById('conv-input').addEventListener('input', updateConverter);
+document.getElementById('conv-select').addEventListener('change', updateConverter);
+
+/* ---------- render: potes ---------- */
+function renderPotes(){
+  const container = document.getElementById('potes-list');
+  container.innerHTML = '';
+  potesSchedule.forEach(dayObj=>{
+    const dayDiv = document.createElement('div');
+    dayDiv.className = 'day-block';
+    const doneCount = dayObj.refeicoes.filter(r=>potesChecked[dayObj.dia+'-'+r.meal]).length;
+    dayDiv.innerHTML = `<h3>${dayObj.dia} <span class="day-count" id="count-${dayObj.dia}">${doneCount}/4</span></h3>`;
+    const grid = document.createElement('div');
+    grid.className = 'pote-grid';
+    dayObj.refeicoes.forEach(r=>{
+      const recipe = recipes.find(rec=>rec.id===r.rid);
+      const key = dayObj.dia+'-'+r.meal;
+      const done = !!potesChecked[key];
+      const card = document.createElement('div');
+      card.className = 'pote-card' + (done?' done':'');
+      card.dataset.key = key;
+      card.dataset.day = dayObj.dia;
+      card.innerHTML = `
+        <input type="checkbox" class="check" ${done?'checked':''} tabindex="-1">
+        <div class="meal">${recipe.emoji} ${r.meal}</div>
+        <div class="dish">${recipe.nome}</div>
+      `;
+      card.addEventListener('click', (e)=>{
+        potesChecked[key] = !potesChecked[key];
+        saveJSON('potes-checked', potesChecked);
+        renderPotes();
+        updatePotesProgress();
+      });
+      grid.appendChild(card);
+    });
+    dayDiv.appendChild(grid);
+    container.appendChild(dayDiv);
+  });
+}
+function updatePotesProgress(){
+  const total = 20;
+  const done = Object.values(potesChecked).filter(Boolean).length;
+  document.getElementById('potes-progress-label').textContent = `${done} de ${total} potes prontos`;
+  document.getElementById('potes-progress-fill').style.width = (done/total*100)+'%';
+  document.getElementById('celebrate-msg').classList.toggle('show', done===total);
+}
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ---------- init ---------- */
+async function init(){
+  comprasChecked = await loadJSON('compras-checked');
+  potesChecked = await loadJSON('potes-checked');
+  precosUsuario = await loadJSON('precos-usuario');
+
+  renderCompras();
+  renderCalculadora();
+  renderReceitas();
+  renderPotes();
+  updateConverter();
+  updatePotesProgress();
+}
+init();
+</script>
+
+</body>
+</html>
