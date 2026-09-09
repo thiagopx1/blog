@@ -1,117 +1,198 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Blog</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Thiago Patrick — site pessoal em construção.">
+  <meta name="theme-color" content="#111111">
+  <title>Thiago Patrick — Em construção</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f7f5;
+      --text: #171717;
+      --muted: #6b6b6b;
+      --line: #deded9;
+      --accent: #171717;
+    }
 
-        header {
-            background-image: url('https://thiagopx1.github.io/blog/img1.webp');
-            background-size: cover;
-            background-position: center;
-            height: 75vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-weight: bold;
-            font-size: 2em;
-            letter-spacing: 2px;
-        }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --text: #f2f2ef;
+        --muted: #a4a4a0;
+        --line: #2c2c2a;
+        --accent: #f2f2ef;
+      }
+    }
 
-        header h1 {
-            color: #fff;
-            font-family: 'Cursive', sans-serif;
-            margin: 0;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        main {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
 
-        article {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        article a {
-            display: block;
-            font-weight: bold;
-            text-decoration: none;
-            color: #333;
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            text-align: center;
-        }
+    header {
+      width: 100%;
+      padding: 28px clamp(24px, 5vw, 72px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        article img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            margin-right: 20px;
-        }
+    .brand {
+      font-size: 15px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
 
-        h2 {
-            color: #333;
-        }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
 
-        p {
-            line-height: 1.6;
-        }
+    .status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
 
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: #fff;
-        }
-    </style>
+    main {
+      flex: 1;
+      width: min(100%, 960px);
+      margin: 0 auto;
+      padding: clamp(80px, 16vh, 180px) clamp(24px, 6vw, 72px);
+      display: flex;
+      align-items: center;
+    }
+
+    .content {
+      max-width: 700px;
+    }
+
+    .eyebrow {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 680px;
+      font-size: clamp(46px, 8vw, 92px);
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+      font-weight: 720;
+    }
+
+    .description {
+      max-width: 560px;
+      margin: 30px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.6;
+    }
+
+    .line {
+      width: 100%;
+      height: 1px;
+      margin: 48px 0 0;
+      background: var(--line);
+    }
+
+    footer {
+      width: 100%;
+      padding: 24px clamp(24px, 5vw, 72px);
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding-top: 22px;
+        padding-bottom: 22px;
+      }
+
+      .status {
+        font-size: 12px;
+      }
+
+      main {
+        padding-top: 80px;
+        padding-bottom: 80px;
+      }
+
+      h1 {
+        font-size: clamp(48px, 16vw, 72px);
+      }
+
+      .description {
+        margin-top: 24px;
+        font-size: 16px;
+      }
+
+      .line {
+        margin-top: 36px;
+      }
+
+      footer {
+        flex-direction: column;
+        padding-top: 18px;
+        padding-bottom: 18px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <header>
+    <div class="brand">Thiago Patrick</div>
+    <div class="status">Em construção</div>
+  </header>
 
-    <header>
-        <h1>Reflexões sobre a vida.</h1>
-    </header>
+  <main>
+    <section class="content" aria-labelledby="title">
+      <p class="eyebrow">Site pessoal</p>
+      <h1 id="title">Em construção.</h1>
+      <p class="description">
+        Este espaço está sendo preparado. Em breve, novas ideias, textos
+        e conteúdos estarão por aqui.
+      </p>
+      <div class="line" aria-hidden="true"></div>
+    </section>
+  </main>
 
-    <main>
-        <article>
-            <img src="https://thiagopx1.github.io/blog/img1.webp" alt="Imagem do Artigo 1">
-            <div>
-                <a href="https://thiagopx1.github.io/blog/post01.html">Título do Artigo 1</a>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel ex vel nisi dictum fringilla. Maecenas et tortor id tortor venenatis tristique. Nulla facilisi. Pellentesque non magna ut elit tristique fermentum. Nullam vel feugiat arcu.</p>
-            </div>
-        </article>
+  <footer>
+    <span>© <span id="year"></span> Thiago Patrick</span>
+    <span>Volte em breve.</span>
+  </footer>
 
-        <article>
-            <img src="https://thiagopx1.github.io/blog/img1.webp" alt="Imagem do Artigo 2">
-            <div>
-                <a href="https://thiagopx1.github.io/blog/post02.html">Título do Artigo 2</a>
-                <p>Proin vel ex id lectus euismod feugiat. Fusce non tincidunt turpis. Nullam eget facilisis massa. Integer id lectus vitae libero vulputate consectetur. Curabitur a purus justo. Fusce hendrerit ligula vitae neque tincidunt, at tristique neque blandit.</p>
-            </div>
-        </article>
-    </main>
-
-    <footer>
-        &copy; 2024 Meu Blog
-    </footer>
-
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
-
 </html>
