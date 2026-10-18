@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dicionário de Comandos R & SQL</title>
+<style>
+:root{--bg:#0f1117;--c:#181b24;--b:#2a2f3d;--t:#e6e8ef;--m:#8b92a5;--r:#4aa3ff;--s:#ff9f43;--g:#6bd66b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:15px system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#0b0d13;border-bottom:1px solid var(--b);padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center}
+h1{font-size:18px;margin:0;color:var(--s)}.tabs{display:flex;gap:6px}
+.tabs button{padding:8px 22px;border-radius:8px;border:1px solid var(--b);background:var(--c);color:var(--t);font-weight:700;cursor:pointer}
+.tabs button.on{background:var(--r);color:#001}.tabs button.on.sql{background:var(--s)}
+.sb{display:flex;align-items:center;background:var(--c);border:1px solid var(--b);border-radius:8px;padding:0 10px}
+.sb input{background:none;border:0;color:var(--t);padding:8px;width:240px;outline:0;font-size:15px}
+main{max-width:1200px;margin:auto;padding:14px}
+section{margin-bottom:22px}h2{font-size:15px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid var(--a);padding-bottom:4px;color:var(--a)}
+.row{display:grid;grid-template-columns:1.1fr 1.7fr 1.6fr 1.8fr auto;gap:10px;align-items:center;background:var(--c);border:1px solid var(--b);border-radius:8px;padding:8px 10px;margin:5px 0}
+.row:hover{border-color:var(--a)}.hd{background:none;border:0;color:var(--m);font-size:12px;text-transform:uppercase}
+.n{font-weight:700;color:var(--a)}code{font:13px Consolas,monospace;background:#0b0d13;padding:3px 7px;border-radius:5px;color:var(--g);word-break:break-word;display:inline-block}
+.d{color:var(--t)}.row button{background:var(--a);color:#001;border:0;border-radius:6px;padding:6px 10px;font-weight:700;cursor:pointer}
+#modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:14px;z-index:9}
+#box{background:var(--c);border:2px solid var(--a);border-radius:12px;max-width:680px;width:100%;max-height:88vh;overflow:auto;padding:20px}
+#box h3{margin:0 0 4px;color:var(--a)}.p{display:flex;gap:10px;margin:8px 0;align-items:flex-start}.p b{background:#0b0d13;color:var(--g);font:13px Consolas,monospace;padding:4px 8px;border-radius:5px;min-width:80px}
+.x{float:right;background:none;border:0;color:var(--t);font-size:22px;cursor:pointer}.lb{color:var(--m);font-size:12px;text-transform:uppercase;margin-top:14px}
+.nav{display:flex;gap:6px}.nav button{padding:8px 14px;border-radius:8px;border:1px solid var(--b);background:var(--c);color:var(--m);font-weight:700;font-size:15px;cursor:pointer}.nav button.on{color:var(--t);border-color:var(--s);background:#2a2113}
+.row.pr{grid-template-columns:2.6fr 1.6fr auto}pre{background:#0b0d13;color:var(--g);font:13px Consolas,monospace;padding:12px;border-radius:8px;overflow:auto;margin:6px 0;white-space:pre-wrap}
+@media(max-width:800px){.row,.row.pr{grid-template-columns:1fr}.hd{display:none}}
+</style></head><body>
+<header><div class="nav"><button id="nD" class="on" onclick="G('D')">📘 Dicionário de Comandos</button><button id="nP" onclick="G('P')">🧩 Problemas e Soluções</button></div><div class="tabs"><button id="tR" class="on" onclick="L('R')">R</button><button id="tS" class="sql" onclick="L('S')">SQL</button></div>
+<div class="sb">🔍<input id="q" placeholder="Pesquisar palavra-chave..." oninput="draw()"></div></header>
+<main id="m"></main>
+<div id="modal" onclick="if(event.target==this)this.style.display='none'"><div id="box"></div></div>
+<script>
+// formato: nome~sintaxe~função~exemplo~parte=explicação¦parte=explicação
+const R=[["Saída e entrada","#4aa3ff",`print()~print(x)~Mostra um valor na tela~print("Olá")~print=função que exibe¦x=texto (entre aspas) ou número
+cat()~cat(..., sep=" ")~Junta vários textos e imprime~cat("Oi", nome, "\\n")~...=itens separados por vírgula¦\\n=quebra de linha¦sep=separador
+readline()~x <- readline("msg")~Lê texto do teclado (sempre vem como texto)~nome <- readline("Nome: ")~"msg"=pergunta mostrada¦x <-=guarda a resposta
+# comentário~# texto~Linha ignorada pelo R, serve para documentar~x <- 5 # idade~#=tudo depois dele é ignorado
+<- (atribuição)~nome <- valor~Guarda um valor numa variável (também ->, <<-, =)~a <- 5~nome=nome da variável (maiúscula≠minúscula)¦<-=seta de atribuição¦valor=o que será guardado
+ls() / rm()~ls() ; rm(x)~Lista variáveis na memória / remove uma~rm(a)~ls()=mostra variáveis¦rm(x)=apaga x
+class() / typeof()~class(x)~Mostra o tipo da variável~class(4.5)~x=qualquer objeto¦retorno="numeric", "character", "logical"...
+is.numeric() is.integer() is.character() is.logical() is.complex()~is.numeric(x)~Testa o tipo (TRUE/FALSE)~is.character("a")~is.*=pergunta "é deste tipo?"
+as.numeric() as.integer() as.character() as.logical()~as.numeric("123")~Converte entre tipos; o que não converte vira NA~as.numeric("12.5")~as.*=converte para o tipo¦"Pedro"→NA com aviso
+10L / 1E4 / 6+4i~x <- 10L~Literais: inteiro (L), notação científica (E), complexo (i)~y <- 1E4~L=inteiro¦E=potência de 10¦i=parte imaginária
+Re() Im() Mod() Arg() Conj()~Re(z)~Partes de um número complexo~Mod(6+4i)~Re=real¦Im=imaginária¦Mod=módulo¦Arg=ângulo¦Conj=conjugado
+help() / ? / args()~?round ; args(round)~Abre a ajuda / mostra argumentos de uma função~?mean~?=ajuda¦args=lista os argumentos`],
+["Operadores e matemática","#ff9f43",`+ - * / ^ **~a + b~Soma, subtração, multiplicação, divisão, potência~6^2~^ e ** = potência¦. =separador decimal
+%/% e %%~a %/% b ; a %% b~Divisão inteira / resto da divisão~7 %% 2~%/%=quociente¦%%=resto (usado para par/ímpar)
+== != > < >= <=~a == b~Comparações; resultado TRUE ou FALSE~a != 3~==(dois iguais)=igual¦!==diferente
+& && | || !~x > 1 & x < 5~E, OU, NÃO lógicos (&& e || só avaliam o 2º se preciso)~!TRUE~&=E¦|=OU¦!=nega
+sqrt() abs() exp()~sqrt(9)~Raiz quadrada, valor absoluto, exponencial~abs(-89)~sqrt=√¦abs=|x|¦exp=e^x
+log() log10() log2() factorial()~log(10)~Logaritmos e fatorial~factorial(4)~log=natural¦log10=base 10¦log2=base 2
+sin() cos() tan() asin() acos() atan() pi~sin(pi/2)~Trigonometria (em radianos)~cos(2*pi)~pi=π¦ângulo sempre em radianos
+ceiling() floor() round()~round(4.3478, 2)~Arredonda para cima / baixo / mais próximo~round(4.3478, 2)→4.35~2=casas decimais
+Inf NaN NA~1/0 ; 0/0 ; NA~Infinito, indeterminado, valor ausente~2 * NA~Inf=infinito¦NaN=não é número¦NA=ausente`],
+["Controle de fluxo","#6bd66b",`if / else~if (cond) {...} else {...}~Executa um bloco se a condição for verdadeira~if (idade < 18) print("menor") else print("maior")~cond=teste TRUE/FALSE¦{}=bloco¦else=caso contrário
+else if~if(a){...} else if(b){...} else {...}~Várias alternativas em sequência~if(y<0){..} else if(y>0){..} else {..}~testa na ordem e para na 1ª verdadeira
+switch()~switch(expr, "a"=1, "b"=2)~Escolhe um valor conforme a expressão (número ou texto)~switch(2,"João","Alice")~expr=o que avaliar¦casos=opções¦fora do intervalo→NULL
+for~for (i in 1:8) {...}~Repete um bloco para cada valor~for(i in 1:3) print(i)~i=contador¦1:8=valores¦{}=corpo
+while~while (cond) {...}~Repete enquanto a condição for verdadeira~while(y<6){print(y); y<-y+1}~testa antes de entrar; mude a condição dentro para não travar
+repeat~repeat { ... break }~Repete para sempre até um break (executa ao menos 1 vez)~repeat{ if(y>5) break }~break=sai do laço
+break / next~break ; next~Sai do laço / pula para a próxima volta~if(i%%2==0) next~break=encerra¦next=pula iteração`],
+["Vetores","#e056a0",`c()~c(4, 5, 2)~Cria vetor juntando valores~notas <- c(4,5,2,8)~c=combinar¦vírgulas separam
+scan()~scan()~Lê números do teclado, um por linha (Enter vazio termina)~v <- scan()~n/nlines limitam a leitura
+rep()~rep(x, times)~Repete um valor~rep(5, 10)~x=valor¦times=quantas vezes
+seq() e :~seq(from,to,by,length)~Gera sequências~seq(1,5,0.5) ; 2:10~from/to=início/fim¦by=passo¦length=tamanho¦a:b=passo 1
+vetor[ ]~v[2] ; v[-3] ; v[2:4] ; v[c(1,3)]~Acessa/altera posições (começa em 1)~notas[2] <- 6~[n]=posição¦[-n]=tudo menos n¦[a:b]=fatia¦posição nova cria NAs
+length() str() is.vector()~length(v)~Tamanho / estrutura / testa se é vetor~str(notas)~length=nº elementos¦str=tipo+amostra
+min() max() which.min() which.max()~max(v)~Menor/maior valor e a posição deles~which.max(notas)~which=devolve o índice
+sum() prod() cumsum() mean()~sum(v, na.rm=TRUE)~Soma, produto, soma acumulada, média~cumsum(1:5)~na.rm=TRUE ignora NA
+sort() order()~sort(v, decreasing=TRUE)~Ordena valores / devolve índices ordenados~v[order(v)]~decreasing=TRUE→do maior ao menor
+is.na() !is.na()~is.na(v)~Testa valores ausentes~sum(is.na(v))~is.na=TRUE onde há NA¦!=nega
+vetor lógico~v[v >= 60]~Filtra com condição lógica~alunos[notas>=60]~condição gera TRUE/FALSE¦[ ] mantém os TRUE
+names()~names(v) <- c("a","b")~Dá nomes às posições~alt["Carlos"]~acessa por nome
+table()~table(x, useNA="ifany")~Conta frequência de cada valor~table(c("A","B","A"))~useNA="ifany" conta os NA
+summary()~summary(x)~Resumo estatístico (mín, quartis, média, máx, NA)~summary(df)~funciona em vetor, tabela e modelo`],
+["Matrizes","#b48cff",`matrix()~matrix(1:9, nrow=3, ncol=3, byrow=FALSE)~Cria matriz (preenche por coluna)~matrix(1:12,nrow=3,byrow=TRUE)~nrow/ncol=linhas/colunas¦byrow=TRUE preenche por linha
+m[linha, coluna]~m[2,3] ; m[3,] ; m[,2]~Acessa elemento, linha ou coluna~m[2,3] <- 4~vazio antes/depois da vírgula=todas
+dim() nrow() ncol()~dim(m)~Dimensões da matriz~ncol(m)~dim=c(linhas,colunas)
+t() diag() solve()~t(m)~Transposta, identidade/diagonal, inversa~solve(diag(2))~t=troca linhas↔colunas¦solve=inversa
+%*%~A %*% B~Multiplicação matricial (diferente de *)~m %*% diag(3)~* é elemento a elemento
+rowSums() colSums()~rowSums(m)~Soma por linha / por coluna~colSums(m)~
+rbind() cbind() as.matrix()~rbind(v1,v2)~Une como linhas / colunas / converte em matriz~cbind(v1,v2)~rbind=empilha¦cbind=lado a lado
+rownames() colnames()~rownames(m) <- c("a","b")~Nomeia linhas/colunas~m["a","Jan"]~
+as.vector() c(m)~as.vector(m)~Transforma matriz em vetor~c(t(m))~t() antes mantém ordem por linha`],
+["Data frames, listas e fatores","#2ec4b6",`data.frame()~data.frame(nome, idade)~Cria tabela com colunas de tipos diferentes~data.frame(nome=c("A"),idade=27)~cada argumento=1 coluna
+df$col / df[ , ]~df$idade ; df[2,] ; df[2:3,"idade"]~Acessa coluna / linha / célula~df$nome[1] <- "Pedro"~$=coluna¦[linha,coluna]
+head() tail()~head(df, 10)~Primeiras / últimas linhas~tail(df)~10=quantas
+nrow() ncol() colnames() rownames()~nrow(df)~Dados da estrutura do data frame~
+df$nova <- ...~df$ano <- 2000~Cria coluna (NULL remove)~df$ano <- NULL~
+subset()~subset(df, idade > 10)~Filtra linhas~df[df$idade>10, ]~
+merge()~merge(a, b, by="id")~Une dois data frames por chave~merge(a,b,all.x=TRUE)~all.x=LEFT JOIN
+attach() detach()~attach(df)~Usa colunas sem escrever df$~detach(df)~
+list()~list(nome="A", idade=2)~Cria lista com tipos misturados~pessoa$nome~
+lista[[ ]]~lista[["nome"]] ; lista[[2]]~Acessa item da lista~lista$nome~[[ ]] devolve o item
+append() unlist() as.list()~append(l, 5)~Adiciona item / lista→vetor / vetor→lista~unlist(l)~
+%in%~"Pedro" %in% itens~Testa se o elemento existe~~
+factor()~factor(x, levels, labels, ordered)~Cria variável categórica~factor(sexo, levels=c("M","F"))~levels=ordem¦labels=nomes¦ordered=TRUE→ordinal
+levels() nlevels() gl()~levels(f)~Níveis do fator / quantidade / gera níveis~gl(3,4,labels=c("a","b","c"))~`],
+["Funções, pacotes e arquivos","#ffd166",`function()~nome <- function(a,b=2){ ... return(x) }~Cria sua própria função~JC <- function(c,t){c*t}~args=entradas (podem ter padrão)¦return=saída
+source()~source("funcoes.R")~Carrega funções de outro arquivo~~
+install.packages() / library()~install.packages("dplyr") ; library(dplyr)~Instala (1 vez) / carrega (toda sessão)~library(readxl)~
+search() installed.packages() update.packages()~search()~Pacotes carregados / instalados / atualizar~~
+devtools::install_github()~install_github("user/repo")~Instala pacote do GitHub~~
+getwd() setwd()~setwd("C:/pasta")~Mostra/define a pasta de trabalho (use / e não \\)~getwd()~
+file.exists() list.files()~file.exists("a.csv")~Confere se o arquivo existe / lista arquivos~list.files(pattern=".csv")~
+read.csv() read.csv2()~read.csv("a.csv", header=TRUE, sep=",")~Lê CSV (csv2: separador ; e decimal ,)~dados <- read.csv("a.csv")~header=1ª linha é nome¦sep¦dec¦na.strings¦encoding
+read.table() read.delim() read.fwf()~read.table("a.txt", header=TRUE, sep=" ")~Lê TXT delimitado / tabulado / largura fixa~read.fwf("a.txt", widths=c(8,2,10))~fill, strip.white, quote, skip, nrows
+read_excel() excel_sheets()~read_excel("a.xlsx", sheet=1)~Lê Excel (pacote readxl)~excel_sheets("a.xlsx")~sheet=aba¦range=faixa¦skip
+write.csv() write.table() write_xlsx()~write.csv(df,"a.csv",row.names=FALSE)~Exporta para CSV / TXT / Excel~write_xlsx(df,"a.xlsx")~
+saveRDS() readRDS() save() load()~saveRDS(obj,"a.rds")~Salva/lê objetos no formato do R~dados <- readRDS("a.rds")~rds=1 objeto¦RData=vários
+data() datasets::~data("mtcars")~Carrega bases prontas do R~head(mtcars)~
+file.choose()~read.csv(file.choose())~Abre janela para escolher arquivo~`],
+["Gráficos","#ff6b6b",`plot()~plot(x, y, type="l", main, xlab, ylab, col)~Gráfico básico (p pontos, l linha, b ambos)~plot(x,x^2,type="l")~lty/lwd/pch=estilo¦xlim/ylim=limites
+lines() points() text() abline()~lines(x, y2, col="red")~Adiciona linhas, pontos, texto ou reta ao gráfico~abline(lm(y~x))~
+legend()~legend("topleft", legend=c("a","b"), col=c("red","blue"), lty=1)~Cria legenda~~
+barplot()~barplot(tabela, names.arg, col)~Gráfico de barras~barplot(table(x))~beside=TRUE agrupa
+pie()~pie(x, labels, col)~Gráfico de pizza~pie(c(10,20,30))~
+hist()~hist(x, breaks=20)~Histograma~~`],
+["Limpeza e texto","#a0e547",`na.omit()~na.omit(df)~Remove linhas com NA~~
+duplicated()~df[!duplicated(df),]~Detecta/remove duplicatas~~
+apply()~apply(m, 2, mean)~Aplica função em linhas(1)/colunas(2)~~1=linhas¦2=colunas
+lapply() sapply() tapply() mapply()~sapply(df, class)~Aplica função em lista/vetor/grupos~~
+tryCatch()~tryCatch(expr, error=function(e) FALSE)~Captura erros~~
+nchar() toupper() tolower()~nchar("texto")~Tamanho / maiúsculas / minúsculas~~
+substr()~substr(x, 1, 4)~Extrai parte do texto~~
+paste() paste0()~paste("a","b",sep="-")~Concatena textos (paste0 sem separador)~~
+grep() grepl() gregexpr()~grepl("ia", v)~Busca padrões em texto~~
+strsplit() trimws() gsub()~strsplit(x, " ")~Divide / tira espaços / substitui~gsub("a","b",x)~
+str_length() str_sub()~str_sub("exemplo",1,3)~(stringr) tamanho e fatia~~
+str_to_upper() str_to_lower() str_to_title()~str_to_title(x)~Maiúsc./minúsc./título~~
+str_replace() str_replace_all()~str_replace_all(x,"a","b")~Substitui 1ª / todas~~
+str_split() str_c() str_dup() str_pad() str_trim()~str_c("a","b",sep="-")~Divide, junta, duplica, preenche, apara~~
+str_detect() str_locate() str_count()~str_detect("exemplo","ex")~Detecta, localiza, conta padrão~~`],
+["Datas","#5ac8fa",`as.Date()~as.Date("01/07/2026", format="%d/%m/%Y")~Converte texto em data~~%d dia¦%m mês¦%Y ano 4 dígitos¦%y 2 dígitos¦%b mês abrev.¦%B mês extenso
+format()~format(data,"%d/%m/%Y")~Mostra a data no formato desejado~~
+difftime() Sys.Date() Sys.time()~difftime(d2,d1,units="days")~Diferença entre datas / data e hora atual~~
+ymd() mdy() dmy() ymd_hms()~dmy("01/07/2026")~(lubridate) lê datas sem formato~~
+year() month() day() hour()~year(d)~Extrai partes da data~~
+days() months() years() hours()~d + days(10)~Soma períodos~~
+interval() duration() period()~interval(d1,d2)~Intervalos, durações e períodos~~
+with_tz() force_tz()~with_tz(d,"America/Sao_Paulo")~Converte / força fuso horário~~
+floor_date() ceiling_date() round_date()~floor_date(d,"month")~Arredonda datas~~`],
+["dplyr e tidyverse","#ff9f43",`%>% e |>~x %>% f()~Pipe: passa o resultado para a próxima função~df %>% filter(a>1) %>% head()~lê da esquerda p/ direita
+select()~select(df, a, b) ; select(-c)~Escolhe colunas~select(df, mpg, hp)~-c=remove¦everything()¦where(is.numeric)
+filter()~filter(df, mpg>20, cyl==4)~Filtra linhas (= WHERE)~~vírgula=E
+mutate()~mutate(df, kpl=mpg*0.42)~Cria/altera colunas~~
+arrange()~arrange(df, desc(mpg))~Ordena (= ORDER BY)~~
+summarise()~summarise(df, m=mean(x))~Resume em estatísticas~~
+group_by()~group_by(df, cyl)~Agrupa para resumir por categoria (= GROUP BY)~~
+if_else()~if_else(x>3,"A","B")~Condição binária~~
+case_when()~case_when(x<18~"menor", TRUE~"outro")~Múltiplas condições~~
+count() distinct() rename() slice()~count(df, sexo)~Contagem / únicos / renomear / linha n~~
+inner_join() left_join() right_join() full_join()~left_join(a, b, by="id")~Junções de tabelas~~inner=só pares¦left=todos da esquerda¦right¦full=todos
+semi_join() anti_join()~anti_join(a,b,by="id")~Só quem tem par / só quem NÃO tem~~
+bind_rows() rbind()~bind_rows(a,b,.id="origem")~Empilha tabelas~~
+tibble() tribble() as_tibble() add_row()~tribble(~a,~b, 1,2)~Cria/converte tibbles~~
+pivot_longer() pivot_wider()~pivot_longer(df, cols, names_to, values_to)~Largo↔longo~~
+separate() unite() fill()~separate(df,col,into,sep)~Divide/une colunas, preenche NA~~
+drop_na() replace_na() expand()~replace_na(df,list(a=0))~Remove/substitui NA, combinações~~`],
+["Diagnóstico e R Markdown","#b48cff",`skim()~skim(dados)~Diagnóstico completo (pacote skimr)~~
+vis_dat() vis_miss()~vis_miss(dados)~Mapa visual de tipos / NA (visdat)~~
+kable() kable_styling()~df %>% kable(booktabs=TRUE)~Tabela formatada (kableExtra)~~
+YAML~--- title: "X" output: html_document ---~Metadados do relatório~~
+chunk {r}~\`\`\`{r, echo=FALSE} ... \`\`\`~Bloco de código R no relatório~~echo=FALSE esconde o código
+código em linha~\`r x\`~Valor de R no meio do texto~~
+render / Knit~rmarkdown::render("a.Rmd")~Gera HTML/PDF/Word~~`]];
+const S=[["SQL no R (DBI/RSQLite)","#4aa3ff",`dbConnect()~con <- dbConnect(SQLite(), "banco.sqlite")~Abre (ou cria) o banco~~drv=SQLite()¦dbname=arquivo
+dbExecute()~dbExecute(con, "INSERT...")~Executa comando que altera (devolve nº de linhas)~~
+dbGetQuery()~dbGetQuery(con, "SELECT...")~Executa consulta e devolve data.frame~~
+dbWriteTable()~dbWriteTable(con,"t",df,append=TRUE)~Grava data.frame como tabela~~
+dbListTables() dbListFields()~dbListTables(con)~Lista tabelas / colunas~~
+dbIsValid() dbDisconnect()~dbDisconnect(con)~Verifica / fecha a conexão~~
+PRAGMA foreign_keys~PRAGMA foreign_keys = ON~Ativa chaves estrangeiras~~`],
+["Criar e inserir","#ff9f43",`CREATE TABLE~CREATE TABLE IF NOT EXISTS T (col tipo, ...)~Cria tabela~CREATE TABLE MEDICO (id INTEGER PRIMARY KEY, nome TEXT NOT NULL)~IF NOT EXISTS=evita erro¦tipo=INTEGER, REAL, TEXT, DATE, BLOB
+PRIMARY KEY~id INTEGER PRIMARY KEY~Chave primária: única e não nula~~
+NOT NULL / UNIQUE~crm TEXT UNIQUE NOT NULL~Proíbe vazio / proíbe repetição~~
+CHECK~CHECK (sexo IN ('M','F'))~Restringe valores aceitos~~
+FOREIGN KEY~FOREIGN KEY (id_medico) REFERENCES MEDICO(id_medico)~Liga a tabela a outra~~
+INSERT INTO~INSERT INTO T (c1,c2) VALUES (v1,v2)~Insere uma linha~INSERT INTO MEDICO (nome) VALUES ('Ana')~`],
+["Consultar","#6bd66b",`SELECT / FROM~SELECT col1, col2 FROM tabela~Escolhe colunas (* = todas)~SELECT nome FROM PACIENTE~
+WHERE~WHERE condição~Filtra linhas~WHERE sexo = 'F'~
+= <> > < >= <=~WHERE id > 2~Comparadores~~
+AND / OR~WHERE a AND (b OR c)~Combina condições (use parênteses)~~
+IN / NOT IN~cidade IN ('A','B')~Lista de valores~~
+LIKE~nome LIKE 'Dra.%'~Busca parcial¦ % qualquer texto, _ um caractere~~
+IS NULL / IS NOT NULL~data_saida IS NULL~Testa ausência (nunca use = NULL)~~
+BETWEEN~data BETWEEN 'a' AND 'b'~Intervalo inclusivo~~
+ORDER BY ASC/DESC~ORDER BY data DESC~Ordena~~
+LIMIT / OFFSET~LIMIT 3 OFFSET 2~Limita / pula linhas~~
+AS~nome AS paciente~Apelido para coluna/tabela~~`],
+["Juntar, agrupar e resumir","#e056a0",`INNER JOIN~FROM A JOIN B ON A.id=B.id~Só linhas com par nos dois lados~~
+LEFT JOIN~FROM A LEFT JOIN B ON ...~Todas de A, mesmo sem par (NULL)~~
+COUNT SUM AVG MIN MAX~COUNT(*)~Funções de agregação~~COUNT(*) conta tudo¦COUNT(col) ignora NULL
+GROUP BY~GROUP BY cidade~Agrupa linhas~~colunas fora de agregação vão aqui
+HAVING~HAVING COUNT(*) > 1~Filtra grupos (depois do GROUP BY)~~WHERE filtra linhas, HAVING filtra grupos
+ROUND()~ROUND(AVG(x),1)~Arredonda~~
+Ordem das cláusulas~SELECT FROM JOIN WHERE GROUP BY HAVING ORDER BY LIMIT~Ordem obrigatória~~`]];
+let lang='R';
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function parse(D){return D.map(([t,c,b])=>[t,c,b.split('\n').map(l=>l.split('~')).filter(a=>a.length>3)])}
+const DB={R:parse(R),S:parse(S)};
+function L(l){lang=l;tR.className=l=='R'?'on':'';tS.className='sql'+(l=='S'?' on':'');draw()}
+function draw(){if(mode=='P')return drawP();const q=document.getElementById('q').value.toLowerCase();let h='';
+DB[lang].forEach(([t,c,rows],i)=>{const f=rows.map((r,j)=>[r,j]).filter(([r])=>r.join(' ').toLowerCase().includes(q));if(!f.length)return;
+h+=`<section style="--a:${c}"><h2>${t}</h2><div class="row hd"><div>Comando</div><div>Como usar</div><div>Função</div><div>Exemplo</div><div></div></div>`;
+f.forEach(([r,j])=>{h+=`<div class="row"><div class="n">${esc(r[0])}</div><div><code>${esc(r[1])}</code></div><div class="d">${esc(r[2])}</div><div>${r[3]?'<code>'+esc(r[3])+'</code>':'—'}</div><button onclick="O(${i},${j})">Detalhes</button></div>`});h+='</section>'});
+m.innerHTML=h||'<p style="text-align:center;color:#8b92a5">Nada encontrado.</p>'}
+function O(i,j){const[t,c,rows]=DB[lang][i],r=rows[j];let p=(r[4]||'').split('¦').filter(Boolean).map(x=>{const k=x.indexOf('=');return `<div class="p"><b>${esc(x.slice(0,k))}</b><span>${esc(x.slice(k+1))}</span></div>`}).join('');
+box.style.borderColor=c;box.innerHTML=`<button class="x" onclick="modal.style.display='none'">×</button><h3 style="color:${c}">${esc(r[0])}</h3><div>${esc(r[2])}</div>
+<div class="lb">1. Forma de escrever</div><code>${esc(r[1])}</code>
+<div class="lb">2. Parte por parte</div>${p||'<div class="p"><span>Escreva o comando exatamente como na forma acima, trocando os nomes pelos seus dados.</span></div>'}
+<div class="lb">3. Exemplo prático</div>${r[3]?'<code>'+esc(r[3])+'</code>':'<span style="color:#8b92a5">Use a forma acima.</span>'}
+<div class="lb">Dica</div><span>Teste no console do R/RStudio e mude os valores para ver o que acontece. Dúvida? Digite <code>?nome_da_função</code>.</span>`;modal.style.display='flex'}
+let mode='D';
+function G(m){mode=m;nD.className=m=='D'?'on':'';nP.className=m=='P'?'on':'';draw()}
+// problema§comandos§código (⏎=quebra)§passo=explicação¦passo=explicação
+const PR={R:[["Básico e operadores","#4aa3ff",`Peça o nome do usuário e exiba uma saudação.§readline, cat§nome <- readline("Digite seu nome: ")⏎cat("Olá", nome, "! Bem-vindo\\n")§readline=pausa e lê o que você digita (vem como texto)¦nome <-=guarda a resposta¦cat=junta o texto e a variável na saída¦\\n=quebra de linha
+Crie variáveis inteira, decimal, texto e lógica e mostre o tipo de cada.§class, print§inteiro <- 10L⏎decimal <- 5.7⏎texto <- "R"⏎logico <- TRUE⏎print(class(inteiro))⏎print(class(decimal))⏎print(class(texto))⏎print(class(logico))§10L=o L força número inteiro¦class=devolve integer, numeric, character ou logical
+Converta "123" (texto) em número e confira o tipo antes e depois.§as.numeric, class§v <- "123"⏎class(v)⏎n <- as.numeric(v)⏎class(n)§antes: character (texto não soma)¦as.numeric=converte¦depois: numeric, já dá para fazer contas
+Troque os valores de a=10 e b=5.§<-, variável auxiliar§a <- 10; b <- 5⏎temp <- a⏎a <- b⏎b <- temp⏎cat(a, b)§temp=guarda o valor de a, senão ele se perde¦a <- b=a recebe o 5¦b <- temp=b recebe o 10 guardado
+O que acontece com pi se fizer pi <- 15? Como desfazer?§<-, rm§pi <- 15⏎pi⏎rm(pi)⏎pi§pi <- 15=cria uma variável sua que esconde a constante¦rm(pi)=apaga a sua variável¦pi=volta a valer 3.141593
+Qual o resultado de TRUE + TRUE, FALSE + TRUE e FALSE + FALSE?§+§TRUE + TRUE⏎FALSE + TRUE⏎FALSE + FALSE§TRUE=vale 1 nas contas¦FALSE=vale 0¦resultados=2, 1 e 0 (por isso sum() conta TRUEs)
+Receba dois inteiros e mostre dividendo, divisor, quociente e resto.§as.integer, %/%, %%§d <- as.integer(readline("Dividendo: "))⏎v <- as.integer(readline("Divisor: "))⏎cat("Quociente:", d %/% v, "Resto:", d %% v)§as.integer=readline devolve texto, aqui vira número¦%/%=divisão inteira (101÷10 dá 10)¦%%=resto (dá 1)
+Receba uma data ddmmaa (300424), mostre dia, mês, ano e monte mmddaa.§readline, substr, paste§d <- readline("ddmmaa: ")⏎dia <- substr(d,1,2)⏎mes <- substr(d,3,4)⏎ano <- substr(d,5,6)⏎paste(mes, dia, ano, sep="")§substr(x,ini,fim)=recorta por posição¦paste=cola os pedaços¦sep=com aspas vazias cola sem espaço (043024)`],
+["Decisão e repetição","#6bd66b",`Leia 3 números e informe o maior.§if, as.numeric§n1 <- as.numeric(readline())⏎n2 <- as.numeric(readline())⏎n3 <- as.numeric(readline())⏎maior <- n1⏎if (n2 > maior) maior <- n2⏎if (n3 > maior) maior <- n3⏎cat("Maior:", maior)§maior <- n1=começa supondo que n1 é o maior¦cada if=troca se achar um número maior
+O número é divisível por 5?§%%, if / else§n <- as.integer(readline())⏎if (n %% 5 == 0) cat("divisível") else cat("não divisível")§n %% 5=resto da divisão por 5¦igual a 0=divisível¦==(dois iguais) compara; um só atribui
+O inteiro está entre 20 e 90 (sem incluir)?§&&, if§if (n > 20 && n < 90) cat("está entre") else cat("não está")§&&=exige as duas condições verdadeiras¦> e <=excluem 20 e 90
+Classifique a idade: recém-nascido, criança, adolescente, adulto, idoso.§if / else if / else§if (i < 3) "recem-nascido" else if (i < 12) "crianca" else if (i < 20) "adolescente" else if (i < 56) "adulto" else "idoso"§else if=testa em ordem e para no primeiro verdadeiro¦por isso basta o limite superior em cada teste
+Some os números de 0 a 100.§for§soma <- 0⏎for (i in 0:100) soma <- soma + i⏎soma§soma <- 0=acumulador começa zerado¦i=assume 0, 1, ... 100¦soma + i=acumula a cada volta (resultado 5050)
+Mostre a tabuada de um número.§for, cat§n <- as.integer(readline())⏎for (i in 1:10) cat(n, "x", i, "=", n * i, "\\n")§for=repete para i de 1 a 10¦cat=imprime a conta de cada volta
+Calcule o fatorial de n.§for§f <- 1⏎for (i in 1:n) f <- f * i⏎f§f <- 1=1 é neutro da multiplicação¦f * i=multiplica por 1, 2, ... n
+O número é primo?§%%, sum, if§r <- n %% (1:n)⏎if (sum(r == 0) == 2) "primo" else "não primo"§n %% (1:n)=restos da divisão por todos de 1 até n¦r igual a 0=marca os divisores¦sum=conta quantos¦primo=tem exatamente 2 divisores`],
+["Vetores, matrizes, listas, fatores e data frames","#e056a0",`Vetor: 1º, 3º, 3 primeiros elementos; multiplique por 2; some 10; soma e média.§c, [ ], sum, mean§v <- c(10,20,30,40,50)⏎v[1]; v[3]; v[1:3]; v[4:5]⏎w <- 1:5⏎w * 2; w + 10⏎sum(w); mean(w)§v[n]=posição (começa em 1)¦v[1:3]=fatia¦w * 2=a conta vale para todos os elementos de uma vez
+Crie 5 notas aleatórias: média, notas abaixo e acima da média, aprovado?§runif, mean, [ ], if§notas <- runif(5, 0, 10)⏎media <- mean(notas)⏎notas[notas < media]⏎notas[notas > media]⏎if (media >= 6) "Aprovado" else "Reprovado"§runif(5,0,10)=5 sorteios entre 0 e 10¦notas[condição]=filtra pelo teste lógico¦media >= 6=regra de aprovação
+Matriz 3x3 preenchida por linha e acesso a partes.§matrix, [ , ]§m <- matrix(1:9, nrow=3, byrow=TRUE)⏎m[2,3]; m[1,]; m[,2]; m[1:2,1:2]§byrow=TRUE preenche por linha¦m[2,3]=linha 2, coluna 3¦vazio=todas (m[1,] é a linha 1 inteira)
+Matriz: soma total, por linha, por coluna, maior valor, transposta e produto A %*% B.§sum, rowSums, colSums, max, t, %*%§sum(m); rowSums(m); colSums(m); max(m)⏎t(m)⏎A %*% B§rowSums=soma cada linha¦t=troca linhas por colunas¦%*%=multiplicação de matrizes (não é elemento a elemento)
+Notas de 3 alunos em 5 provas: médias, melhor aluno, pior prova.§matrix, rownames, colnames, rowMeans, colMeans, which.max§m <- matrix(runif(15,0,10), nrow=3)⏎rownames(m) <- c("Aluno1","Aluno2","Aluno3")⏎colnames(m) <- paste0("A", 1:5)⏎names(which.max(rowMeans(m)))⏎names(which.min(colMeans(m)))§rowMeans=média de cada aluno¦which.max=posição do maior¦names=troca a posição pelo nome
+Data frame: filtre salário > 4000, crie Bonus (10%), remova Cidade, ordene por salário.§[ ], $, NULL, order§df[df$Salario > 4000, ]⏎df$Bonus <- df$Salario * 0.10⏎df$Cidade <- NULL⏎df[order(df$Salario, decreasing=TRUE), ]§condição antes da vírgula=filtra linhas¦$ novo <- ...=cria coluna¦<- NULL=remove coluna¦order=devolve a ordem das linhas
+Média de salário por departamento.§aggregate§aggregate(Salario ~ Departamento, data=df, FUN=mean)§Salario ~ Departamento=resumir Salário por grupo¦FUN=função aplicada em cada grupo
+Listas: crie com vetor e data frame, adicione, remova e aplique length.§list, $, NULL, lapply§l <- list(Numeros=c(10,20), Nomes=c("A","B"), Dados=df)⏎l$Logico <- c(TRUE,FALSE)⏎l$Nomes <- NULL⏎lapply(l, length)§list=cada item com seu nome¦$ novo <- ...=adiciona¦<- NULL=remove¦lapply=aplica length em cada item
+Fatores: cores com níveis e frequência; tamanhos ordenados e comparação.§factor, levels, table§f <- factor(c("vermelho","azul","verde","vermelho","azul"))⏎levels(f); table(f)⏎t <- factor(c("Médio","Pequeno","Grande"), levels=c("Pequeno","Médio","Grande"), ordered=TRUE)⏎t > "Pequeno"§levels=lista as categorias¦table=conta cada uma¦ordered=com TRUE permite comparar com > e <`],
+["Arquivos, bases, gráficos, pacotes e R Markdown","#ff9f43",`Importe CSV e Excel e crie a coluna de valor total.§read.csv, read_excel, $§d <- read.csv("dados.csv")⏎mean(d$Idade)⏎library(readxl)⏎p <- read_excel("dados.xlsx", sheet="Planilha1")⏎p$Total <- p$Quantidade * p$Preco§read.csv=lê o CSV para data frame¦sheet=escolhe a aba¦coluna nova=produto de duas colunas
+Bases prontas: resumo do mtcars, filtrar iris e contar NAs do airquality.§data, head, summary, is.na, colSums§data(airquality)⏎head(airquality)⏎summary(mtcars)⏎iris[iris$Species == "versicolor", ]⏎colSums(is.na(airquality))§data=carrega a base¦is.na=TRUE/FALSE por célula¦colSums=soma os TRUE de cada coluna (nº de NAs)
+Crie gráfico de linha, de barras e de pizza.§plot, barplot, table, pie, paste§plot(AirPassengers, type="l", main="Passageiros")⏎barplot(table(mtcars$cyl))⏎t <- table(iris$Species)⏎pie(t, labels=paste(names(t), round(prop.table(t)*100,1), "%"))§type l=liga os pontos com linha¦table=conta categorias¦prop.table=vira proporção¦paste=monta o rótulo com nome e %
+Instale, carregue e veja a versão de um pacote; instale do GitHub.§install.packages, library, packageVersion§install.packages("dplyr")⏎library(dplyr)⏎packageVersion("dplyr")⏎devtools::install_github("hrbrmstr/hrbrthemes")§install.packages=só 1 vez¦library=toda sessão¦packageVersion=mostra a versão¦install_github=pacote fora do CRAN
+Crie um relatório R Markdown com YAML, chunk e código em linha.§YAML, chunk, r inline§---⏎title: "Meu relatório"⏎output: html_document⏎---⏎\`\`\`{r}⏎a <- 1; b <- 2⏎a + b⏎\`\`\`⏎Valor: \`r a + b\`§--- ---=bloco YAML com título e formato¦\`\`\`{r}=chunk de código R¦\`r ...\`=resultado dentro do texto`],
+["Limpeza e estatística básica","#ffd166",`No airquality, descubra quais colunas têm NA e quantos.§is.na, colSums§data(airquality)⏎colSums(is.na(airquality)) > 0⏎colSums(is.na(airquality))§is.na=TRUE onde falta valor¦colSums=soma os TRUE de cada coluna¦> 0=mostra só se há algum NA (Ozone 37, Solar.R 7)
+Remova as linhas com NA e compare o número de linhas antes e depois.§na.omit, nrow, cat§antes <- nrow(airquality)⏎sem_na <- na.omit(airquality)⏎depois <- nrow(sem_na)⏎cat("Antes:", antes, "Depois:", depois, "\\n")§na.omit=apaga linhas com qualquer NA¦nrow=conta as linhas (153 caem para 111)
+Substitua os NA de Ozone pela mediana.§median, is.na, [ ]§aq <- airquality⏎med <- median(aq$Ozone, na.rm=TRUE)⏎aq$Ozone[is.na(aq$Ozone)] <- med⏎sum(is.na(aq$Ozone))§aq <- airquality=cópia, para não estragar o original¦na.rm=TRUE ignora os NA ao calcular a mediana (31.5)¦[is.na(...)] <- med=troca só as posições vazias¦sum=confere: 0 NA
+Vendas: some tudo, só o Produto A, por produto e ordene.§sum, [ ], aggregate, order§vendas <- data.frame(produto=c("A","B","A","C","B","A"), vendas=c(100,150,200,250,120,180))⏎sum(vendas$vendas)⏎sum(vendas$vendas[vendas$produto == "A"])⏎tot <- aggregate(vendas ~ produto, data=vendas, sum)⏎tot[order(-tot$vendas), ]§sum(coluna)=total geral (1000)¦[produto igual a A]=filtra antes de somar (480)¦aggregate=soma por grupo¦order(-x)=decrescente
+Resuma o data frame de vendas com summary e table.§summary, table§summary(vendas)⏎table(vendas$produto)§summary=mín, quartis, média e máx da coluna numérica¦table=conta quantas vezes cada produto aparece`],
+["Texto e datas","#5ac8fa",`Frutas: maiúsculas, trocar banana por kiwi, juntar com vírgula e separar de novo.§toupper, [ ], paste, strsplit§frutas <- c("maçã","banana","laranja","uva","manga")⏎toupper(frutas)⏎f2 <- frutas⏎f2[f2 == "banana"] <- "kiwi"⏎s <- paste(f2, collapse=", ")⏎strsplit(s, split=", ")[[1]]§f2 igual a banana=encontra a posição¦collapse=junta o vetor em 1 texto¦strsplit=devolve lista¦[[1]]=pega o vetor de dentro da lista
+Filmes com stringr: achar Harry, trocar título, maiúsculas, aparar espaços, tamanho e palavras.§str_subset, str_replace, str_to_upper, str_trim, str_length, str_count§library(stringr)⏎str_subset(filmes, "Harry")⏎str_replace(filmes, "Star Wars: Episódio IV - Uma Nova Esperança", "Star Wars: Episódio IV")⏎str_to_upper(filmes)⏎str_trim(filmes)⏎str_length(filmes)⏎str_count(filmes, "\\\\S+")§str_subset=só os textos que contêm o padrão¦str_replace=troca o 1º trecho¦str_trim=tira espaços das pontas¦str_length=nº de caracteres¦\\\\S+=um bloco sem espaço, então conta palavras
+Vetor de datas de 2023: mês, ano, formato DD/MM/AAAA e diferença entre 1/jan e 31/dez.§as.Date, format, diferença de datas§datas <- as.Date(c("2023-01-01","2023-02-01","2023-03-01"))⏎format(datas, "%m")⏎format(datas, "%Y")⏎format(datas, "%d/%m/%Y")⏎as.Date("2023-12-31") - as.Date("2023-01-01")§as.Date=texto vira data¦%m mês, %Y ano, %d dia=códigos do format¦subtração de datas=dá 364 dias
+Com lubridate: extrair mês e ano, somar 10 dias, subtrair 2 meses, diferença para hoje e ano bissexto.§ymd, month, year, days, months, today, leap_year§library(lubridate)⏎d <- ymd(c("2024-01-01","2024-02-01"))⏎month(d); year(d)⏎d + days(10)⏎d - months(2)⏎max(d) - today()⏎leap_year(2024)§ymd=lê ano-mês-dia¦month e year=extraem partes¦days e months=períodos para somar e subtrair¦today=data de hoje¦leap_year=TRUE, então 29/02/2024 existe`],
+["dplyr: filtrar, agrupar e contar (starwars)","#ff6b6b",`No starwars: personagens com mass acima de 100; e só name, species e mass sem NA em mass.§filter, select, is.na, %>%§library(dplyr)⏎starwars %>% filter(mass > 100)⏎starwars %>% select(name, species, mass) %>% filter(!is.na(mass))§%>%=passa o resultado para o próximo passo¦filter=mantém as linhas que passam no teste¦select=escolhe colunas¦!is.na=só linhas preenchidas
+No starwars: altura média por species, os 5 mais pesados e contagem por homeworld.§group_by, summarise, arrange, slice_head, count§starwars %>% group_by(species) %>% summarise(media_height = mean(height, na.rm=TRUE))⏎starwars %>% arrange(desc(mass)) %>% select(name, species, homeworld, mass) %>% slice_head(n=5)⏎starwars %>% count(homeworld, sort=TRUE)§group_by + summarise=uma média por espécie¦arrange(desc())=do maior para o menor¦slice_head(n=5)=as 5 primeiras linhas¦count(sort=TRUE)=conta por categoria e ordena`]],
+S:[["Modelo relacional e criação","#ff9f43",`Defina PK e FK da tabela CONSULTA (o nome da FK pode ser diferente da PK).§PRIMARY KEY, FOREIGN KEY§CREATE TABLE CONSULTA (⏎id_consulta INTEGER PRIMARY KEY,⏎data TEXT,⏎codigo_pac INTEGER NOT NULL,⏎FOREIGN KEY (codigo_pac) REFERENCES PACIENTE(id_paciente)⏎)§PRIMARY KEY=identifica cada consulta¦FOREIGN KEY=liga codigo_pac à PK de PACIENTE¦nomes diferentes funcionam, o que liga é o REFERENCES
+Represente o relacionamento N:M entre PACIENTE e MEDICAMENTO.§CREATE TABLE, PRIMARY KEY composta, FOREIGN KEY§CREATE TABLE PRESCRICAO (⏎id_paciente INTEGER,⏎id_medicamento TEXT,⏎dose TEXT,⏎PRIMARY KEY (id_paciente, id_medicamento),⏎FOREIGN KEY (id_paciente) REFERENCES PACIENTE(id_paciente),⏎FOREIGN KEY (id_medicamento) REFERENCES MEDICAMENTO(id_medicamento)⏎)§tabela intermediária=guarda os dois ids¦PK composta=impede repetir o par¦dose=atributo próprio da relação
+Crie a tabela LEITO e insira 3 registros (via R).§CREATE TABLE, CHECK, INSERT INTO, dbExecute§dbExecute(con, "CREATE TABLE IF NOT EXISTS LEITO (id_leito INTEGER PRIMARY KEY, codigo TEXT NOT NULL, tipo TEXT NOT NULL, disponivel TEXT NOT NULL CHECK (disponivel IN ('S','N')))")⏎dbExecute(con, "INSERT INTO LEITO (codigo,tipo,disponivel) VALUES ('L-101','UTI','S')")⏎dbGetQuery(con, "SELECT * FROM LEITO")§dbExecute=roda comandos que alteram o banco¦CHECK=só aceita S ou N¦id_leito não é informado: a PK se gera sozinha¦dbGetQuery=confere o resultado`],
+["Consultas","#6bd66b",`Pacientes que NÃO são de Brasília, em ordem alfabética.§SELECT, WHERE, <>, ORDER BY§SELECT nome, cidade⏎FROM PACIENTE⏎WHERE cidade <> 'Brasília'⏎ORDER BY nome ASC§WHERE cidade <> ...=filtra os diferentes¦ORDER BY nome ASC=A→Z
+Internações com CID começando por J (respiratórias).§LIKE§SELECT id_internacao, data_entrada, cid10_principal⏎FROM INTERNACAO⏎WHERE cid10_principal LIKE 'J%'§LIKE=busca por padrão¦'J%'=começa com J e termina com qualquer coisa
+Os 2 pacientes mais recentemente cadastrados.§ORDER BY DESC, LIMIT§SELECT id_paciente, nome, cidade⏎FROM PACIENTE⏎ORDER BY id_paciente DESC⏎LIMIT 2§DESC=do maior id para o menor¦LIMIT 2=só as 2 primeiras linhas
+Internações em aberto, da mais antiga para a mais recente.§IS NULL, ORDER BY§SELECT *⏎FROM INTERNACAO⏎WHERE data_saida IS NULL⏎ORDER BY data_entrada ASC§IS NULL=sem data de saída (nunca use = NULL)¦ASC=antigas primeiro
+Liste paciente, cidade, médico e especialidade.§INNER JOIN, alias§SELECT p.nome AS paciente, p.cidade, m.nome AS medico, m.especialidade⏎FROM PACIENTE AS p⏎INNER JOIN MEDICO AS m ON p.id_medico = m.id_medico§p e m=apelidos das tabelas¦ON=a chave que liga FK e PK¦INNER=só quem tem par
+Liste todos os pacientes, inclusive os nunca internados.§LEFT JOIN§SELECT p.nome AS paciente, p.cidade, i.id_internacao⏎FROM PACIENTE AS p⏎LEFT JOIN INTERNACAO AS i ON p.id_paciente = i.id_paciente§LEFT=mantém todos os pacientes¦sem internação o id_internacao fica NULL
+Total de pacientes por especialidade, do maior para o menor.§JOIN, COUNT, GROUP BY, ORDER BY§SELECT m.especialidade, COUNT(p.id_paciente) AS total_pacientes⏎FROM MEDICO AS m⏎INNER JOIN PACIENTE AS p ON m.id_medico = p.id_medico⏎GROUP BY m.especialidade⏎ORDER BY total_pacientes DESC§GROUP BY=cria um grupo por especialidade¦COUNT=conta pacientes do grupo¦ORDER BY usa o apelido criado
+Cidades com mais de um paciente, com a contagem.§GROUP BY, HAVING§SELECT cidade, COUNT(*) AS qtd_pacientes⏎FROM PACIENTE⏎GROUP BY cidade⏎HAVING COUNT(*) > 1⏎ORDER BY qtd_pacientes DESC§GROUP BY=agrupa por cidade¦HAVING=filtra grupos depois de contar (WHERE não enxerga COUNT)
+Por médico, quantas internações encerradas seus pacientes tiveram (mín. 1), do maior ao menor.§3 tabelas: JOIN, WHERE, GROUP BY, HAVING, ORDER BY§SELECT m.nome AS medico, COUNT(i.id_internacao) AS total_encerradas⏎FROM INTERNACAO AS i⏎INNER JOIN PACIENTE AS p ON i.id_paciente = p.id_paciente⏎INNER JOIN MEDICO AS m ON p.id_medico = m.id_medico⏎WHERE i.data_saida IS NOT NULL⏎GROUP BY m.id_medico, m.nome⏎HAVING COUNT(i.id_internacao) >= 1⏎ORDER BY total_encerradas DESC§JOINs=INTERNACAO→PACIENTE→MEDICO¦WHERE=só internações encerradas¦GROUP BY=um grupo por médico¦HAVING=descarta quem tem 0¦ORDER BY=ranking`]]};
+const PD={R:parse2(PR.R),S:parse2(PR.S)};
+function parse2(D){return D.map(([t,c,b])=>[t,c,b.split('\n').map(l=>l.split('§')).filter(a=>a.length>3)])}
+function drawP(){const q=document.getElementById('q').value.toLowerCase();let h='';
+PD[lang].forEach(([t,c,rows],i)=>{const f=rows.map((r,j)=>[r,j]).filter(([r])=>r.join(' ').toLowerCase().includes(q));if(!f.length)return;
+h+=`<section style="--a:${c}"><h2>${t}</h2><div class="row pr hd"><div>Problema</div><div>Comandos utilizados</div><div></div></div>`;
+f.forEach(([r,j])=>{h+=`<div class="row pr"><div>${esc(r[0])}</div><div><code>${esc(r[1])}</code></div><button onclick="OP(${i},${j})">Ver solução</button></div>`});h+='</section>'});
+m.innerHTML=h||'<p style="text-align:center;color:#8b92a5">Nada encontrado.</p>'}
+function OP(i,j){const[t,c,rows]=PD[lang][i],r=rows[j];const p=r[3].split('¦').filter(Boolean).map(x=>{const k=x.indexOf('=');return `<div class="p"><b>${esc(x.slice(0,k))}</b><span>${esc(x.slice(k+1))}</span></div>`}).join('');
+box.style.borderColor=c;box.innerHTML=`<button class="x" onclick="modal.style.display='none'">×</button><h3 style="color:${c}">Problema</h3><div>${esc(r[0])}</div>
+<div class="lb">Comandos utilizados</div><code>${esc(r[1])}</code>
+<div class="lb">Solução completa</div><pre>${esc(r[2].replace(/⏎/g,'\n'))}</pre>
+<div class="lb">Como funciona</div>${p}
+<div class="lb">Dica</div><span>Copie a solução para o RStudio, rode linha por linha e troque os valores para ver o efeito.</span>`;modal.style.display='flex'}
+draw();
+</script></body></html>
