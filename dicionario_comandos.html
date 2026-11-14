@@ -79,6 +79,45 @@ ul.warn li{background:#2b1d1d;border-left:4px solid var(--red);padding:8px 12px;
 .st ol,.st ul{margin:6px 0;padding-left:22px}
 .st li{margin:4px 0}
 .kbd{display:inline-block;border:1px solid var(--b);border-bottom-width:3px;border-radius:5px;padding:0 6px;font:12px Consolas,monospace;background:var(--c2)}
+
+/* conceitos */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.cc{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:12px 14px;cursor:pointer}
+.cc:hover{border-color:var(--a)}
+.cc h4{margin:0 0 4px;color:var(--a);font-size:16px}
+.cc p{margin:0;color:var(--m);font-size:14px}
+.cc .pk{margin:8px 0 0}
+.viz{background:#10131b;border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin:12px 0}
+.vh{font-weight:800;color:var(--y);margin-bottom:8px}
+.vctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.vb{background:var(--c2);border:1px solid var(--b);color:var(--t);border-radius:8px;padding:5px 10px;cursor:pointer;font-weight:600}
+.vb:hover{border-color:var(--m)}
+.vb.on{border-color:var(--y);background:#2a2113;color:var(--y)}
+.vsl{display:flex;align-items:center;gap:6px;color:var(--m);font-size:13px}
+.vsl input[type=range]{accent-color:var(--y);width:140px}
+.vsl b{color:var(--t);min-width:28px}
+.vin{background:var(--code);border:1px solid var(--b);color:var(--t);border-radius:6px;padding:6px 8px;font:14px Consolas,Menlo,monospace}
+.vsvg svg text{fill:#cfd5e3;font:12px system-ui}
+.vro{margin-top:8px;line-height:1.65;overflow-x:auto}
+.vro small,.vhint{color:var(--m);font-size:12.5px}
+.tb{border-collapse:collapse;margin:6px 0}
+.tb th,.tb td{border:1px solid var(--b);padding:3px 9px;text-align:center}
+.tb th{background:var(--c2)}
+.tb tr.hl td{background:#2a2113}
+.tt{color:var(--y);font-weight:700}
+.chips2{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.ch{background:var(--c2);border:1px solid var(--b);border-radius:8px;padding:4px 10px;font-weight:700}
+.ch.mid{border-color:var(--y);color:var(--y);background:#2a2113}
+.ch small{color:var(--m);margin-left:3px}
+.tr{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.trk{display:flex;gap:8px;align-items:center}
+.trk2{display:flex;flex-direction:column;gap:6px}
+.tn{border:1px solid var(--b);border-radius:8px;padding:6px 10px;text-align:center;background:var(--c2);opacity:.5;font-size:13px}
+.tn.hit{opacity:1;border-color:var(--y);background:#2a2113;color:var(--y)}
+.warn1{background:#2b1d1d;border-left:4px solid var(--red);padding:8px 12px;border-radius:6px;margin:6px 0}
+.fx{background:#1b1626;border-left:4px solid #b48cff;padding:10px 12px;border-radius:6px;white-space:pre-wrap;font:13.5px/1.6 Consolas,Menlo,monospace;overflow-x:auto}
+.see button.cl{font-family:system-ui;font-size:13px;border-color:#5a4a1e}
+.ia{background:#102a24;border-left:4px solid #2ec4b6;padding:8px 12px;border-radius:6px}
 @media(max-width:600px){table.pp tr,table.pp td{display:block;width:auto!important}table.pp td:first-child{border-radius:6px 6px 0 0;padding-bottom:2px}table.pp td:last-child{border-radius:0 0 6px 6px}table.pp td:first-child code{white-space:pre-wrap}.mb{padding:6px 14px 16px}.mh{padding:14px 14px 10px}}
 @media(max-width:820px){.row,.row.pr{grid-template-columns:1fr;gap:6px}.row.hd{display:none}.row button{justify-self:start}}
 </style>
@@ -88,6 +127,7 @@ ul.warn li{background:#2b1d1d;border-left:4px solid var(--red);padding:8px 12px;
  <div class="top">
   <div class="nav">
    <button id="nS" onclick="G('S')">🧭 Comece aqui</button>
+   <button id="nC" onclick="G('C')">💡 Conceitos</button>
    <button id="nD" class="on" onclick="G('D')">📘 Dicionário</button>
    <button id="nP" onclick="G('P')">🧩 Problemas e soluções</button>
    <button id="nG" onclick="G('G')">📖 Glossário</button>
@@ -1291,15 +1331,27 @@ summary(sexo)
 ::s
 quantile(x, probs = c(0.25, 0.5, 0.75), na.rm = FALSE)
 ::p probs | as proporções desejadas (0.9 = percentil 90).
+::p type | método de cálculo (1 a 9). O padrão é 7. Com type = 2 o resultado bate com o método "à mão" dos slides.
 ::e
 quantile(1:10)
 quantile(1:10, probs = 0.9)
+
+# mesmo vetor, método dos slides (type = 2)
+d <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 40)
+quantile(d)
+quantile(d, type = 2)
 ::r
    0%   25%   50%   75%  100%
  1.00  3.25  5.50  7.75 10.00
  90%
  9.1
-::v summary() | median()
+   0%   25%   50%   75%  100%
+ 2.00  4.25  6.50  8.75 40.00
+  0%  25%  50%  75% 100%
+ 2.0  4.0  6.5  9.0 40.0
+::a ATENÇÃO: o padrão do R (type = 7) e o método ensinado na aula (aproximadamente type = 2) podem dar quartis diferentes. Se o seu resultado "não bate" com o slide, use type = 2.
+::a Na aula: se n·p é inteiro, o quartil é a média entre o valor dessa posição e o seguinte; se não, é o valor da posição seguinte (arredondando para cima).
+::v summary() | median() | IQR() e limites dos outliers | boxplot()
 @@ runif(), rnorm() e set.seed()
 ::k base
 ::f Programação · Aula 16 · Aula 13 (R Markdown)
@@ -3751,6 +3803,543 @@ rmarkdown::render("atividade.Rmd", output_format = "html_document")
 ::a Erros comuns no Knit: objeto que só existia no seu Console (crie-o num chunk), arquivo de dados fora da pasta do .Rmd, readline() ou View() no meio do documento.
 ::a Instale uma vez: install.packages("rmarkdown").
 ::v YAML (cabeçalho do .Rmd)
+
+@G Estatística: tabelas de frequência | #4cc9f0 | Como resumir uma variável em tabelas: contar, calcular percentuais, agrupar números em faixas (classes) e montar tabelas cruzadas. Material: Estatística Descritiva, Aulas 3, 4, 11 e 12 (base de nascidos vivos SINASC).
+@@ Número de classes e amplitude (h)
+::k base
+::f Estatística Descritiva · Aulas 3 e 4
+::o Receita para decidir em quantas faixas (classes) dividir uma variável numérica e qual o tamanho (h) de cada faixa.
+::q Imagine agrupar salários em faixas. Se fizer faixas demais, a tabela fica enorme; se fizer de menos, esconde tudo. O critério da raiz diz: número de classes (k) ≈ raiz quadrada do número de observações (n). Depois, o tamanho de cada faixa é a amplitude total dividida por k.
+::s
+n <- length(x)                 # quantas observações
+k <- ceiling(sqrt(n))          # número de classes (critério da raiz)
+h <- (max(x) - min(x)) / k     # amplitude (tamanho) de cada classe
+::p length(x) | n = quantidade de valores.
+::p ceiling(sqrt(n)) | raiz quadrada de n, arredondada PARA CIMA (ceiling).
+::p max(x) - min(x) | amplitude total: do menor ao maior valor.
+::p / k | divide a amplitude total pelo número de classes. Se der quebrado, arredonde para cima para as faixas cobrirem todos os dados.
+::e
+salarios <- c(1200, 1500, 1800, 2100, 2500, 3000, 3200, 4100, 5200, 7900)
+n <- length(salarios)
+n
+k <- ceiling(sqrt(n))
+k
+max(salarios) - min(salarios)
+h <- (max(salarios) - min(salarios)) / k
+h
+::r
+[1] 10
+[1] 4
+[1] 6700
+[1] 1675
+::a Não existe número "certo" de classes: é uma regra prática. Na aula, o fdt() escolhe sozinho, mas você pode impor suas faixas com start, end e h (veja fdt()).
+::a Prefira limites "redondos" (1000, 3000, 5000...) em vez de 1675 quebrado: a tabela fica mais fácil de ler.
+::v fdt() (pacote fdth) | cut() | sqrt(), abs() e exp() | min(), max(), which.min() e which.max()
+@@ cut()
+::k base
+::f Estatística Descritiva · Aula 4
+::o Transforma uma variável numérica em faixas (categorias), como "0 a 18 anos", "19 a 40 anos".
+::q É a tesoura do R: você diz onde cortar (breaks) e ele cola em cada número a etiqueta da faixa a que pertence. Depois, table() conta quantos caíram em cada faixa.
+::s
+cut(x, breaks = c(...), labels = c(...), right = TRUE, include.lowest = FALSE)
+::p x | vetor numérico (ou coluna: df$idade).
+::p breaks | os pontos de corte, em ordem crescente. Com 5 pontos você cria 4 faixas.
+::p labels | nomes das faixas (opcional). Sem isso, o R usa "(0,18]", "(18,40]"...
+::p right = TRUE | faixas FECHADAS À DIREITA: (0,18] inclui o 18, mas não o 0. Use right = FALSE para [0,18): inclui o 0 e não inclui o 18.
+::p include.lowest = TRUE | inclui o menor valor também na primeira faixa.
+::e
+idade <- c(5, 12, 17, 23, 34, 41, 58, 66)
+faixas <- cut(idade, breaks = c(0, 18, 40, 60, 100))
+faixas
+table(faixas)
+
+# onde o 18 e o 40 caem em cada tipo de faixa?
+cut(c(18, 40), breaks = c(0, 18, 40, 60))
+cut(c(18, 40), breaks = c(0, 18, 40, 60), right = FALSE)
+::r
+[1] (0,18]   (0,18]   (0,18]   (18,40]  (18,40]  (40,60]  (40,60]  (60,100]
+Levels: (0,18] (18,40] (40,60] (60,100]
+faixas
+  (0,18]  (18,40]  (40,60] (60,100]
+       3        2        2        1
+[1] (0,18]  (18,40]
+Levels: (0,18] (18,40] (40,60]
+[1] [18,40) [40,60)
+Levels: [0,18) [18,40) [40,60)
+::a Valor fora dos cortes vira NA. Se a variável tem zero e o primeiro corte é 0, o zero fica de fora com right = TRUE! Na aula, para o número de consultas pré-natal usou-se breaks = c(-0.01, 0, 3, 6, 98, 99) para o 0 ter a sua própria faixa.
+::a Colchete [ ou ] = o número ENTRA na faixa. Parêntese ( ou ) = NÃO entra.
+::a O resultado é um fator (veja factor()). Com labels = c(...) o número de nomes tem que ser igual ao número de faixas (um a menos que os cortes).
+::v table() | prop.table() | factor() | fdt() (pacote fdth)
+@@ fdt() (pacote fdth)
+::k fdth
+::f Estatística Descritiva · Aula 4
+::o Monta, de uma vez, a tabela de frequências de uma variável numérica: classes, frequência absoluta (f), relativa (rf), percentual (rf%) e acumuladas (cf).
+::q É um "faça tudo": em vez de usar cut() + table() + prop.table() + cumsum(), o fdt() entrega a tabela completa. Sem argumentos ele escolhe as classes sozinho (às vezes com limites quebrados); com start, end e h você manda.
+::s
+library(fdth)
+fdt(x, na.rm = TRUE)
+fdt(x, start = inicio, end = fim, h = amplitude)
+::p x | o vetor numérico (df$coluna).
+::p na.rm = TRUE | ignora os NA.
+::p start | início da primeira classe.
+::p end | fim da última classe.
+::p h | amplitude (tamanho) de cada classe.
+::e
+library(fdth)
+salarios <- c(1200, 1500, 1800, 2100, 2500, 3000, 3200, 4100, 5200, 7900)
+tab <- fdt(salarios, start = 1000, end = 9000, h = 2000)
+tab
+::r
+ Class limits  f   rf rf(%) cf cf(%)
+ [1000,3000)   5 0.50 50.00  5 50.00
+ [3000,5000)   3 0.30 30.00  8 80.00
+ [5000,7000)   1 0.10 10.00  9 90.00
+ [7000,9000)   1 0.10 10.00 10 100.00
+::a As classes do fdt() são fechadas à esquerda: [1000,3000) inclui 1000 e não inclui 3000.
+::a O alinhamento exato das colunas pode variar um pouco no seu Console.
+::a Guarde o resultado (tab <- fdt(...)) para reutilizar em plot(tab, type = "cfp") e fazer ogiva e polígono de frequências.
+::a Antes de usar: install.packages("fdth") (só na primeira vez) e library(fdth).
+::v cut() | Ogiva e polígono de frequências | Número de classes e amplitude (h) | table()
+@@ Tabela de frequências feita à mão
+::k base
+::f Estatística Descritiva · Aula 4
+::o Receita para montar a tabela completa (f, fr, fr%, F, Fr%) de uma variável com table(), prop.table() e cumsum().
+::q Frequência = contagem. Frequência relativa = contagem ÷ total. Frequência acumulada = soma corrida (o "até aqui").
+::s
+f <- table(x)                      # frequência absoluta
+fr <- prop.table(f)                # frequência relativa
+F <- cumsum(f)                     # frequência acumulada
+::p table(x) | conta cada valor.
+::p prop.table() | divide cada contagem pelo total.
+::p cumsum() | soma acumulada: 2, 2+2, 2+2+3...
+::p as.vector() | tira os nomes, para a coluna do data.frame ficar limpa.
+::e
+filhos <- c(0, 1, 1, 2, 2, 2, 3, 3, 4, 0)
+f  <- table(filhos)
+fr <- prop.table(f)
+tab <- data.frame(filhos = names(f),
+                  f      = as.vector(f),
+                  fr     = as.vector(fr),
+                  fr_pct = as.vector(fr) * 100,
+                  F      = as.vector(cumsum(f)),
+                  Fr_pct = as.vector(cumsum(fr)) * 100)
+tab
+::r
+  filhos f  fr fr_pct  F Fr_pct
+1      0 2 0.2     20  2     20
+2      1 2 0.2     20  4     40
+3      2 3 0.3     30  7     70
+4      3 2 0.2     20  9     90
+5      4 1 0.1     10 10    100
+::a A última linha da acumulada (F) tem que ser igual a n, e a de Fr% tem que ser 100. É um bom teste para achar erros.
+::a Variável QUALITATIVA nominal (cor, sexo): a acumulada não faz sentido. Ela é para variáveis ordenáveis (ordinais ou quantitativas).
+::v table() | prop.table() | sum(), mean(), prod() e cumsum() | fdt() (pacote fdth) | data.frame()
+@@ addmargins()
+::k base
+::f Estatística Descritiva · Aulas 11 e 12
+::o Acrescenta os TOTAIS (linha "Sum" e/ou coluna "Sum") a uma tabela feita com table().
+::q Na tabela cruzada, os totais das linhas e das colunas (chamados "marginais") dizem quantos casos há em cada categoria sozinha, ignorando a outra variável.
+::s
+addmargins(tabela)
+addmargins(tabela, margin = 1)
+addmargins(tabela, margin = 2)
+::p tabela | resultado de table(x, y) (ou de prop.table()).
+::p margin = 1 | só a linha de totais (soma para baixo, por coluna).
+::p margin = 2 | só a coluna de totais (soma para o lado, por linha).
+::p sem margin | as duas.
+::e
+sexo <- c("F", "M", "F", "M", "F", "M", "F", "F")
+fuma <- c("sim", "não", "não", "não", "sim", "sim", "sim", "não")
+tab <- table(sexo, fuma)
+tab
+addmargins(tab)
+::r
+    fuma
+sexo não sim
+   F   2   3
+   M   2   1
+     fuma
+sexo  não sim Sum
+  F     2   3   5
+  M     2   1   3
+  Sum   4   4   8
+::a Para percentuais: round(prop.table(tab, 1) * 100, 1) divide pela LINHA; prop.table(tab, 2) divide pela COLUNA; prop.table(tab) divide pelo TOTAL GERAL. Depois, addmargins(..., margin = 2) soma a coluna de totais (100% em cada linha).
+::a O alinhamento dos espaços no seu Console pode ser um pouco diferente do mostrado aqui.
+::v table() | prop.table() | tabyl() e adorn_*() (janitor)
+@@ tabyl() e adorn_*() (janitor)
+::k janitor
+::f Estatística Descritiva · Aulas 11 e 12
+::o Faz tabelas de frequência e tabelas cruzadas já "bonitas", com totais e percentuais, em formato de data.frame.
+::q É a versão turbinada do table() + addmargins() + prop.table(): você encadeia com |> os enfeites que quer: totais (adorn_totals), proporções (adorn_percentages), arredondamento (adorn_rounding) e formato % (adorn_pct_formatting).
+::s
+library(janitor)
+tabyl(dados, var1, var2, show_na = FALSE)
+tabela |> adorn_totals(c("row", "col"))
+tabela |> adorn_percentages("all")
+tabela |> adorn_pct_formatting(digits = 1)
+::p tabyl(dados, var1, var2) | cruza var1 (linhas) com var2 (colunas). Só com var1 faz tabela de uma variável.
+::p show_na = FALSE | não mostra a categoria NA.
+::p adorn_totals("row") / ("col") / c("row", "col") | totais na linha, na coluna ou nas duas.
+::p adorn_percentages("all" / "row" / "col") | proporções em relação ao total geral, ao total de cada linha ou de cada coluna.
+::p adorn_rounding(digits = 3) | arredonda as proporções.
+::p adorn_pct_formatting(digits = 1) | transforma em texto com % (25.0%).
+::e
+library(janitor)
+dados <- data.frame(
+  sexo = c("F", "M", "F", "M", "F", "M", "F", "F"),
+  fuma = c("sim", "não", "não", "não", "sim", "sim", "sim", "não"))
+tabyl(dados, sexo, fuma) |>
+  adorn_totals(c("row", "col"))
+tabyl(dados, sexo, fuma) |>
+  adorn_percentages("all") |>
+  adorn_rounding(digits = 3) |>
+  adorn_totals(c("row", "col"))
+::r
+  sexo não sim Total
+     F   2   3     5
+     M   2   1     3
+ Total   4   4     8
+  sexo  não   sim Total
+     F 0.25 0.375 0.625
+     M 0.25 0.125 0.375
+ Total 0.50 0.500 1.000
+::a A ORDEM importa: percentuais "all" primeiro e totais depois dá a soma 1,0 (100%). Totais antes de percentuais pode contar o total duas vezes, dependendo do argumento.
+::a O resultado é um data.frame: dá para exportar direto com write.xlsx().
+::a Antes de usar: install.packages("janitor") (só na primeira vez).
+::v addmargins() | table() | write.xlsx() (pacote openxlsx) | prop.table()
+@@ write.xlsx() (pacote openxlsx)
+::k openxlsx
+::f Estatística Descritiva · Aula 11
+::o Salva um data.frame (ou tabela) em um arquivo Excel .xlsx.
+::q Parecido com write_xlsx() (pacote writexl) que você já viu: muda o pacote, e o write.xlsx() é o usado nas aulas de estatística para exportar tabelas prontas.
+::s
+library(openxlsx)
+write.xlsx(tabela, "nome_do_arquivo.xlsx")
+::p tabela | data.frame, tabyl ou resultado de tabela já convertido em data.frame.
+::p "nome_do_arquivo.xlsx" | nome (e caminho) do arquivo a criar.
+::e
+library(openxlsx)
+tab <- data.frame(sexo = c("F", "M"), n = c(5, 3))
+write.xlsx(tab, "Tabela_sexo.xlsx")
+::r
+(nada aparece no Console; o arquivo Tabela_sexo.xlsx surge na pasta de trabalho, veja getwd())
+::a Sem o caminho completo, o arquivo vai para a pasta de trabalho atual (getwd()).
+::a Se o Excel estiver com o arquivo aberto, o R não consegue sobrescrevê-lo: feche-o antes.
+::v write_xlsx() | getwd() e setwd() | tabyl() e adorn_*() (janitor)
+
+@G Estatística: medidas resumo | #f72585 | Média, mediana, moda, variância, desvio padrão, quartis e outliers: os números que "resumem" uma variável. Material: Estatística Descritiva, Aulas 7, 8 e 9.
+@@ mfv() (moda)
+::k modeest
+::f Estatística Descritiva · Aula 8
+::o Devolve a MODA: o valor que mais se repete (most frequent value).
+::q É o "campeão de audiência". Em dados qualitativos (estado civil, sexo) é a única medida de posição que faz sentido. Pode haver mais de uma moda (bimodal).
+::s
+library(modeest)
+mfv(x, na_rm = TRUE)
+::p x | vetor numérico OU de texto.
+::p na_rm = TRUE | ignora os NA (repare: com underline, ao contrário de na.rm).
+::e
+library(modeest)
+mfv(c(2, 3, 3, 3, 5, 5, 7))
+mfv(c(1, 1, 2, 2, 3))
+mfv(c("A", "B", "B", "C"))
+::r
+[1] 3
+[1] 1 2
+[1] "B"
+::a Se vários valores empatam, devolve TODOS (no segundo exemplo, 1 e 2).
+::a O R base não tem função de moda (mode() é outra coisa: tipo do objeto). Por isso o pacote modeest.
+::v median() | sum(), mean(), prod() e cumsum() | table()
+@@ var() e sd()
+::k base
+::f Estatística Descritiva · Aula 8
+::o var() calcula a variância e sd() o desvio padrão: medidas de quanto os dados se espalham em torno da média.
+::q Desvio padrão = "distância típica" entre cada valor e a média, na mesma unidade dos dados. A variância é esse número ao quadrado (por isso o desvio padrão é mais fácil de interpretar).
+::s
+var(x, na.rm = FALSE)
+sd(x, na.rm = FALSE)
+::p x | vetor numérico.
+::p na.rm = TRUE | ignora os NA. Sem isso, um único NA faz o resultado ser NA.
+::p x - mean(x) | desvio de cada valor em relação à média.
+::p sum((x - mean(x))^2) | soma dos desvios ao quadrado: 9 + 0 + 1 + 1 + 9 = 20.
+::p var(x) | 20 ÷ (n − 1) = 20 ÷ 4 = 5.
+::p sd(x) | raiz quadrada da variância: √5 = 2,236068.
+::e
+x <- c(3, 6, 5, 7, 9)
+mean(x)
+x - mean(x)
+sum((x - mean(x))^2)
+var(x)
+sd(x)
+sqrt(var(x))
+::r
+[1] 6
+[1] -3  0 -1  1  3
+[1] 20
+[1] 5
+[1] 2.236068
+[1] 2.236068
+::a O R divide por n − 1 (variância AMOSTRAL), como na aula. Dividir por n daria a variância populacional (4 neste exemplo).
+::a Desvio padrão pequeno: valores colados na média. Grande: espalhados.
+::v Coeficiente de variação (CV) | sqrt(), abs() e exp() | sum(), mean(), prod() e cumsum()
+@@ Coeficiente de variação (CV)
+::k base
+::f Estatística Descritiva · Aula 8
+::o Receita para calcular o CV: o desvio padrão como percentual da média. Serve para comparar a dispersão de variáveis em unidades diferentes.
+::q Um desvio padrão de 5 é grande para quem tem média 10, e minúsculo para quem tem média 1000. O CV (desvio ÷ média) tira a unidade e permite comparar "peso em gramas" com "idade em anos".
+::s
+CV <- sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE) * 100
+::e
+x <- c(3, 6, 5, 7, 9)
+CV <- sd(x) / mean(x) * 100
+CV
+::r
+[1] 37.2678
+::a Regra prática comum: CV abaixo de ~15% = dados pouco dispersos; entre 15% e 30% = média dispersão; acima de ~30% = alta dispersão. Os limites variam por área.
+::a Só faz sentido com variáveis de valores positivos e com zero verdadeiro (peso, salário, idade). Não use em temperatura em °C.
+::v var() e sd() | sum(), mean(), prod() e cumsum()
+@@ diff() (amplitude total)
+::k base
+::f Estatística Descritiva · Aula 8
+::o diff() calcula a diferença entre valores vizinhos. Aplicada a range(), dá a AMPLITUDE TOTAL (maior − menor).
+::s
+diff(x)
+diff(range(x))
+::p range(x) | devolve c(mínimo, máximo).
+::p diff() | subtrai o primeiro do segundo: máximo − mínimo.
+::e
+x <- c(3, 6, 5, 7, 9)
+range(x)
+diff(range(x))
+max(x) - min(x)
+diff(c(1, 4, 9))
+::r
+[1] 3 9
+[1] 6
+[1] 6
+[1] 3 5
+::a Sozinha, diff(x) devolve a diferença entre cada valor e o anterior: (4−1) e (9−4).
+::v range() | min(), max(), which.min() e which.max()
+@@ IQR() e limites dos outliers
+::k base
+::f Estatística Descritiva · Aula 9
+::o Calcula a distância interquartílica (DI = Q3 − Q1) e, com ela, os limites para identificar outliers (valores muito fora do padrão).
+::q A "caixa" do box-plot guarda os 50% do meio dos dados: o tamanho dela é a DI. Valores além de 1,5 caixas para fora são suspeitos (outliers).
+::s
+IQR(x, type = 2)
+limite_inf <- Q1 - 1.5 * DI
+limite_sup <- Q3 + 1.5 * DI
+::p IQR(x, type = 2) | Q3 − Q1 pelo método (type = 2) que reproduz a conta à mão das aulas.
+::p Q1 − 1,5 · DI | abaixo disso é outlier inferior.
+::p Q3 + 1,5 · DI | acima disso é outlier superior.
+::e
+d <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 40)
+q <- unname(quantile(d, probs = c(0.25, 0.75), type = 2))
+q
+di <- q[2] - q[1]
+di
+limites <- c(q[1] - 1.5 * di, q[2] + 1.5 * di)
+limites
+d[d < limites[1] | d > limites[2]]
+IQR(d, type = 2)
+::r
+[1] 4 9
+[1] 5
+[1] -3.5 16.5
+[1] 40
+[1] 5
+::a O padrão do R (type = 7) calcula quartis de outro jeito e pode dar valores um pouco diferentes dos slides. Aqui, type = 2 reproduz a conta à mão (veja quantile()).
+::a Outlier não é necessariamente erro: pode ser um valor real extremo. Investigue antes de apagar.
+::v quantile() | boxplot() | summary()
+@@ tapply()
+::k base
+::f Estatística Descritiva · Aula 12
+::o Aplica uma função (mean, sd, length, summary...) a uma variável NUMÉRICA, separadamente para cada categoria de outra variável.
+::q "Qual o peso médio dos bebês por sexo?" Divide em grupos (F, M) e calcula a média de cada um. É a base da análise bidimensional qualitativa × quantitativa.
+::s
+tapply(variavel_numerica, variavel_categorica, funcao)
+::p variavel_numerica | o que será calculado (df$peso).
+::p variavel_categorica | como separar os grupos (df$sexo).
+::p funcao | mean, sd, var, median, length, summary...
+::e
+dados <- data.frame(sexo = c("F", "M", "F", "M", "F", "M"),
+                    peso = c(3.1, 3.4, 2.9, 3.6, 3.3, 3.2))
+tapply(dados$peso, dados$sexo, mean)
+tapply(dados$peso, dados$sexo, length)
+::r
+  F   M
+3.1 3.4
+F M
+3 3
+::a length dá o n de cada grupo, útil para saber se os grupos têm tamanhos parecidos.
+::a Com summary dá um resumo completo por grupo (retorna uma lista).
+::v apply() | summary() | group_by() e summarise() | boxplot()
+@@ cor()
+::k base
+::f Extra (além do curso) · relaciona-se com a Aula 10
+::o Calcula o coeficiente de correlação (de Pearson) entre duas variáveis numéricas: um número de −1 a +1 que mede a força da relação linear.
+::q +1: quando uma sobe, a outra sobe sempre, em linha reta. −1: quando uma sobe, a outra desce. 0: nenhuma relação em linha reta.
+::s
+cor(x, y, use = "complete.obs")
+::p x, y | dois vetores numéricos do mesmo tamanho.
+::p use = "complete.obs" | ignora as linhas com NA em qualquer uma das duas.
+::e
+x <- c(1, 2, 3, 4, 5)
+y <- c(2, 4, 5, 4, 5)
+cor(x, y)
+cor(x, 2 * x)
+cor(x, rev(x))
+::r
+[1] 0.7745967
+[1] 1
+[1] -1
+::a Correlação NÃO é causalidade: duas coisas podem andar juntas sem uma causar a outra.
+::a Só enxerga relação em LINHA RETA: uma relação em "U" pode dar correlação perto de 0. Sempre olhe o gráfico de dispersão (plot(x, y)) junto.
+::a Este assunto não aparece nos slides da disciplina: é um complemento (a Aula 10 apresenta o gráfico de dispersão, que é o "irmão visual" da correlação).
+::v Gráficos de dispersão (plot) | var() e sd()
+
+@G Estatística: gráficos | #fca311 | Gráficos para variáveis numéricas e para cruzar variáveis: histograma, dispersão, ogiva, polígono, box-plot, além de cores e como salvar a imagem. Material: Estatística Descritiva, Aulas 5, 6, 9, 11 e 12.
+@@ hist(): densidade, classes e quebras
+::k base
+::f Estatística Descritiva · Aula 6
+::o Versão "de estatística" do histograma: altura em DENSIDADE (freq = FALSE) e com você escolhendo o número de classes ou os cortes.
+::q Em um histograma de densidade, a ÁREA de cada barra é a proporção de dados naquela faixa (e a área total é 1). Por isso a altura não é uma contagem.
+::s
+hist(x, freq = FALSE, main = "", xlab = "", ylab = "", col = "")
+hist(x, nclass = 6)
+hist(x, breaks = seq(0, 7000, 1000), right = FALSE)
+::p freq = FALSE | eixo y em densidade (em vez de contagem).
+::p nclass = 6 | número aproximado de classes.
+::p breaks = seq(0, 7000, 1000) | os cortes exatos: de 0 a 7000, de 1000 em 1000.
+::p right = FALSE | classes fechadas à esquerda: [0,1000), [1000,2000)...
+::p col | cor das barras (nome, número ou hexadecimal).
+::e
+set.seed(1)
+peso <- rnorm(500, mean = 3200, sd = 450)
+hist(peso, freq = FALSE,
+     breaks = seq(1000, 5000, 500), right = FALSE,
+     main = "Peso ao nascer", xlab = "Peso (g)",
+     ylab = "Densidade", col = "lightblue")
+::r
+(histograma em forma de sino, com o eixo vertical em densidade)
+::a Sem freq = FALSE e com classes de larguras iguais, o formato é o mesmo; a diferença é só a escala do eixo y. Com classes de larguras DIFERENTES, só a densidade é correta.
+::v hist() | rnorm() | seq() e :
+@@ boxplot()
+::k base
+::f Estatística Descritiva · Aulas 9 e 12
+::o Desenha o box-plot (diagrama de caixa), que resume uma variável em cinco números e mostra os outliers como pontinhos.
+::q A caixa vai de Q1 a Q3 (50% dos dados do meio); o traço dentro é a mediana; os "bigodes" vão até os valores normais mais extremos; pontinhos fora são outliers.
+::s
+boxplot(x, horizontal = FALSE, main = "", col = "")
+boxplot(numerica ~ categorica, data = dados)
+::p x | vetor numérico.
+::p horizontal = TRUE | deita o gráfico.
+::p numerica ~ categorica | box-plot COMPARATIVO: uma caixa para cada categoria (ex.: peso ~ sexo).
+::p col | cores das caixas, em ordem (col = c(6, 4)).
+::e
+d <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 40)
+boxplot(d, main = "Com um outlier", col = "lightblue")
+b <- boxplot(d, plot = FALSE)
+b$out
+dados <- data.frame(sexo = c("F", "M", "F", "M", "F", "M"),
+                    peso = c(3.1, 3.4, 2.9, 3.6, 3.3, 3.2))
+boxplot(peso ~ sexo, data = dados, col = c(6, 4))
+::r
+[1] 40
+(dois gráficos: o primeiro com um ponto isolado lá em cima; o segundo com duas caixas, F e M)
+::a Para tirar códigos de "valor ignorado" (como 99 no SINASC) antes de desenhar: boxplot(dados$IDADEMAE[dados$IDADEMAE < 99]).
+::a O R calcula os quartis do box-plot pelo seu próprio método (dobradiças de Tukey); em amostras pequenas pode diferir um pouco de quantile().
+::v quantile() | IQR() e limites dos outliers | tapply() | hist()
+@@ Gráficos de dispersão (plot)
+::k base
+::f Estatística Descritiva · Aulas 6 e 12
+::o Usa plot() de dois jeitos: (1) dispersão unidimensional, com uma variável quantitativa discreta; (2) dispersão entre duas variáveis quantitativas.
+::q (1) Mostra, para cada valor possível (Apgar 0 a 10), uma haste ou ponto na altura da frequência. (2) Cada observação vira um ponto (x, y): a nuvem de pontos revela se uma variável cresce, cai ou nada tem a ver com a outra.
+::s
+plot(table(x))                       # dispersão unidimensional (segmentos)
+plot(valores, frequencias, pch = 19) # só os pontos
+plot(x, y, main = "", xlab = "", ylab = "")   # duas variáveis
+::p plot(table(x)) | hastes na altura de cada frequência.
+::p pch = 19 | pontos cheios.
+::p plot(x, y) | x no eixo horizontal, y no vertical; os dois vetores com o mesmo tamanho.
+::e
+apgar <- c(7, 8, 8, 9, 9, 9, 10, 10, 10, 10)
+plot(table(apgar), xlab = "Apgar", ylab = "Frequência")
+x <- c(1, 2, 3, 4, 5)
+y <- c(2, 4, 5, 4, 5)
+plot(x, y, pch = 19, xlab = "x", ylab = "y")
+::r
+(dois gráficos: hastes verticais nos valores 7 a 10 e uma nuvem de 5 pontos subindo da esquerda para a direita)
+::a Com milhões de pontos o gráfico fica um borrão e pesado. Na aula, usou-se uma amostra.
+::a Para ver só a força da relação em um número, use cor().
+::v plot() | cor() | table() | boxplot()
+@@ Ogiva e polígono de frequências
+::k fdth
+::f Estatística Descritiva · Aula 6
+::o Gráficos de linha feitos a partir de uma tabela fdt(): a ogiva (frequência ACUMULADA) e o polígono de frequências.
+::q Ogiva: uma linha que só sobe, mostrando "quantos dados há até aqui". Polígono: liga os pontos médios do topo de cada barra do histograma.
+::s
+tab <- fdt(x, start = , end = , h = )
+plot(tab, type = "cfp")     # ogiva (acumulada)
+plot(tab, type = "cfpp")    # ogiva em porcentagem
+plot(tab, type = "fp")      # polígono de frequências
+::p type = "cfp" | cumulative frequency polygon: ogiva de frequência acumulada.
+::p type = "cfpp" | ogiva de porcentagem acumulada (0 a 100).
+::p type = "fp" | polígono de frequências (absolutas).
+::p type = "rfp" | polígono de frequências relativas.
+::e
+library(fdth)
+salarios <- c(1200, 1500, 1800, 2100, 2500, 3000, 3200, 4100, 5200, 7900)
+tab <- fdt(salarios, start = 1000, end = 9000, h = 2000)
+plot(tab, type = "cfp", main = "Ogiva", xlab = "Salário", ylab = "Frequência acumulada", col = 4, lwd = 2)
+plot(tab, type = "fp", main = "Polígono de frequências", col = 4, lwd = 2)
+::r
+(a ogiva é uma linha que sobe de 0 a 10; o polígono é uma linha que sobe e desce)
+::a Nos tipos "cfp" e "cfpp" use ylim = c(0, 100) se quiser que o eixo termine nos 100%.
+::v fdt() (pacote fdth) | hist(): densidade, classes e quebras | plot()
+@@ brewer.pal() (pacote RColorBrewer)
+::k RColorBrewer
+::f Estatística Descritiva · Aula 6
+::o Devolve paletas de cores prontas (combinações bonitas) para usar em gráficos.
+::q Em vez de escolher cores uma a uma (col = c("red", "blue")), você pede "me dê 3 cores da paleta Paired".
+::s
+library(RColorBrewer)
+brewer.pal(n, "NomeDaPaleta")
+::p n | quantas cores (cada paleta tem um limite máximo).
+::p "Paired", "Set1", "Blues"... | nome da paleta. display.brewer.all() mostra todas.
+::e
+library(RColorBrewer)
+cores <- brewer.pal(3, "Paired")
+cores
+barplot(c(10, 20, 15), names.arg = c("A", "B", "C"), col = cores)
+::r
+[1] "#A6CEE3" "#1F78B4" "#B2DF8A"
+(gráfico de três barras, cada uma de uma cor)
+::a Cores em hexadecimal ("#A6CEE3") são aceitas em qualquer argumento col.
+::a Além disso, col aceita números (col = 4 é azul, 2 é vermelho) e nomes (col = "darkblue"); colors() lista os nomes.
+::v barplot() | pie()
+@@ png() e dev.off()
+::k grDevices
+::f Estatística Descritiva · Aula 6
+::o png() abre um "arquivo de imagem"; os gráficos seguintes são desenhados nele; dev.off() fecha e grava o arquivo.
+::q É como pedir ao R para imprimir o gráfico em vez de mostrá-lo na tela. Abre o papel, desenha, fecha o papel.
+::s
+png("nome.png", width = 800, height = 600)
+(comandos do gráfico)
+dev.off()
+::p "nome.png" | nome (e pasta) do arquivo.
+::p width / height | largura e altura em pixels.
+::p dev.off() | OBRIGATÓRIO: fecha o arquivo; sem ele a imagem não é gravada direito.
+::e
+png("meu_grafico.png", width = 800, height = 600)
+hist(c(1, 2, 2, 3, 3, 3, 4, 4, 5), col = "orange")
+dev.off()
+::r
+null device
+          1
+::a Ao rodar dentro do RStudio, pode aparecer "RStudioGD 2" em vez de "null device 1": é normal.
+::a Também existem jpeg(), pdf() e svg(), com o mesmo esquema.
+::v hist() | barplot() | getwd() e setwd()
 </script>
 <script type="text/plain" id="d-qcmd">@G Conceitos do modelo relacional | #c792ea | Antes dos comandos: como um banco relacional organiza os dados. Os exemplos do curso usam o banco hospital_curso.sqlite, com as tabelas MEDICO, PACIENTE e INTERNACAO.
 @@ Tabela, linha e coluna
@@ -5661,6 +6250,246 @@ analise <- internacoes |>
   left_join(dados_lab, by = "id_paciente")
 nrow(internacoes) == nrow(analise)                   # o join não multiplicou linhas?
 dbDisconnect(con)
+
+@G Estatística descritiva (Aulas 3 a 12) | #4cc9f0 | Exercícios no estilo das aulas de Estatística Descritiva, com conjuntos de dados pequenos para você conferir a conta à mão. Os dados reais das aulas (SINASC 2025) têm milhões de linhas e não cabem aqui.
+@@ (Aula 4) Faça a tabela de frequências de uma variável qualitativa: contagem, percentual e ordem decrescente.
+::f Estatística Descritiva · Aula 4
+::c table(), prop.table(), sort() e order(), round(), ceiling() e floor()
+::o Variável qualitativa (categorias): conte com table(), transforme em proporção com prop.table(), multiplique por 100 e arredonde. Para ordenar do mais frequente ao menos frequente, use sort(decreasing = TRUE).
+::p table(escolaridade) | conta quantas vezes cada categoria aparece.
+::p prop.table(f) * 100 | cada contagem ÷ total (10), em porcentagem.
+::p sort(f, decreasing = TRUE) | ordena do maior para o menor.
+::e
+escolaridade <- c("Médio", "Superior", "Médio", "Fundamental", "Médio",
+                  "Superior", "Médio", "Fundamental", "Médio", "Superior")
+f <- table(escolaridade)
+f
+round(prop.table(f) * 100, 1)
+sort(f, decreasing = TRUE)
+::r
+escolaridade
+Fundamental       Médio    Superior
+          2           5           3
+escolaridade
+Fundamental       Médio    Superior
+       20.0        50.0        30.0
+escolaridade
+      Médio    Superior Fundamental
+          5           3           2
+::a Para um gráfico de barras ordenado: barplot(sort(f, decreasing = TRUE)).
+@@ (Aula 4) Agrupe idades em faixas etárias com nomes e conte quantas pessoas há em cada faixa.
+::f Estatística Descritiva · Aula 4
+::c cut(), table(), prop.table()
+::o Idade é numérica; para agrupá-la, use cut() com os pontos de corte e labels com os nomes das faixas. Depois table().
+::p breaks | 5 cortes = 4 faixas, fechadas à direita: (0,18], (18,40]...
+::p labels | 4 nomes, na mesma ordem das faixas.
+::e
+idade <- c(5, 12, 17, 23, 34, 41, 58, 66)
+faixa <- cut(idade, breaks = c(0, 18, 40, 60, 100),
+             labels = c("até 18", "19 a 40", "41 a 60", "mais de 60"))
+table(faixa)
+::r
+faixa
+    até 18    19 a 40    41 a 60 mais de 60
+         3          2          2          1
+::a Se esquecer um valor fora dos cortes (idade 105, por exemplo), ele vira NA e some da tabela.
+@@ (Aula 4) Construa a tabela de frequências com classes de salários (critério da raiz) e confira com o fdt().
+::f Estatística Descritiva · Aula 4
+::c length(), sqrt(), ceiling(), cut(), table(), fdt()
+::o Passo 1: n = 10, k = ceiling(sqrt(10)) = 4 classes. Passo 2: amplitude total 6700 ÷ 4 ≈ 1675. Passo 3: escolha limites redondos de 2000 em 2000 (1000 a 9000) e conte com cut(..., right = FALSE) (classes [a, b)). Passo 4: confira com fdt().
+::p seq(1000, 9000, 2000) | gera 1000, 3000, 5000, 7000, 9000 (4 classes).
+::p right = FALSE | o limite inferior ENTRA na classe e o superior não: 3000 fica em [3000,5000).
+::e
+salarios <- c(1200, 1500, 1800, 2100, 2500, 3000, 3200, 4100, 5200, 7900)
+k <- ceiling(sqrt(length(salarios)))
+k
+classes <- cut(salarios, breaks = seq(1000, 9000, 2000), right = FALSE)
+table(classes)
+
+library(fdth)
+fdt(salarios, start = 1000, end = 9000, h = 2000)
+::r
+[1] 4
+classes
+[1000,3000) [3000,5000) [5000,7000) [7000,9000)
+          5           3           1           1
+(e a tabela do fdt(), com as colunas f, rf, rf(%), cf e cf(%))
+::a Confira à mão: 5 + 3 + 1 + 1 = 10 = n.
+@@ (Aula 8) Calcule média, mediana, moda, amplitude, variância, desvio padrão e CV de um conjunto de dados.
+::f Estatística Descritiva · Aula 8
+::c mean(), median(), mfv(), diff(), range(), var(), sd(), table()
+::o Cada medida tem sua função. A moda vem do pacote modeest (mfv). Amplitude = diff(range(x)). O CV é sd/média × 100.
+::p mean(x) | (2+4+4+4+5+5+7+9) ÷ 8 = 40 ÷ 8 = 5.
+::p median(x) | com 8 valores, é a média do 4º e do 5º ordenados: (4 + 5) ÷ 2 = 4,5.
+::p mfv(x) | o 4 aparece 3 vezes: a moda.
+::p var(x) | soma dos quadrados dos desvios = 32; 32 ÷ (8 − 1) = 4,571429.
+::p CV | 2,13809 ÷ 5 × 100 = 42,76%: dispersão alta.
+::e
+x <- c(2, 4, 4, 4, 5, 5, 7, 9)
+mean(x)
+median(x)
+library(modeest)
+mfv(x)
+diff(range(x))
+var(x)
+sd(x)
+sd(x) / mean(x) * 100
+::r
+[1] 5
+[1] 4.5
+[1] 4
+[1] 7
+[1] 4.571429
+[1] 2.13809
+[1] 42.7618
+::a Média 5, mediana 4,5 e moda 4: média > mediana > moda indica assimetria à direita (cauda para valores altos).
+@@ (Aula 8) Mostre o efeito de um outlier na média, na mediana e no desvio padrão.
+::f Estatística Descritiva · Aula 8
+::c mean(), median(), sd(), which.max()
+::o Calcule as medidas com e sem o valor extremo e compare: quais mudam muito e quais quase não mudam?
+::p mean | foi de 9,4 para 6: mudou 3,4 por causa de um único valor.
+::p median | foi de 6,5 para 6: quase não mudou (medida resistente).
+::p sd | caiu de 11,06 para 2,74: o outlier estica muito o desvio padrão.
+::e
+d <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 40)
+mean(d)
+median(d)
+sd(d)
+sem <- d[d < 40]
+mean(sem)
+median(sem)
+sd(sem)
+::r
+[1] 9.4
+[1] 6.5
+[1] 11.05743
+[1] 6
+[1] 6
+[1] 2.738613
+::a Por isso, com outliers, prefira mediana e distância interquartílica à média e ao desvio padrão.
+@@ (Aula 9) Calcule os quartis, a DI e os limites; identifique os outliers e faça o box-plot.
+::f Estatística Descritiva · Aula 9
+::c quantile(), IQR(), boxplot()
+::o Use quantile(..., type = 2) para bater com o método dos slides. DI = Q3 − Q1. Limites: Q1 − 1,5·DI e Q3 + 1,5·DI.
+::e
+d <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 40)
+q <- quantile(d, probs = c(0.25, 0.5, 0.75), type = 2)
+q
+di <- IQR(d, type = 2)
+di
+c(q[1] - 1.5 * di, q[3] + 1.5 * di)
+d[d < q[1] - 1.5 * di | d > q[3] + 1.5 * di]
+boxplot(d, horizontal = TRUE, col = "lightblue", main = "Box-plot com outlier")
+::r
+25% 50% 75%
+4.0 6.5 9.0
+[1] 5
+ 25%  75%
+-3.5 16.5
+[1] 40
+(box-plot deitado, com um ponto isolado à direita, no 40)
+::a Os nomes "25%" e "75%" no resultado do c(...) aparecem porque os números vieram de q (que tem nomes). Use unname() para tirá-los.
+@@ (Aula 12) Calcule a média, o desvio padrão e o n do peso por sexo e compare com box-plot.
+::f Estatística Descritiva · Aula 12
+::c tapply(), mean(), sd(), length(), boxplot()
+::o Variável quantitativa (peso) × qualitativa (sexo): calcule as medidas por grupo com tapply() e desenhe um box-plot comparativo.
+::p tapply(peso, sexo, mean) | média dentro de cada grupo.
+::p peso ~ sexo | lê-se "peso em função do sexo": uma caixa por categoria.
+::e
+dados <- data.frame(sexo = c("F", "M", "F", "M", "F", "M"),
+                    peso = c(3.1, 3.4, 2.9, 3.6, 3.3, 3.2))
+tapply(dados$peso, dados$sexo, mean)
+tapply(dados$peso, dados$sexo, sd)
+tapply(dados$peso, dados$sexo, length)
+boxplot(peso ~ sexo, data = dados, col = c(6, 4),
+        main = "Peso por sexo", xlab = "Sexo", ylab = "Peso (kg)")
+::r
+  F   M
+3.1 3.4
+  F   M
+0.2 0.2
+F M
+3 3
+(gráfico com duas caixas: M um pouco mais alta que F)
+@@ (Aula 11) Monte a tabela cruzada sexo × fuma, com totais e com percentuais por linha.
+::f Estatística Descritiva · Aulas 11 e 12
+::c table(), addmargins(), prop.table(), round()
+::o table(x, y) cruza as duas variáveis. addmargins() soma totais. prop.table(tab, 1) calcula percentuais por LINHA (cada linha soma 100%).
+::p prop.table(tab, 1) | 1 = divide pelo total de cada linha. Com 2, divide pelo total de cada coluna; sem número, pelo total geral.
+::p F: 3 de 5 fumam | 60%. M: 1 de 3 | 33,3%.
+::e
+sexo <- c("F", "M", "F", "M", "F", "M", "F", "F")
+fuma <- c("sim", "não", "não", "não", "sim", "sim", "sim", "não")
+tab <- table(sexo, fuma)
+addmargins(tab)
+round(prop.table(tab, 1) * 100, 1)
+::r
+     fuma
+sexo  não sim Sum
+  F     2   3   5
+  M     2   1   3
+  Sum   4   4   8
+    fuma
+sexo  não  sim
+   F 40.0 60.0
+   M 66.7 33.3
+::a Leia sempre a pergunta: "entre as mulheres, quantas fumam?" é percentual por LINHA; "entre os fumantes, quantos são mulheres?" é por COLUNA.
+::a O alinhamento dos espaços no seu Console pode variar um pouco.
+@@ (Aula 12) Faça o gráfico de dispersão entre duas variáveis e calcule a correlação (extra).
+::f Estatística Descritiva · Aula 12 (correlação é um extra)
+::c plot(), cor()
+::o O gráfico de dispersão mostra a relação; a correlação resume a força dela em um número de −1 a 1.
+::p cor = 0,77 | relação positiva e forte, mas não perfeita (os pontos não estão em linha reta).
+::e
+x <- c(1, 2, 3, 4, 5)
+y <- c(2, 4, 5, 4, 5)
+plot(x, y, pch = 19, main = "Dispersão de y por x", xlab = "x", ylab = "y")
+cor(x, y)
+::r
+(nuvem de 5 pontos, subindo da esquerda para a direita)
+[1] 0.7745967
+::a Correlação não prova causa e só mede relação em linha reta.
+@@ (Aula 4) Transforme códigos numéricos em categorias com nome e trate o código 99 como NA.
+::f Estatística Descritiva · Aula 4
+::c factor(), table(), is.na() e !is.na(), mean()
+::o Bases como o SINASC trazem categorias codificadas (1, 2...) e "ignorado" como 99. Converta com factor(levels, labels) e troque 99 por NA antes de calcular medidas.
+::p levels = c(1, 2) | códigos existentes na base.
+::p labels | nomes, na mesma ordem.
+::p idade[idade == 99] <- NA | substitui o código de "ignorado" por NA.
+::e
+sexo <- c(1, 2, 2, 1, 1)
+sexo_f <- factor(sexo, levels = c(1, 2), labels = c("Masculino", "Feminino"))
+sexo_f
+table(sexo_f)
+
+idade <- c(25, 31, 99, 28, 99)
+idade[idade == 99] <- NA
+mean(idade, na.rm = TRUE)
+::r
+[1] Masculino Feminino  Feminino  Masculino Masculino
+Levels: Masculino Feminino
+sexo_f
+Masculino  Feminino
+        3         2
+[1] 28
+::a Esquecer o 99: a média seria (25+31+99+28+99) ÷ 5 = 56,4, um valor absurdo.
+@@ (Aula 6) Gere a ogiva e o histograma de densidade do mesmo conjunto de dados.
+::f Estatística Descritiva · Aula 6
+::c fdt(), plot(), hist()
+::o O histograma (hist com freq = FALSE) e a ogiva (plot de fdt com type = "cfp") contam a mesma história: um mostra onde os dados se concentram, a outra quanto já foi acumulado.
+::p freq = FALSE | eixo em densidade.
+::p type = "cfp" | cumulative frequency polygon: ogiva.
+::e
+library(fdth)
+salarios <- c(1200, 1500, 1800, 2100, 2500, 3000, 3200, 4100, 5200, 7900)
+hist(salarios, freq = FALSE, breaks = seq(1000, 9000, 2000), right = FALSE,
+     col = "lightblue", main = "Histograma", xlab = "Salário", ylab = "Densidade")
+tab <- fdt(salarios, start = 1000, end = 9000, h = 2000)
+plot(tab, type = "cfp", col = 4, lwd = 2, main = "Ogiva",
+     xlab = "Salário", ylab = "Frequência acumulada")
+::r
+(histograma com a barra mais alta na primeira classe e cauda longa à direita; ogiva subindo de 0 a 10)
+::a Barra mais alta à esquerda e cauda comprida à direita = assimetria positiva (média > mediana).
 </script>
 <script type="text/plain" id="d-qprob">@G Modelo relacional e criação de tabelas | #ff9f43 | Exercícios das Listas de Fixação I e II de Banco de Dados (Aulas 9 e 13).
 @@ Explique a diferença entre PK e FK e identifique-as na tabela CONSULTA (id_consulta, data_consulta, cid10, id_paciente, id_medico).
@@ -6181,10 +7010,645 @@ notas <- c(7, 8.5, 9)
 @@ Mediana, quartis e média
 ::o Média = soma ÷ quantidade (sensível a extremos). Mediana = valor do meio. 1º e 3º quartis = valores abaixo dos quais estão 25% e 75% dos dados.
 </script>
+<script type="text/plain" id="d-conc">@G Fundamentos: dados e tabelas | #4cc9f0 | Os "tijolos" da estatística: de onde vêm os dados, de que tipo eles são e como resumi-los em tabelas. (Estatística Descritiva, Aulas 3 e 4)
+@@ População e amostra
+::f Aula 3 · Introdução à estatística
+::o População é o conjunto de TODOS os elementos que você quer estudar; amostra é uma parte dela, escolhida para estudar. Número que descreve a população = parâmetro; número calculado na amostra = estatística.
+::q Para saber se a sopa está boa você não bebe a panela inteira: prova uma colherada (amostra) e conclui algo sobre a panela (população). Mas a sopa precisa estar bem mexida: a colherada tem que representar a panela.
+::w amostra
+::i Uma boa amostra é representativa: sorteada de forma aleatória, para cada elemento ter chance de entrar. Amostras maiores costumam dar resultados mais próximos do valor verdadeiro.
+::p População | todos os elementos de interesse (todos os nascimentos do Brasil em 2025, por exemplo).
+::p Amostra | subconjunto da população, usado para estudá-la.
+::p Parâmetro (μ, σ) | número que descreve a população inteira. Em geral é desconhecido. Usa letras gregas.
+::p Estatística (x̄, s) | número calculado na amostra. É o que a gente realmente consegue obter. Usa letras latinas.
+::x
+Exemplo: a base SINASC 2025 reúne (praticamente) todos os nascimentos registrados no ano: aqui ela funciona como POPULAÇÃO de nascimentos de 2025. Se você pegasse só 1.000 linhas dela, teria uma AMOSTRA.
+Estatística descritiva = resumir e descrever os dados que você TEM (tabelas, gráficos, médias). Inferência = usar a amostra para tirar conclusões sobre a população (é assunto de outras disciplinas).
+::a Amostra "de conveniência" (só quem está por perto) costuma ser enviesada.
+::a Resultados de duas amostras diferentes quase nunca são iguais: isso é normal (variação amostral).
+::v C:Tipos de variável | C:Média
+@@ Tipos de variável
+::f Aula 3 · Introdução à estatística
+::o O tipo da variável decide quais tabelas, gráficos e medidas fazem sentido. Qualitativa = categorias (nominal ou ordinal). Quantitativa = números (discreta ou contínua).
+::q Antes de cozinhar, veja o ingrediente: não se bate gelatina como se bate um bolo. Antes de calcular, veja o tipo da variável: não se calcula média de "cor dos olhos".
+::w tipos
+::s
+Pergunta 1: faz sentido somar e tirar média?  Sim → quantitativa. Não → qualitativa.
+Pergunta 2 (qualitativa): as categorias têm ordem?  Sim → ordinal. Não → nominal.
+Pergunta 3 (quantitativa): é contagem (inteiros) ou medida?  Contagem → discreta. Medida → contínua.
+::p Qualitativa nominal | categorias sem ordem: sexo, cor dos olhos, estado civil.
+::p Qualitativa ordinal | categorias com ordem natural: escolaridade, grau de satisfação, faixa etária.
+::p Quantitativa discreta | resulta de CONTAR: número de filhos, de consultas, Apgar. Valores inteiros.
+::p Quantitativa contínua | resulta de MEDIR: peso, altura, tempo. Qualquer valor num intervalo.
+::x
+"Número de consultas pré-natal" (0, 1, 2, ... 12): faz sentido média? Sim → quantitativa. Foi contado → discreta.
+"Escolaridade da mãe" (fundamental, médio, superior): média? Não → qualitativa. Tem ordem → ordinal.
+::e
+class(dados$PESO)        # numeric: quantitativa
+class(dados$SEXO)        # factor ou character: qualitativa
+str(dados)               # mostra o tipo de todas as colunas
+::r
+[1] "numeric"
+[1] "factor"
+(str() lista cada coluna com seu tipo)
+::a Códigos numéricos podem enganar: SEXO = 1 ou 2 é QUALITATIVA (o 1 e o 2 são rótulos), mesmo escrita com números. Converta com factor().
+::a Idade em anos inteiros costuma ser tratada como quantitativa mesmo sendo arredondada.
+::v C:Frequências: absoluta, relativa e acumulada | C:Escolha do gráfico | factor() | str()
+@@ Notação de somatório (Σ)
+::f Aula 7 · Medidas descritivas
+::o Σ (sigma maiúsculo) significa "some tudo o que vem depois". Aparece em quase toda fórmula da estatística.
+::q É a instrução "some todos os x, do primeiro ao último". Σx lê-se "soma dos x".
+::w sigma
+::s
+Σx    = x₁ + x₂ + ... + xₙ
+x̄     = Σx ÷ n
+Σx²   = x₁² + x₂² + ... + xₙ²      (eleva cada um ao quadrado e depois soma)
+(Σx)² = (x₁ + ... + xₙ)²           (soma e depois eleva ao quadrado)
+::p Σ | some.
+::p xᵢ | o i-ésimo valor (x₁ é o primeiro, x₂ o segundo...).
+::p n | quantos valores há.
+::p x̄ (x barra) | a média: Σx ÷ n.
+::x
+x = 3, 6, 5, 7, 9
+Σx = 3 + 6 + 5 + 7 + 9 = 30    n = 5    x̄ = 30 ÷ 5 = 6
+Σx² = 9 + 36 + 25 + 49 + 81 = 200     (Σx)² = 30² = 900
+::e
+x <- c(3, 6, 5, 7, 9)
+sum(x)       # Σx
+sum(x^2)     # Σx²
+sum(x)^2     # (Σx)²
+::r
+[1] 30
+[1] 200
+[1] 900
+::a Σx² e (Σx)² NÃO são iguais. Preste atenção em onde está o quadrado.
+::v C:Média | C:Variância e desvio padrão | sum(), mean(), prod() e cumsum()
+@@ Valores ignorados (NA e o código 99)
+::f Aulas 4 e 8 · Rmd
+::o Em bases reais, "não informado" costuma vir como um código (99, 9, 999). O R não sabe disso: você precisa trocar o código por NA antes de calcular.
+::q Se na caixa de "idade" alguém escrever 99 para dizer "não sei", o computador acredita que a pessoa tem 99 anos e estraga a média.
+::w na99
+::s
+1) Descubra o código de "ignorado" no dicionário de dados da base.
+2) Troque por NA:  x[x == 99] <- NA
+3) Calcule com na.rm = TRUE (para o R ignorar os NA).
+::x
+Idades: 25, 31, 99, 28, 22, 99, 34, 27
+Com 99: soma 365 ÷ 8 = 45,6 anos (absurdo).
+Sem os 99: soma 167 ÷ 6 = 27,8 anos.
+::e
+idade <- c(25, 31, 99, 28, 22, 99, 34, 27)
+mean(idade)
+idade[idade == 99] <- NA
+mean(idade, na.rm = TRUE)
+::r
+[1] 45.625
+[1] 27.83333
+::a Alguns "ignorados" fazem parte do intervalo válido (Apgar vai até 10, então 99 é código; mas 99 anos de idade da mãe também seria suspeito). Sempre confira o dicionário de dados.
+::a Sem na.rm = TRUE, um único NA faz mean() devolver NA.
+::v is.na() e !is.na() | sum(), mean(), prod() e cumsum() | C:Média
+@@ Frequências: absoluta, relativa e acumulada
+::f Aulas 3 e 4 · Tabelas
+::o Frequência absoluta (f) = contagem; relativa (fr) = f ÷ n (ou em %); acumulada (F) = soma corrida: "quantos até aqui".
+::q Numa sala de 40 alunos: 10 de óculos (f = 10), um quarto da turma (fr = 0,25 = 25%). Se você conta "quantos têm até 1,60 m", está fazendo a frequência acumulada.
+::w freq
+::s
+f      = contagem
+fr     = f ÷ n
+fr %   = fr × 100
+F      = f₁, f₁+f₂, f₁+f₂+f₃, ...
+Fr %   = F ÷ n × 100      (a última linha é sempre 100%)
+::p f | frequência absoluta: quantas vezes cada valor ou categoria aparece.
+::p fr | frequência relativa: f ÷ n (de 0 a 1).
+::p fr % | frequência relativa percentual: fr × 100.
+::p F | frequência acumulada: soma das f até a linha atual.
+::p Fr % | acumulada em percentual.
+::x
+Nº de filhos de 10 mulheres: 0, 1, 1, 2, 2, 2, 3, 3, 4, 0
+Valor  f   fr    F   Fr%
+0      2   0,2   2   20%
+1      2   0,2   4   40%
+2      3   0,3   7   70%
+3      2   0,2   9   90%
+4      1   0,1  10  100%
+"70% das mulheres têm até 2 filhos" lê-se na linha do 2, coluna Fr%.
+::e
+f <- table(filhos)
+fr <- prop.table(f)
+cumsum(f)
+::r
+ 0  1  2  3  4
+ 2  4  7  9 10
+::a Frequência acumulada só faz sentido se os valores têm ordem (ordinal ou quantitativa).
+::a Confira: soma das f = n; soma das fr = 1; última F = n.
+::v table() | prop.table() | Tabela de frequências feita à mão | C:Classes (intervalos de classe)
+@@ Classes (intervalos de classe)
+::f Aulas 3 e 4 · Tabelas
+::o Para variável quantitativa contínua (ou com muitos valores), agrupa-se em faixas chamadas classes e conta-se quantos valores caem em cada uma.
+::q Em vez de uma fila de 2 milhões de pesos diferentes, você cria "gavetas" (2000 a 2500 g, 2500 a 3000 g...) e conta quantos bebês há em cada gaveta.
+::w classes
+::s
+1) n = quantidade de dados.
+2) k = √n, arredondando para cima.
+3) amplitude total = máximo − mínimo.
+4) h = amplitude total ÷ k (arredonde para um número "redondo").
+5) comece do mínimo (ou de um valor redondo abaixo dele) e some h para achar cada limite.
+6) conte quantos valores caem em cada classe.
+::p k | número de classes. Critério da raiz: k ≈ √n (arredondado para cima).
+::p h | amplitude da classe (tamanho da faixa) = (máx − mín) ÷ k.
+::p [a, b) | fechada à esquerda: inclui a, não inclui b.
+::p (a, b] | fechada à direita: inclui b, não inclui a.
+::x
+n = 10 salários (de 1200 a 7900). k = √10 = 3,16 → 4 classes.
+Amplitude = 7900 − 1200 = 6700. h = 6700 ÷ 4 = 1675 → usamos 2000 (redondo).
+Classes: [1000, 3000) [3000, 5000) [5000, 7000) [7000, 9000). Contagens: 5, 3, 1, 1.
+::e
+cut(salarios, breaks = seq(1000, 9000, 2000), right = FALSE)
+library(fdth)
+fdt(salarios, start = 1000, end = 9000, h = 2000)
+::a Cada valor tem que cair em UMA classe só: use sempre o mesmo tipo de intervalo ([a, b) ou (a, b]).
+::a Poucas classes escondem a forma dos dados; muitas deixam o gráfico "serrilhado".
+::v cut() | fdt() (pacote fdth) | Número de classes e amplitude (h) | C:Histograma
+@@ Escolha do gráfico
+::f Aula 5 · Visualização de dados
+::o O tipo da variável (e quantas variáveis você quer mostrar) decide o gráfico certo.
+::q É como escolher a ferramenta: martelo para prego, chave para parafuso. Pizza para dados contínuos é chave de fenda para pregar prego.
+::w grafico
+::s
+Qualitativa                   → barras, colunas, pizza
+Quantitativa discreta         → dispersão unidimensional, colunas
+Quantitativa contínua         → histograma, polígono, ogiva, box-plot
+Duas qualitativas             → colunas agrupadas/empilhadas (tabela cruzada)
+Qualitativa × quantitativa    → box-plots ou histogramas comparativos
+Duas quantitativas            → gráfico de dispersão
+::a Pizza só com poucas categorias (até 5) e quando as partes somam um todo.
+::a Todo gráfico precisa de título, rótulos nos eixos e unidade.
+::v barplot() | pie() | hist() | boxplot() | Gráficos de dispersão (plot)
+@@ Histograma
+::f Aulas 5 e 6 · Gráficos
+::o Gráfico de barras COLADAS para variável quantitativa: cada barra é uma classe, e a altura mostra a frequência (ou a densidade).
+::q Se a tabela de classes é uma lista de gavetas, o histograma é o desenho das gavetas, lado a lado, com altura proporcional ao que tem dentro.
+::w histograma
+::i Veja o formato: simétrico (sino)? cauda para um lado (assimétrico)? dois montes (bimodal)? Onde está o centro? Há valores isolados?
+::s
+densidade da classe = (f ÷ n) ÷ largura da classe
+área da barra = densidade × largura = f ÷ n
+::p Eixo x | os valores da variável, divididos em classes.
+::p Altura (frequência) | quantos valores há na classe.
+::p Altura (densidade) | proporção ÷ largura da classe. Assim a ÁREA da barra = proporção dos dados.
+::e
+hist(peso, freq = FALSE, breaks = seq(1000, 5000, 500),
+     right = FALSE, col = "lightblue",
+     main = "Peso ao nascer", xlab = "Peso (g)", ylab = "Densidade")
+::a Barras SEPARADAS (barplot) são para categorias; COLADAS (hist) são para números contínuos.
+::a Com classes de larguras diferentes, o gráfico de frequência engana: use densidade.
+::v hist(): densidade, classes e quebras | hist() | C:Classes (intervalos de classe) | C:Assimetria
+@@ Ogiva (frequência acumulada)
+::f Aulas 5 e 6 · Gráficos
+::o Gráfico de linha da frequência acumulada. Só sobe, e termina no total (n ou 100%). Responde "quantos (ou qual %) ficam abaixo de X?".
+::q É o "contador de pessoas que já passaram pela porta": nunca diminui. Quanto mais inclinado um trecho, mais gente passou naquela faixa.
+::w ogiva
+::s
+1) Monte a tabela de frequências por classe.
+2) Calcule a frequência acumulada (F).
+3) Marque os pontos (limite SUPERIOR da classe, F).
+4) Ligue os pontos com retas, começando em 0 no limite inferior da primeira classe.
+::x
+Salários em classes: [1000,3000) 5 · [3000,5000) 3 · [5000,7000) 1 · [7000,9000) 1. Acumuladas: 5, 8, 9, 10.
+A ogiva começa em 0 no limite 1000, passa por 5 em 3000, 8 em 5000, 9 em 7000 e chega a 10 (100%) em 9000.
+Leitura: "80% dos salários são menores que 5000" (8 ÷ 10).
+::e
+library(fdth)
+tab <- fdt(salarios, start = 1000, end = 9000, h = 2000)
+plot(tab, type = "cfp", col = 4, lwd = 2)       # em frequência
+plot(tab, type = "cfpp", col = 4, lwd = 2)      # em porcentagem
+::a A ogiva usa o limite SUPERIOR de cada classe (é onde o acumulado "fecha").
+::v Ogiva e polígono de frequências | C:Percentil | C:Frequências: absoluta, relativa e acumulada
+
+@G Medidas de posição (onde está o "centro") | #f72585 | Números que dizem em torno de que valor os dados se concentram. (Estatística Descritiva, Aulas 7 e 8)
+@@ Média
+::f Aulas 7 e 8 · Medidas descritivas
+::o Soma de todos os valores dividida pela quantidade deles. É o ponto de equilíbrio dos dados.
+::q Imagine uma gangorra com os valores como pesos sobre uma régua: a média é o ponto onde ela fica em equilíbrio. Se você aumenta um valor, o ponto de equilíbrio se desloca para o lado dele.
+::w media
+::i "Se todos tivessem o mesmo valor, qual seria?" A média usa TODOS os valores, por isso é sensível a valores extremos.
+::s
+x̄ = Σx ÷ n = (x₁ + x₂ + ... + xₙ) ÷ n
+::p Σx | soma de todos os valores.
+::p n | quantos valores há.
+::p x̄ | símbolo da média amostral (lê-se "x barra").
+::x
+Idades: 3, 6, 5, 7, 9
+Soma = 3 + 6 + 5 + 7 + 9 = 30     n = 5
+Média = 30 ÷ 5 = 6
+::e
+x <- c(3, 6, 5, 7, 9)
+mean(x)
+mean(c(4, NA, 8), na.rm = TRUE)
+::r
+[1] 6
+[1] 6
+::a Média de uma variável com outlier pode enganar: use C:Média × Mediana para escolher.
+::a Média de variável qualitativa não existe. E códigos (1 = masculino, 2 = feminino) não podem entrar em média.
+::a Com NA, use na.rm = TRUE.
+::v sum(), mean(), prod() e cumsum() | C:Mediana | C:Média × Mediana: qual usar? | C:Notação de somatório (Σ)
+@@ Mediana
+::f Aulas 7 e 8 · Medidas descritivas
+::o Valor que fica no meio dos dados ordenados: metade dos valores está abaixo dela e metade acima.
+::q Alinhe todo mundo por ordem de altura; a pessoa do meio da fila é a mediana. Não importa se a última pessoa é um gigante de 2,30 m: o meio continua o mesmo.
+::w mediana
+::i Metade dos casos é menor ou igual à mediana, metade é maior ou igual. É uma medida RESISTENTE: valores extremos mexem pouco nela.
+::s
+1) Ordene do menor para o maior.
+2) Conte n.
+3) n ímpar: pegue o valor do meio.   n par: faça a média dos dois do meio.
+::p n ímpar | mediana = valor na posição (n + 1) ÷ 2.
+::p n par | mediana = média dos dois valores centrais (posições n/2 e n/2 + 1).
+::x
+Ímpar: 7, 2, 9, 4, 5 → ordenado: 2, 4, 5, 7, 9 → n = 5 → posição 3 → mediana = 5.
+Par: 2, 4, 5, 7, 9, 12 → n = 6 → dois do meio: 5 e 7 → (5 + 7) ÷ 2 = 6.
+::e
+median(c(7, 2, 9, 4, 5))
+median(c(2, 4, 5, 7, 9, 12))
+::r
+[1] 5
+[1] 6
+::a Esquecer de ORDENAR antes de pegar o do meio.
+::a A mediana nem sempre é um valor que existe nos dados (com n par, pode ser a média de dois).
+::v median() | C:Média × Mediana: qual usar? | C:Quartis | C:Percentil
+@@ Moda
+::f Aulas 7 e 8 · Medidas descritivas
+::o Valor (ou categoria) que mais se repete. Única medida de posição que serve para variáveis qualitativas.
+::q O "campeão de votos". Se duas opções empatam em primeiro, há duas modas (bimodal). Se ninguém se repete, não há moda (amodal).
+::w moda
+::s
+1) Conte quantas vezes cada valor aparece (table()).
+2) A moda é o valor com a maior contagem.
+::x
+2, 3, 3, 3, 5, 5, 7 → o 3 aparece 3 vezes → moda = 3 (unimodal).
+1, 1, 2, 2, 3 → o 1 e o 2 aparecem 2 vezes → bimodal (modas 1 e 2).
+"solteira", "casada", "casada", "viúva" → moda = "casada".
+::e
+library(modeest)
+mfv(c(2, 3, 3, 3, 5, 5, 7))
+mfv(c("A", "B", "B", "C"))
+table(c(2, 3, 3, 3, 5, 5, 7))
+::r
+[1] 3
+[1] "B"
+
+2 3 5 7
+1 3 2 1
+::a A moda é o VALOR (3), não a frequência (3 vezes).
+::a Em variável contínua com valores todos diferentes, a moda perde sentido: use a classe modal do histograma.
+::v mfv() (moda) | table() | C:Média | C:Mediana
+@@ Média × Mediana: qual usar?
+::f Aula 7 · Medidas descritivas
+::o A média é puxada por valores extremos; a mediana, não. Com outliers ou distribuição assimétrica, prefira a mediana.
+::q Numa sala de 10 pessoas com renda de 2 a 10 mil, entra um bilionário: a renda MÉDIA da sala vira "milionária", mas a pessoa do meio da fila continua ganhando o mesmo.
+::w mediaMediana
+::i Renda, preço de imóveis, tempo de internação: costumam ter cauda longa à direita. Nesses casos, relatar a mediana é mais honesto.
+::s
+Simétrica, sem outliers      → média ≈ mediana: pode usar a média.
+Assimétrica ou com outliers  → mediana descreve melhor o "típico".
+::x
+Dados: 2, 3, 4, 5, 6, 7, 8, 9, 10 → média = 6 e mediana = 6.
+Entra o 40: média = 94 ÷ 10 = 9,4; mediana = (6 + 7) ÷ 2 = 6,5.
+Um único valor mudou a média em 3,4 e a mediana em só 0,5.
+::e
+d <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 40)
+mean(d)
+median(d)
+::r
+[1] 9.4
+[1] 6.5
+::a Dizer "o salário médio é X" quando a distribuição é muito assimétrica passa uma imagem irreal.
+::v C:Assimetria | C:Outliers (valores atípicos) | median() | sum(), mean(), prod() e cumsum()
+@@ Assimetria
+::f Aulas 7 e 8 · Medidas descritivas
+::o Descreve o formato da distribuição: simétrica (os dois lados iguais) ou assimétrica (uma cauda mais longa). A relação entre média e mediana mostra o lado.
+::q Pense numa praia: simétrica = nivelada; assimétrica à direita = uma "rampa" longa subindo para a direita (poucos valores muito altos).
+::w assimetria
+::i Olhe o histograma: onde está a cauda longa? A média vai para o lado da cauda.
+::s
+média > mediana  →  cauda à direita (assimetria positiva)
+média ≈ mediana  →  simétrica
+média < mediana  →  cauda à esquerda (assimetria negativa)
+::p Simétrica | média ≈ mediana ≈ moda.
+::p Assimétrica à direita (positiva) | cauda à direita; média > mediana.
+::p Assimétrica à esquerda (negativa) | cauda à esquerda; média < mediana.
+::x
+Salários: 1200, 1500, 1800, 2100, 2500, 3000, 3200, 4100, 5200, 7900.
+Média = 32 500 ÷ 10 = 3 250. Mediana = (2500 + 3000) ÷ 2 = 2 750.
+Média > mediana → cauda à direita: poucos salários muito altos puxam a média.
+::a A cauda aponta para o lado da assimetria (não para onde estão os dados mais comuns).
+::v C:Média × Mediana: qual usar? | C:Histograma | hist()
+@@ Quartis
+::f Aula 7 · Separatrizes
+::o Dividem os dados ordenados em 4 partes de igual quantidade: Q1 (25%), Q2 = mediana (50%) e Q3 (75%).
+::q Se a mediana corta a fila no meio, os quartis cortam cada metade de novo: ficam 4 grupos com o mesmo número de pessoas.
+::w quartis
+::i 25% dos valores são ≤ Q1; 75% são ≤ Q3. A caixa do box-plot vai de Q1 a Q3.
+::s
+Método do curso (à mão), para o quartil p (p = 0,25; 0,5; 0,75):
+1) Ordene e calcule n · p.
+2) Se n · p NÃO é inteiro: arredonde para cima e pegue o valor dessa posição.
+3) Se n · p É inteiro: faça a média do valor nessa posição e do seguinte.
+::p Q1 | 25% dos dados estão abaixo (e 75% acima).
+::p Q2 | 50%: a mediana.
+::p Q3 | 75% dos dados estão abaixo.
+::p DI = Q3 − Q1 | distância interquartílica: onde estão os 50% do meio.
+::x
+n = 10: 2, 3, 4, 5, 6, 7, 8, 9, 10, 40
+Q1: 10 · 0,25 = 2,5 (não inteiro) → posição 3 → Q1 = 4
+Q2: 10 · 0,5 = 5 (inteiro) → média das posições 5 e 6 = (6 + 7) ÷ 2 = 6,5
+Q3: 10 · 0,75 = 7,5 → posição 8 → Q3 = 9
+::e
+d <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 40)
+quantile(d, type = 2)     # método do curso
+quantile(d)               # padrão do R (type = 7)
+::r
+  0%  25%  50%  75% 100%
+ 2.0  4.0  6.5  9.0 40.0
+   0%   25%   50%   75%  100%
+ 2.00  4.25  6.50  8.75 40.00
+::a O R tem 9 métodos de calcular quartis. O padrão (type = 7) pode dar valores diferentes dos slides: use type = 2 para conferir contas à mão. summary() usa o padrão.
+::a Não confunda "quartil" (um ponto: Q1, Q2, Q3) com "quarto" (cada pedaço entre dois pontos).
+::v quantile() | summary() | C:Percentil | C:Box-plot | IQR() e limites dos outliers
+@@ Percentil
+::f Aula 7 · Separatrizes
+::o O percentil Pk é o valor abaixo do qual ficam k% dos dados. Quartis são percentis especiais: Q1 = P25, mediana = P50, Q3 = P75.
+::q Quando o pediatra diz "seu bebê está no percentil 90 de peso", significa que 90% dos bebês da mesma idade pesam menos ou o mesmo que ele.
+::w percentil
+::s
+Para Pk: use o mesmo método dos quartis com p = k ÷ 100.
+n · p inteiro → média do valor nessa posição e do seguinte.
+n · p quebrado → arredonde para cima.
+::x
+n = 60 pesos ordenados; P90: 60 · 0,9 = 54 (inteiro) → média do 54º e do 55º valores.
+P10: 60 · 0,1 = 6 → média do 6º e do 7º.
+::e
+quantile(peso, probs = c(0.10, 0.90), type = 2)
+::a "Estar no percentil 90" NÃO é "ter 90 pontos": é estar acima de 90% dos outros.
+::v quantile() | C:Quartis | C:Ogiva (frequência acumulada)
+
+@G Medidas de dispersão (o quanto os dados "espalham") | #ffd166 | Duas turmas podem ter a mesma média e serem completamente diferentes: uma toda parecida, outra muito heterogênea. A dispersão mede isso. (Estatística Descritiva, Aulas 7 a 9)
+@@ Amplitude total
+::f Aula 7 · Medidas de dispersão
+::o Maior valor menos menor valor. A medida de dispersão mais simples.
+::q A "largura" do conjunto: da ponta esquerda à ponta direita.
+::w amplitude
+::i Quanto maior, mais espalhados os extremos. Mas só dois valores contam.
+::s
+A = máximo − mínimo
+::x
+Dados: 3, 6, 5, 7, 9 → máximo 9, mínimo 3 → A = 9 − 3 = 6.
+::e
+range(x)
+diff(range(x))
+::r
+[1] 3 9
+[1] 6
+::a Muito sensível a outliers: um valor extremo estoura a amplitude.
+::a range() devolve os dois extremos; para a amplitude (um número) use diff(range(x)).
+::v range() | diff() (amplitude total) | C:Variância e desvio padrão
+@@ Variância e desvio padrão
+::f Aulas 7 e 8 · Medidas de dispersão
+::o Medem, em média, o quanto os valores se afastam da média. A variância é a média dos desvios ao quadrado; o desvio padrão (dp) é a raiz da variância e tem a mesma unidade dos dados.
+::q O desvio padrão é a "distância típica" entre cada valor e a média. Dp pequeno: dados colados na média. Dp grande: dados bem espalhados.
+::w variancia
+::i "Em média, os valores ficam a cerca de 2,2 unidades da média." Compare sempre com o tamanho da média (veja o CV).
+::s
+s² = Σ(xᵢ − x̄)² ÷ (n − 1)
+s  = √s²
+::p xᵢ − x̄ | desvio: o quanto o valor i se afasta da média (positivo se acima, negativo se abaixo).
+::p (xᵢ − x̄)² | desvio ao quadrado: tira o sinal (senão a soma dos desvios daria sempre 0).
+::p n − 1 | divisor da variância AMOSTRAL (o R usa este).
+::p s | desvio padrão = √(variância).
+::x
+x = 3, 6, 5, 7, 9      x̄ = 6
+Desvios:           −3, 0, −1, 1, 3     (soma = 0)
+Desvios ao quadrado: 9, 0, 1, 1, 9     (soma = 20)
+Variância = 20 ÷ (5 − 1) = 5
+Desvio padrão = √5 = 2,236
+::e
+x <- c(3, 6, 5, 7, 9)
+var(x)
+sd(x)
+::r
+[1] 5
+[1] 2.236068
+::a Variância está em unidade ao QUADRADO (kg², anos²): por isso se usa o desvio padrão para interpretar.
+::a O R divide por n − 1. Dividir por n daria outro valor (população).
+::v var() e sd() | C:Coeficiente de variação (CV) | C:Regra empírica (68-95-99,7) | C:Média
+@@ Coeficiente de variação (CV)
+::f Aula 7 · Medidas de dispersão
+::o Desvio padrão dividido pela média, em %. É uma dispersão RELATIVA: permite comparar variáveis de unidades ou tamanhos diferentes.
+::q Errar 10 minutos numa viagem de 20 minutos é muito; errar 10 minutos numa viagem de 10 horas é pouco. O CV diz o tamanho do erro em relação ao tamanho do que se mede.
+::w cv
+::i Regra prática (varia conforme a área): CV < 15% baixa dispersão; 15 a 30% média; > 30% alta.
+::s
+CV = (s ÷ x̄) × 100
+::x
+Peso do bebê: média 3200 g, dp 450 g → CV = 450 ÷ 3200 × 100 = 14,1%.
+Idade da mãe: média 27 anos, dp 6,5 anos → CV = 6,5 ÷ 27 × 100 = 24,1%.
+Apesar de 450 ser muito maior que 6,5, a idade varia MAIS em termos relativos.
+::e
+CV <- sd(x) / mean(x) * 100
+::a Só vale para variáveis com zero verdadeiro e valores positivos (peso, idade, salário), não para temperatura em °C.
+::a Se a média é perto de 0, o CV explode e perde sentido.
+::v Coeficiente de variação (CV) | var() e sd() | C:Variância e desvio padrão
+@@ Regra empírica (68-95-99,7)
+::f Aula 7 · Medidas de dispersão
+::o Para dados em forma de sino (simétricos), cerca de 68% ficam em x̄ ± 1 dp, 95% em x̄ ± 2 dp e 99,7% em x̄ ± 3 dp.
+::q É um "mapa de onde estão as pessoas": a grande maioria perto da média; muito poucos a mais de 3 dp. Quem está a mais de 3 dp é raro.
+::w empirica
+::i Serve para ter uma noção rápida e para detectar valores muito incomuns.
+::s
+x̄ ± 1·dp  → ~68% dos dados
+x̄ ± 2·dp  → ~95% dos dados
+x̄ ± 3·dp  → ~99,7% dos dados
+::x
+Peso ao nascer: média 3200 g, dp 450 g (distribuição em sino).
+x̄ ± 1 dp: 2750 a 3650 g → ~68% dos bebês.
+x̄ ± 2 dp: 2300 a 4100 g → ~95%.
+x̄ ± 3 dp: 1850 a 4550 g → ~99,7%.
+Um bebê de 1500 g está a mais de 3 dp abaixo: é raro.
+::e
+m <- mean(peso); s <- sd(peso)
+mean(peso >= m - 2*s & peso <= m + 2*s)   # proporção real dentro de ±2 dp
+::a Só vale se o histograma tiver forma de sino. Distribuições assimétricas não seguem a regra.
+::v C:Variância e desvio padrão | C:Outliers (valores atípicos) | C:Assimetria
+@@ Distância interquartílica (DI)
+::f Aula 7 · Medidas de dispersão
+::o DI = Q3 − Q1. Mede a dispersão dos 50% do meio dos dados e quase não é afetada por outliers.
+::q Ignore os 25% menores e os 25% maiores. A DI é a largura do "miolo".
+::w boxplot
+::i É a medida de dispersão que acompanha a mediana (as duas resistem a outliers), assim como o desvio padrão acompanha a média.
+::s
+DI = Q3 − Q1
+::x
+d = 2, 3, 4, 5, 6, 7, 8, 9, 10, 40 → Q1 = 4, Q3 = 9 → DI = 9 − 4 = 5.
+(A amplitude seria 38 por causa do 40; a DI continua 5.)
+::e
+IQR(d, type = 2)
+::r
+[1] 5
+::v IQR() e limites dos outliers | C:Quartis | C:Box-plot | C:Outliers (valores atípicos)
+@@ Box-plot
+::f Aulas 7 e 9 · Medidas descritivas
+::o Desenho que resume a variável em 5 números: mínimo, Q1, mediana, Q3 e máximo, e destaca os outliers.
+::q A caixa guarda os 50% do meio; o traço dentro é a mediana; os "bigodes" mostram até onde vão os valores normais; pontinhos são os atípicos.
+::w boxplot
+::i Caixa longa = muita dispersão. Mediana descentralizada na caixa = assimetria. Pontos = valores a investigar.
+::s
+Limite inferior = Q1 − 1,5 · DI
+Limite superior = Q3 + 1,5 · DI
+Bigodes: do menor ao maior valor dentro dos limites.
+::p Caixa | de Q1 a Q3 (comprimento = DI).
+::p Traço dentro | mediana.
+::p Bigodes | vão até o menor e o maior valor que NÃO são outliers.
+::p Pontos | outliers.
+::x
+d = 2, 3, 4, 5, 6, 7, 8, 9, 10, 40 → Q1 = 4, Q3 = 9, DI = 5.
+Limites: 4 − 7,5 = −3,5 e 9 + 7,5 = 16,5. O 40 está fora → outlier (ponto).
+Bigode inferior até 2; bigode superior até 10.
+::e
+boxplot(d, horizontal = TRUE)
+boxplot(peso ~ sexo, data = dados)
+::a O R desenha o box-plot com seu próprio método de quartis (dobradiças de Tukey), que pode diferir um pouco do cálculo à mão em amostras pequenas.
+::v boxplot() | C:Quartis | C:Outliers (valores atípicos) | C:Comparar grupos com box-plots
+@@ Outliers (valores atípicos)
+::f Aula 9 · Medidas descritivas
+::o Valores muito distantes do restante. Regra prática: fora do intervalo [Q1 − 1,5·DI ; Q3 + 1,5·DI].
+::q O gigante numa fila de pessoas comuns. Pode ser um erro de digitação (altura 17 m) ou um caso real e raro; descobrir qual é o seu trabalho.
+::w boxplot
+::i Primeiro investigue: erro de digitação? código de "ignorado" (99)? Ou valor real? Só remova se for erro comprovado.
+::s
+1) Calcule Q1, Q3 e DI = Q3 − Q1.
+2) Limite inferior = Q1 − 1,5 · DI; limite superior = Q3 + 1,5 · DI.
+3) Tudo que está fora dos limites é outlier.
+::x
+Q1 = 4, Q3 = 9, DI = 5 → limites −3,5 e 16,5 → o valor 40 é outlier.
+Se incluir o 40: média 9,4 e dp 11,06. Sem ele: média 6 e dp 2,74. Veja como um único valor distorce.
+::e
+q <- quantile(d, c(0.25, 0.75), type = 2)
+di <- q[2] - q[1]
+d[d < q[1] - 1.5*di | d > q[2] + 1.5*di]
+::r
+[1] 40
+::a Remover outlier só porque "atrapalha" é manipular os dados.
+::v IQR() e limites dos outliers | C:Box-plot | C:Média × Mediana: qual usar? | C:Valores ignorados (NA e o código 99)
+
+@G Duas variáveis (análise bidimensional) | #7ee07e | Como duas variáveis se relacionam? A técnica depende dos tipos: duas qualitativas (tabela cruzada), uma de cada (comparar grupos) ou duas quantitativas (dispersão). (Estatística Descritiva, Aulas 10 a 12)
+@@ Tabela cruzada
+::f Aulas 10, 11 e 12 · Análise bidimensional
+::o Tabela de dupla entrada: as categorias de uma variável nas linhas, as da outra nas colunas, e em cada célula a contagem de casos que têm aquela combinação.
+::q É o quadro de presença de uma festa com duas perguntas: quantas mulheres fumantes, quantos homens não fumantes... cada casinha responde a uma combinação.
+::w cruzada
+::i Primeiro leia as margens (quantos de cada categoria), depois compare as células. Para comparar grupos de tamanhos diferentes, use percentuais.
+::p Célula | combinação (ex.: mulher e fuma).
+::p Total da linha / da coluna | margens: contagem de cada categoria sozinha.
+::p Total geral | n.
+::x
+Sexo × fuma, 8 pessoas:
+          Fuma   Não fuma   Total
+Feminino    3        2        5
+Masculino   1        2        3
+Total       4        4        8
+::e
+tab <- table(sexo, fuma)
+addmargins(tab)
+::a Comparar contagens entre grupos de tamanhos diferentes engana: use percentuais.
+::v table() | addmargins() | tabyl() e adorn_*() (janitor) | C:Percentual por linha, coluna ou total
+@@ Percentual por linha, coluna ou total
+::f Aulas 11 e 12 · Análise bidimensional
+::o Em tabela cruzada você pode calcular percentuais de 3 formas, e cada uma responde uma pergunta diferente.
+::q Muda o "denominador": dividir pelo total da linha, da coluna ou da tabela inteira. Antes de calcular, escreva a pergunta.
+::w cruzada2
+::s
+% linha  = célula ÷ total da linha × 100
+% coluna = célula ÷ total da coluna × 100
+% total  = célula ÷ total geral × 100
+::p % da linha | cada linha soma 100%: "ENTRE os de cada linha, qual parte...?" (ex.: entre as mulheres, quantas fumam?)
+::p % da coluna | cada coluna soma 100%: "ENTRE os de cada coluna, qual parte...?" (ex.: entre os fumantes, quantos são mulheres?)
+::p % do total | tudo soma 100%: "do conjunto todo, qual parte...?"
+::x
+Mulheres que fumam: 3.  Total de mulheres: 5.  Fumantes: 4.  Total geral: 8.
+% linha:  3 ÷ 5 = 60%    (entre as mulheres, 60% fumam)
+% coluna: 3 ÷ 4 = 75%    (entre os fumantes, 75% são mulheres)
+% total:  3 ÷ 8 = 37,5%  (37,5% de TODOS são mulheres fumantes)
+::e
+round(prop.table(tab, 1) * 100, 1)   # por linha
+round(prop.table(tab, 2) * 100, 1)   # por coluna
+round(prop.table(tab) * 100, 1)      # do total
+::a Trocar linha por coluna muda completamente a conclusão. Escolha o percentual pela pergunta.
+::a Em prop.table(): 1 = linha, 2 = coluna, sem número = total.
+::v prop.table() | addmargins() | tabyl() e adorn_*() (janitor) | C:Tabela cruzada
+@@ Comparar grupos com box-plots
+::f Aulas 11 e 12 · Qualitativa × quantitativa
+::o Para ver se uma variável numérica difere entre categorias (peso por sexo), desenhe um box-plot para cada categoria na mesma escala, ou calcule medidas por grupo.
+::q Colocar os grupos lado a lado, na mesma régua, para dar para ver quem é maior, quem varia mais e quem tem valores estranhos.
+::w comparativo
+::i Se as caixas quase não se sobrepõem, os grupos tendem a ser realmente diferentes. Se se sobrepõem muito, a diferença é pequena perto da variação.
+::s
+1) Calcule média/mediana/dp por grupo (tapply).
+2) Desenhe boxplot(numerica ~ categorica).
+3) Compare: posição (mediana), dispersão (largura da caixa), forma e outliers.
+::x
+Peso por sexo: mediana F = 3,1 kg e M = 3,4 kg: M tem pesos um pouco maiores. Caixas de largura parecida: dispersão parecida.
+::e
+tapply(dados$peso, dados$sexo, median)
+boxplot(peso ~ sexo, data = dados, col = c(6, 4))
+::a Compare na MESMA escala vertical, senão o gráfico engana.
+::v boxplot() | tapply() | C:Box-plot
+@@ Gráfico de dispersão
+::f Aulas 10 e 12 · Quantitativa × quantitativa
+::o Cada observação vira um ponto (x, y). A nuvem mostra se as variáveis andam juntas (subindo ou descendo) ou se não têm relação.
+::q Cada ponto é uma pessoa no mapa "altura × peso". Se os pontos formam uma faixa subindo, quem é mais alto tende a ser mais pesado.
+::w dispersao
+::i Procure: direção (sobe/desce), força (faixa estreita ou larga), forma (reta ou curva) e pontos isolados.
+::s
+plot(x, y)   # x no eixo horizontal, y no vertical
+::x
+Salário (x) e idade (y) de 8 funcionários: pontos subindo da esquerda para a direita → relação positiva: mais idade, salário maior.
+::e
+plot(x, y, pch = 19, xlab = "x", ylab = "y")
+::a Com milhões de pontos, vira borrão: use amostra ou transparência.
+::a Associação não significa que uma causa a outra.
+::v Gráficos de dispersão (plot) | C:Correlação | cor()
+@@ Correlação
+::f Extra · complementa a Aula 10 (não aparece nos slides)
+::o Número de −1 a +1 que mede a força e a direção da relação em LINHA RETA entre duas variáveis quantitativas.
+::q +1: sobem juntas em linha reta. −1: uma sobe quando a outra desce. 0: nenhuma relação em linha reta.
+::w correlacao
+::i Regra prática: |r| ≥ 0,7 forte; entre 0,4 e 0,7 moderada; < 0,4 fraca.
+::s
+r = Σ(x − x̄)(y − ȳ) ÷ √[ Σ(x − x̄)² · Σ(y − ȳ)² ]
+::p r = +1 | reta ascendente perfeita.
+::p r = −1 | reta descendente perfeita.
+::p r ≈ 0 | sem relação linear.
+::x
+x = 1, 2, 3, 4, 5 → x̄ = 3      y = 2, 4, 5, 4, 5 → ȳ = 4
+(x − x̄) = −2, −1, 0, 1, 2      (y − ȳ) = −2, 0, 1, 0, 1
+Produtos: 4, 0, 0, 0, 2 → soma = 6
+Σ(x − x̄)² = 10      Σ(y − ȳ)² = 6
+r = 6 ÷ √(10 · 6) = 6 ÷ 7,746 = 0,775
+::e
+cor(x, y)
+::r
+[1] 0.7745967
+::a Correlação NÃO é causalidade.
+::a Só mede relação em linha reta: relação em "U" pode dar r perto de 0 mesmo sendo forte.
+::a Muito sensível a outliers.
+::a Este tema não está nos slides: é um complemento natural do gráfico de dispersão.
+::v cor() | C:Gráfico de dispersão | C:Outliers (valores atípicos)
+</script>
 <template id="t-start"><h2>Como usar este guia</h2>
 <div class="card">
 <h3>As quatro abas</h3>
 <ul>
+<li><b>💡 Conceitos</b>: a teoria da Estatística Descritiva (média, mediana, desvio padrão, quartis, correlação…) explicada com analogias, exemplos resolvidos e figuras em que você pode mexer.</li>
 <li><b>📘 Dicionário</b>: todos os comandos do curso, separados por assunto. Clique em qualquer linha para abrir os detalhes.</li>
 <li><b>🧩 Problemas e soluções</b>: os exercícios das listas e gabaritos, resolvidos e explicados linha a linha.</li>
 <li><b>📖 Glossário</b>: o significado das palavras técnicas (vetor, argumento, NA, chave primária…).</li>
@@ -6272,10 +7736,332 @@ notas <- c(7, 8.5, 9)
 </template>
 
 <script>
+/* ===== Conceitos: ferramentas comuns ===== */
+const NS='http://www.w3.org/2000/svg';
+function S(tag,at,par){const e=document.createElementNS(NS,tag);for(const k in (at||{}))e.setAttribute(k,at[k]);if(par)par.appendChild(e);return e}
+function X(tag,cls,html,par){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;if(par)par.appendChild(e);return e}
+const fm=(x,d=2)=>{if(!isFinite(x))return '–';return Number(x.toFixed(d)).toString().replace('.',',')};
+const sum=a=>a.reduce((s,v)=>s+v,0);
+const mean=a=>a.length?sum(a)/a.length:NaN;
+const srt=a=>a.slice().sort((p,q)=>p-q);
+function median(a){const s=srt(a),n=s.length;if(!n)return NaN;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2}
+function q2(a,p){const s=srt(a),n=s.length;if(!n)return NaN;if(p<=0)return s[0];if(p>=1)return s[n-1];const np=n*p;return Math.abs(np-Math.round(np))<1e-9?(s[Math.round(np)-1]+s[Math.round(np)])/2:s[Math.ceil(np)-1]}
+function q7(a,p){const s=srt(a),n=s.length;if(!n)return NaN;const h=(n-1)*p,lo=Math.floor(h);return lo+1>=n?s[n-1]:s[lo]+(h-lo)*(s[lo+1]-s[lo])}
+const vari=a=>{const m=mean(a);return a.length>1?sum(a.map(v=>(v-m)**2))/(a.length-1):NaN};
+const sdev=a=>Math.sqrt(vari(a));
+function corr(x,y){const mx=mean(x),my=mean(y);let sxy=0,sxx=0,syy=0;for(let i=0;i<x.length;i++){sxy+=(x[i]-mx)*(y[i]-my);sxx+=(x[i]-mx)**2;syy+=(y[i]-my)**2}return sxy/Math.sqrt(sxx*syy)}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function normals(n,seed){const r=rng(seed),o=[];while(o.length<n){const u=r()||1e-9,v=r();const m=Math.sqrt(-2*Math.log(u));o.push(m*Math.cos(2*Math.PI*v));if(o.length<n)o.push(m*Math.sin(2*Math.PI*v))}return o}
+function erf(x){const t=1/(1+0.3275911*Math.abs(x)),y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return x>=0?y:-y}
+const PESOS=normals(60,7).map(z=>Math.round((3200+450*z)/10)*10); // pesos simulados (g)
+function mk(el,title){el.innerHTML='';const b=X('div','vh','🎮 '+title,el);const c=X('div','vctl','',el);const s=X('div','vsvg','',el);const r=X('div','vro','',el);return{c,s,r}}
+function btn(par,txt,fn){const b=X('button','vb',txt,par);b.onclick=fn;return b}
+function sl(par,label,min,max,val,step,fn){const w=X('label','vsl',label+' ',par);const i=X('input','',null,w);i.type='range';i.min=min;i.max=max;i.step=step;i.value=val;const o=X('b','',String(val).replace('.',','),w);i.oninput=()=>{o.textContent=String(i.value).replace('.',',');fn(+i.value)};return i}
+function nums(t){return (t.match(/-?\d+(?:[.,]\d+)?/g)||[]).map(s=>+s.replace(',','.'))}
+function mkSvg(par,h){const s=S('svg',{viewBox:'0 0 640 '+h,width:'100%',style:'display:block;touch-action:none'});par.appendChild(s);return s}
+function axis(svg,x0,x1,y,min,max,step,px){ // eixo horizontal com marcas
+  S('line',{x1:x0,x2:x1,y1:y,y2:y,stroke:'#6b7389'},svg);
+  for(let v=min;v<=max+1e-9;v+=step){const x=px(v);S('line',{x1:x,x2:x,y1:y,y2:y+5,stroke:'#6b7389'},svg);const t=S('text',{x:x,y:y+18,'text-anchor':'middle'},svg);t.textContent=fm(v,step<1?1:0)}
+}
+
+/* ===== Motor 1: pontos arrastáveis numa reta numérica ===== */
+function DotEngine(el,o){
+  const {c,s,r}=mk(el,o.title||'Arraste os pontos');
+  let pts=o.pts.slice();const MAX=o.max||20,W=640,L=30,R=610,base=o.box?150:135,H=o.box?190:175;
+  const svg=mkSvg(s,H);const px=v=>L+(R-L)*v/MAX,iv=x=>Math.max(0,Math.min(MAX,Math.round((x-L)*MAX/(R-L))));
+  let drag=-1;
+  function render(){
+    svg.innerHTML='';axis(svg,L,R,base,0,MAX,MAX>30?5:(MAX>12?2:1),px);
+    const cnt={},idx=pts.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v||a.i-b.i);
+    const m=mean(pts),md=median(pts),L2=o.layers;
+    if(L2.includes('dev'))pts.forEach((v,i)=>{S('line',{x1:px(v),x2:px(m),y1:base-14,y2:base-14,stroke:v>=m?'#ff9f43':'#4aa3ff','stroke-width':1.5,'stroke-dasharray':'3 3',opacity:.8},svg)});
+    if(L2.includes('range')&&pts.length){const a=Math.min(...pts),b=Math.max(...pts);S('rect',{x:px(a),y:base-70,width:Math.max(px(b)-px(a),1),height:6,rx:3,fill:'#ffd166',opacity:.9},svg);S('line',{x1:px(a),x2:px(a),y1:base-76,y2:base,stroke:'#ffd166','stroke-dasharray':'3 3'},svg);S('line',{x1:px(b),x2:px(b),y1:base-76,y2:base,stroke:'#ffd166','stroke-dasharray':'3 3'},svg);const t=S('text',{x:(px(a)+px(b))/2,y:base-80,'text-anchor':'middle',fill:'#ffd166'},svg);t.textContent='amplitude = '+fm(b-a)}
+    if(L2.includes('median')){S('line',{x1:px(md),x2:px(md),y1:base-110,y2:base+2,stroke:'#4aa3ff','stroke-width':2,'stroke-dasharray':'5 3'},svg);const t=S('text',{x:px(md),y:base-114,'text-anchor':'middle',fill:'#4aa3ff'},svg);t.textContent='mediana'}
+    idx.forEach(({v,i})=>{cnt[v]=(cnt[v]||0)+1;const cy=base-10-(cnt[v]-1)*15;const ci=S('circle',{cx:px(v),cy:cy,r:7,fill:i===drag?'#ffd166':'#7ee07e',stroke:'#0b0d13','stroke-width':1.5,style:'cursor:grab'},svg);ci.addEventListener('pointerdown',e=>{drag=i;svg.setPointerCapture(e.pointerId);e.preventDefault();render()})});
+    if(L2.includes('mean')){const x=px(m);S('polygon',{points:`${x},${base+3} ${x-9},${base+22} ${x+9},${base+22}`,fill:'#ff6b6b'},svg);const t=S('text',{x:x,y:base+38,'text-anchor':'middle',fill:'#ff6b6b'},svg);t.textContent='média';S('line',{x1:x,x2:x,y1:base-100,y2:base,stroke:'#ff6b6b','stroke-width':2},svg)}
+    if(L2.includes('box')&&pts.length>1){
+      const q1=q2(pts,.25),q3=q2(pts,.75),di=q3-q1,lo=q1-1.5*di,hi=q3+1.5*di,inn=pts.filter(v=>v>=lo&&v<=hi),wl=Math.min(...inn),wh=Math.max(...inn),y=40,h=34;
+      S('rect',{x:px(lo),y:y-4,width:Math.max(px(hi)-px(lo),1),height:h+8,fill:'none',stroke:'#6b7389','stroke-dasharray':'2 4'},svg);
+      S('line',{x1:px(wl),x2:px(q1),y1:y+h/2,y2:y+h/2,stroke:'#cfd5e3','stroke-width':2},svg);S('line',{x1:px(q3),x2:px(wh),y1:y+h/2,y2:y+h/2,stroke:'#cfd5e3','stroke-width':2},svg);
+      S('line',{x1:px(wl),x2:px(wl),y1:y+8,y2:y+h-8,stroke:'#cfd5e3','stroke-width':2},svg);S('line',{x1:px(wh),x2:px(wh),y1:y+8,y2:y+h-8,stroke:'#cfd5e3','stroke-width':2},svg);
+      S('rect',{x:px(q1),y:y,width:Math.max(px(q3)-px(q1),1),height:h,fill:'#4aa3ff55',stroke:'#4aa3ff','stroke-width':2},svg);
+      S('line',{x1:px(q2(pts,.5)),x2:px(q2(pts,.5)),y1:y,y2:y+h,stroke:'#ffd166','stroke-width':3},svg);
+      pts.filter(v=>v<lo||v>hi).forEach(v=>S('circle',{cx:px(v),cy:y+h/2,r:5,fill:'none',stroke:'#ff6b6b','stroke-width':2},svg));
+      const t=S('text',{x:L,y:18,fill:'#9aa1b4'},svg);t.textContent='tracejado = limites Q1−1,5·DI e Q3+1,5·DI';
+    }
+    r.innerHTML=o.read(pts);
+  }
+  svg.addEventListener('pointermove',e=>{if(drag<0)return;const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(svg.getScreenCTM().inverse());pts[drag]=iv(q.x);render()});
+  const end=()=>{if(drag>=0){drag=-1;render()}};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  btn(c,'+ valor',()=>{pts.push(Math.round(mean(pts))||Math.round(MAX/2));render()});
+  btn(c,'− valor',()=>{if(pts.length>2){pts.pop();render()}});
+  if(o.outlier)btn(c,'⚠ Adicionar um valor extremo',()=>{pts.push(MAX);render()});
+  btn(c,'↺ Reiniciar',()=>{pts=o.pts.slice();render()});
+  X('span','vhint','Arraste os pontos verdes para os lados.',c);
+  render();
+}
+/* ===== Motor 2: histograma ===== */
+function bins(data,edges){const c=edges.slice(1).map(()=>0);data.forEach(v=>{for(let k=0;k<c.length;k++){if(v>=edges[k]&&(v<edges[k+1]||(k===c.length-1&&v<=edges[k+1]))){c[k]++;break}}});return c}
+function evenEdges(a,b,k){const o=[];for(let i=0;i<=k;i++)o.push(a+(b-a)*i/k);return o}
+function drawHist(svg,edges,cnt,n,mode,opt){
+  opt=opt||{};const W=640,L=48,R=620,T=14,B=190,lo=edges[0],hi=edges[edges.length-1],px=v=>L+(R-L)*(v-lo)/(hi-lo);
+  const hs=cnt.map((c,i)=>mode==='dens'?c/(n*(edges[i+1]-edges[i])):c),mx=(mode==='dens'?Math.max(...hs)*1.15:Math.ceil(Math.max(...hs)*1.1/4)*4)||1,py=v=>B-(B-T)*v/mx;
+  svg.innerHTML='';
+  for(let i=0;i<=4;i++){const v=mx*i/4,y=py(v);S('line',{x1:L,x2:R,y1:y,y2:y,stroke:'#2a2f3d'},svg);const t=S('text',{x:L-6,y:y+4,'text-anchor':'end'},svg);t.textContent=mode==='dens'?v.toExponential(1).replace('.',','):fm(v,v<10?1:0)}
+  hs.forEach((h,i)=>{const x=px(edges[i]),w=px(edges[i+1])-x;const rc=S('rect',{x:x+1,y:py(h),width:Math.max(w-2,1),height:B-py(h),fill:opt.sel===i?'#ffd166':'#4aa3ffcc',stroke:'#0b0d13',style:'cursor:pointer'},svg);rc.addEventListener('click',()=>opt.onsel&&opt.onsel(i));if(cnt.length<=14){const t=S('text',{x:x+w/2,y:py(h)-4,'text-anchor':'middle'},svg);t.textContent=mode==='dens'?'':cnt[i]}});
+  S('line',{x1:L,x2:R,y1:B,y2:B,stroke:'#6b7389'},svg);
+  const step=(hi-lo)/ (cnt.length>10?5:cnt.length);
+  edges.forEach((e,i)=>{if(cnt.length>10&&i%2)return;const t=S('text',{x:px(e),y:B+16,'text-anchor':'middle'},svg);t.textContent=fm(e,Math.abs(e)<10?1:0)});
+  return {px,py,mx};
+}
+
+const W={};
+
+/* ---- Fundamentos ---- */
+W.amostra=function(el){
+  const {c,s,r}=mk(el,'Sorteie amostras de uma população');
+  const N=200,rn=rng(3),pop=[];for(let i=0;i<N;i++)pop.push(i<70?1:0);
+  for(let i=N-1;i>0;i--){const j=Math.floor(rn()*(i+1));[pop[i],pop[j]]=[pop[j],pop[i]]}
+  const svg=mkSvg(s,150);let sel=new Set(),hist=[],n=30;
+  const dots=pop.map((v,i)=>{const x=30+(i%40)*14.5,y=18+Math.floor(i/40)*26;return S('circle',{cx:x,cy:y,r:5.5,fill:v?'#ff7b7b':'#6b7389'},svg)});
+  function paint(){dots.forEach((d,i)=>{d.setAttribute('stroke',sel.has(i)?'#ffd166':'none');d.setAttribute('stroke-width',sel.has(i)?3:0);d.setAttribute('opacity',sel.size&&!sel.has(i)?.35:1)})}
+  function note(){r.innerHTML=`<b>População:</b> 200 pessoas, 70 fumantes (vermelhas) = <b>35%</b> (o valor “verdadeiro”, que normalmente NÃO conhecemos).<br>`+(sel.size?`<b>Esta amostra (n = ${sel.size}):</b> ${[...sel].filter(i=>pop[i]).length} fumantes = <b>${fm([...sel].filter(i=>pop[i]).length/sel.size*100,1)}%</b>.<br>`:'')+(hist.length?`<b>Últimas amostras:</b> ${hist.slice(-8).map(h=>h.n+'→'+fm(h.p,0)+'%').join(' · ')}<br><small>Repare: amostras maiores costumam ficar mais perto de 35%. Cada sorteio dá um resultado um pouco diferente.</small>`:'<small>Clique em “Sortear” várias vezes.</small>')}
+  [10,30,80].forEach(k=>btn(c,'n = '+k,()=>{n=k;[...c.querySelectorAll('.vb')].forEach(b=>b.classList.toggle('on',b.textContent==='n = '+k))}));
+  c.querySelectorAll('.vb')[1].classList.add('on');
+  btn(c,'🎲 Sortear amostra',()=>{const idx=[...Array(N).keys()];for(let i=N-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}sel=new Set(idx.slice(0,n));hist.push({n,p:[...sel].filter(i=>pop[i]).length/n*100});paint();note()});
+  btn(c,'Limpar',()=>{sel=new Set();hist=[];paint();note()});
+  paint();note();
+};
+
+W.tipos=function(el){
+  const {c,s,r}=mk(el,'Clique numa variável e veja onde ela se encaixa');
+  const V=[['Sexo do bebê','qual','nom'],['Cor dos olhos','qual','nom'],['Escolaridade da mãe','qual','ord'],['Faixa de renda (baixa/média/alta)','qual','ord'],['Número de filhos','quant','disc'],['Apgar (0 a 10)','quant','disc'],['Peso ao nascer (g)','quant','cont'],['Altura (cm)','quant','cont']];
+  s.innerHTML=`<div class="tr"><div class="tn" id="t-root">Variável</div><div class="trk"><div class="tn" id="t-qual">Qualitativa<br><small>(categorias)</small></div><div class="trk2"><div class="tn" id="t-nom">Nominal<br><small>sem ordem</small></div><div class="tn" id="t-ord">Ordinal<br><small>tem ordem</small></div></div></div><div class="trk"><div class="tn" id="t-quant">Quantitativa<br><small>(números)</small></div><div class="trk2"><div class="tn" id="t-disc">Discreta<br><small>contagem (inteiros)</small></div><div class="tn" id="t-cont">Contínua<br><small>medida (qualquer valor)</small></div></div></div></div>`;
+  V.forEach(v=>btn(c,v[0],()=>{s.querySelectorAll('.tn').forEach(x=>x.classList.remove('hit'));['root',v[1],v[2]].forEach(k=>s.querySelector('#t-'+k).classList.add('hit'));const ex={nom:'só dá para dar nomes: não dá para dizer que um é “maior” que o outro.',ord:'são categorias, mas com uma ordem natural (fundamental < médio < superior).',disc:'resulta de CONTAR: só valores inteiros (0, 1, 2…). Não existe 2,5 filhos.',cont:'resulta de MEDIR: pode assumir qualquer valor num intervalo (3 245,7 g).'}[v[2]];r.innerHTML=`<b>${v[0]}</b>: ${ex}`}));
+  r.innerHTML='<small>Dica: pergunte “faz sentido calcular uma média disso?”. Se sim, é quantitativa.</small>';
+};
+
+W.sigma=function(el){
+  const {c,s,r}=mk(el,'Experimente a notação de somatório');
+  const inp=X('input','vin','',c);inp.value='3, 6, 5, 7, 9';inp.style.flex='1 1 200px';
+  function go(){const a=nums(inp.value);if(!a.length){r.innerHTML='Digite alguns números separados por vírgula ou espaço.';return}
+    const n=a.length;r.innerHTML=`<b>n</b> = ${n} (quantos valores)<br><b>Σx</b> = ${a.map(v=>fm(v)).join(' + ')} = <b>${fm(sum(a))}</b><br><b>x̄</b> = Σx ÷ n = ${fm(sum(a))} ÷ ${n} = <b>${fm(mean(a))}</b><br><b>Σx²</b> (eleva cada um ao quadrado e depois soma) = ${fm(sum(a.map(v=>v*v)))}<br><b>(Σx)²</b> (soma e depois eleva ao quadrado) = ${fm(sum(a)**2)}<br><small>Σx² e (Σx)² são coisas DIFERENTES: a ordem das operações muda o resultado.</small>`}
+  inp.oninput=go;go();
+};
+
+W.na99=function(el){
+  const {c,s,r}=mk(el,'O que o código 99 faz com a média');
+  const ages=[25,31,99,28,22,99,34,27];let tr=false;
+  const svg=mkSvg(s,110);
+  function go(){svg.innerHTML='';const vals=tr?ages.filter(v=>v!==99):ages;
+    ages.forEach((v,i)=>{const x=30+i*76;S('rect',{x:x,y:20,width:64,height:34,rx:6,fill:v===99?(tr?'#2a2f3d':'#5a1e1e'):'#1f2a1c',stroke:v===99?'#ff7b7b':'#7ee07e'},svg);const t=S('text',{x:x+32,y:42,'text-anchor':'middle','font-size':16},svg);t.textContent=(v===99&&tr)?'NA':v});
+    r.innerHTML=`Média = <b>${fm(mean(vals),1)}</b> anos (n = ${vals.length}).<br>`+(tr?'Com 99 → NA e <code>na.rm = TRUE</code>, a média é razoável.':'Se o R achar que 99 é uma idade de verdade, a média sobe para um valor absurdo.')}
+  btn(c,'Tratar 99 como NA',()=>{tr=!tr;go();c.querySelector('.vb').classList.toggle('on',tr)});go();
+};
+
+W.freq=function(el){
+  const {c,s,r}=mk(el,'Mude as contagens e veja a tabela se atualizar');
+  const cats=['Fundamental','Médio','Superior','Pós'],v=[20,50,25,5],inp=[];
+  cats.forEach((k,i)=>{const w=X('label','vsl',k+' ',c);const e=X('input','vin','',w);e.type='number';e.min=0;e.value=v[i];e.style.width='64px';e.oninput=go;inp.push(e)});
+  const svg=mkSvg(s,120);
+  function go(){const f=inp.map(e=>Math.max(0,+e.value||0)),n=sum(f);svg.innerHTML='';const mx=Math.max(...f,1);
+    f.forEach((x,i)=>{const w=90,xx=40+i*140,h=80*x/mx;S('rect',{x:xx,y:100-h,width:w,height:h,fill:'#4aa3ffcc'},svg);const t=S('text',{x:xx+w/2,y:96-h,'text-anchor':'middle'},svg);t.textContent=x;const t2=S('text',{x:xx+w/2,y:115,'text-anchor':'middle'},svg);t2.textContent=cats[i]});
+    let acc=0,h='<table class="tb"><tr><th>Categoria</th><th>f</th><th>fr</th><th>fr %</th><th>F</th><th>Fr %</th></tr>';
+    f.forEach((x,i)=>{acc+=x;h+=`<tr><td>${cats[i]}</td><td>${x}</td><td>${fm(n?x/n:0,3)}</td><td>${fm(n?x/n*100:0,1)}</td><td>${acc}</td><td>${fm(n?acc/n*100:0,1)}</td></tr>`});
+    r.innerHTML=h+`<tr><th>Total</th><th>${n}</th><th>1</th><th>100</th><th></th><th></th></tr></table><small>f = contagem · fr = f ÷ n · F = soma acumulada (“até aqui”) · Fr % = F ÷ n × 100</small>`}
+  go();
+};
+
+W.classes=function(el){
+  const {c,s,r}=mk(el,'Quantas classes? Mexa no controle');
+  const svg=mkSvg(s,215),lo=Math.floor(Math.min(...PESOS)/100)*100,hi=Math.ceil(Math.max(...PESOS)/100)*100;let k=8;
+  const inp=sl(c,'Classes (k):',2,16,8,1,v=>{k=v;go()});
+  btn(c,'Usar critério da raiz (k = √n)',()=>{k=Math.ceil(Math.sqrt(PESOS.length));inp.value=k;inp.oninput()});
+  function go(){const e=evenEdges(lo,hi,k),cn=bins(PESOS,e);drawHist(svg,e,cn,PESOS.length,'freq');
+    r.innerHTML=`n = ${PESOS.length} bebês · √n = ${fm(Math.sqrt(PESOS.length),2)} → k = ${Math.ceil(Math.sqrt(PESOS.length))} · amplitude da classe h = (${hi} − ${lo}) ÷ ${k} = <b>${fm((hi-lo)/k,0)} g</b>.<br>`+(k<=3?'<b>Poucas classes</b>: a forma da distribuição some.':k>=13?'<b>Muitas classes</b>: o gráfico fica “serrilhado” e difícil de ler.':'Boa quantidade: dá para enxergar a forma.')}
+  go();
+};
+
+W.grafico=function(el){
+  const {c,s,r}=mk(el,'Qual gráfico usar? Escolha o tipo de dado');
+  const M={'1 qualitativa':['Barras ou colunas (primeira escolha) e pizza (poucas categorias, até uns 5)','Histograma e linhas'],'1 quantitativa discreta':['Dispersão unidimensional (hastes na altura da frequência) e colunas','Pizza'],'1 quantitativa contínua':['Histograma, polígono de frequências, ogiva, box-plot','Barras (as “classes” não são categorias soltas)'],'2 qualitativas':['Colunas lado a lado ou empilhadas, a partir da tabela cruzada','Dispersão'],'Qualitativa × quantitativa':['Box-plots comparativos ou histogramas lado a lado (um por categoria)','Pizza'],'2 quantitativas':['Gráfico de dispersão (um ponto por observação)','Barras, pizza']};
+  Object.keys(M).forEach(k=>btn(c,k,()=>{[...c.children].forEach(b=>b.classList&&b.classList.toggle('on',b.textContent===k));r.innerHTML=`<div class="tip">✅ <b>Use:</b> ${M[k][0]}</div><div class="warn1">❌ <b>Evite:</b> ${M[k][1]}</div>`}));
+  r.innerHTML='<small>Clique numa opção acima.</small>';
+};
+
+W.histograma=function(el){
+  const {c,s,r}=mk(el,'Frequência × densidade, larguras iguais × diferentes');
+  const svg=mkSvg(s,215);let mode='freq',eq=true,sel=-1;
+  const E1=[2000,2400,2800,3200,3600,4000,4400],E2=[2000,2800,3200,3600,4400];
+  const b1=btn(c,'Eixo: frequência',()=>{mode=mode==='freq'?'dens':'freq';b1.textContent=mode==='freq'?'Eixo: frequência':'Eixo: densidade';go()});
+  const b2=btn(c,'Classes: larguras iguais',()=>{eq=!eq;b2.textContent=eq?'Classes: larguras iguais':'Classes: larguras diferentes';sel=-1;go()});
+  function go(){const e=eq?E1:E2,cn=bins(PESOS.filter(v=>v>=2000&&v<=4400),e),n=sum(cn);drawHist(svg,e,cn,n,mode,{sel,onsel:i=>{sel=i;go()}});
+    let h='<table class="tb"><tr><th>Classe</th><th>Largura</th><th>Contagem</th><th>Proporção</th><th>Densidade</th></tr>';
+    cn.forEach((x,i)=>{const w=e[i+1]-e[i];h+=`<tr${sel===i?' class="hl"':''}><td>[${e[i]}, ${e[i+1]})</td><td>${w}</td><td>${x}</td><td>${fm(x/n,3)}</td><td>${(x/n/w).toExponential(2).replace('.',',')}</td></tr>`});
+    r.innerHTML=h+'</table><small>Densidade = proporção ÷ largura. Assim a ÁREA de cada barra (largura × densidade) é a proporção de dados, e a área total é 1. Com larguras diferentes, só a densidade não engana. Clique numa barra.</small>'}
+  go();
+};
+
+W.ogiva=function(el){
+  const {c,s,r}=mk(el,'Ogiva: quantos valores há “até aqui”?');
+  const svg=mkSvg(s,215),lo=2000,hi=4400,e=evenEdges(lo,hi,6),cn=bins(PESOS.filter(v=>v>=lo&&v<=hi),e),n=sum(cn);let x0=3200;
+  const cum=[0];cn.forEach(v=>cum.push(cum[cum.length-1]+v/n*100));
+  function at(x){for(let i=0;i<6;i++)if(x<=e[i+1])return cum[i]+(cum[i+1]-cum[i])*(x-e[i])/(e[i+1]-e[i]);return 100}
+  sl(c,'Peso (g):',lo,hi,x0,50,v=>{x0=v;go()});
+  function go(){svg.innerHTML='';const L=48,R=620,T=14,B=190,px=v=>L+(R-L)*(v-lo)/(hi-lo),py=v=>B-(B-T)*v/100;
+    [0,25,50,75,100].forEach(v=>{S('line',{x1:L,x2:R,y1:py(v),y2:py(v),stroke:'#2a2f3d'},svg);const t=S('text',{x:L-6,y:py(v)+4,'text-anchor':'end'},svg);t.textContent=v+'%'});
+    e.forEach(v=>{const t=S('text',{x:px(v),y:B+16,'text-anchor':'middle'},svg);t.textContent=v});
+    S('polyline',{points:e.map((v,i)=>px(v)+','+py(cum[i])).join(' '),fill:'none',stroke:'#4aa3ff','stroke-width':3},svg);
+    e.forEach((v,i)=>S('circle',{cx:px(v),cy:py(cum[i]),r:4,fill:'#4aa3ff'},svg));
+    const a=at(x0);S('line',{x1:px(x0),x2:px(x0),y1:py(0),y2:py(a),stroke:'#ffd166','stroke-dasharray':'4 3'},svg);S('line',{x1:L,x2:px(x0),y1:py(a),y2:py(a),stroke:'#ffd166','stroke-dasharray':'4 3'},svg);S('circle',{cx:px(x0),cy:py(a),r:6,fill:'#ffd166'},svg);
+    r.innerHTML=`Aproximadamente <b>${fm(at(x0),1)}%</b> dos bebês pesam <b>até ${x0} g</b>.<br><small>A ogiva só sobe (nunca desce) e termina em 100%. Ela é a frequência acumulada desenhada como linha: ótima para responder “qual percentual está abaixo de X?”.</small>`}
+  go();
+};
+/* ---- Posição e dispersão ---- */
+W.media=el=>DotEngine(el,{title:'A média é o ponto de equilíbrio. Arraste os pontos!',pts:[3,6,5,7,9],max:15,layers:['mean'],read:p=>`Soma = ${p.map(v=>v).join(' + ')} = <b>${fm(sum(p))}</b> · n = ${p.length}<br>Média = ${fm(sum(p))} ÷ ${p.length} = <b>${fm(mean(p))}</b> <small>(o triângulo vermelho é a “gangorra” em equilíbrio)</small>`});
+W.mediaMediana=el=>DotEngine(el,{title:'Adicione um valor extremo e veja quem se mexe mais',pts:[2,3,4,5,6,7,8,9,10],max:40,layers:['mean','median'],outlier:true,read:p=>`Média = <b>${fm(mean(p))}</b> · Mediana = <b>${fm(median(p))}</b> · diferença = ${fm(Math.abs(mean(p)-median(p)))}<br><small>Clique em “Adicionar um valor extremo” e depois arraste-o. A média corre atrás dele; a mediana quase não sai do lugar.</small>`});
+W.amplitude=el=>DotEngine(el,{title:'Amplitude = maior − menor. Arraste os pontos das pontas',pts:[3,6,5,7,9],max:20,layers:['range'],read:p=>`Maior = ${Math.max(...p)} · menor = ${Math.min(...p)} · amplitude = <b>${fm(Math.max(...p)-Math.min(...p))}</b><br><small>Só os dois extremos importam: os pontos do meio podem mudar à vontade que a amplitude não muda.</small>`});
+W.variancia=el=>DotEngine(el,{title:'Quanto cada ponto se afasta da média? Arraste e veja',pts:[3,6,5,7,9],max:15,layers:['mean','dev'],read:p=>{const m=mean(p);let h='<table class="tb"><tr><th>x</th><th>x − x̄</th><th>(x − x̄)²</th></tr>';p.forEach(v=>h+=`<tr><td>${v}</td><td>${fm(v-m)}</td><td>${fm((v-m)**2)}</td></tr>`);const ss=sum(p.map(v=>(v-m)**2));return h+`<tr><th>soma</th><th>${fm(sum(p.map(v=>v-m)),2)}</th><th>${fm(ss)}</th></tr></table>Variância = ${fm(ss)} ÷ (n − 1) = ${fm(ss)} ÷ ${p.length-1} = <b>${fm(vari(p))}</b> · Desvio padrão = √${fm(vari(p))} = <b>${fm(sdev(p))}</b><br><small>A soma dos desvios é sempre 0 (por isso elevamos ao quadrado).</small>`}});
+W.boxplot=el=>DotEngine(el,{title:'Monte seu box-plot: arraste pontos e veja os outliers',pts:[2,3,4,5,6,7,8,9,10,14],max:40,layers:['box'],outlier:true,box:true,read:p=>{const q1=q2(p,.25),m=q2(p,.5),q3=q2(p,.75),di=q3-q1,lo=q1-1.5*di,hi=q3+1.5*di,out=srt(p).filter(v=>v<lo||v>hi);return `Mín ${Math.min(...p)} · Q1 <b>${fm(q1)}</b> · Mediana <b>${fm(m)}</b> · Q3 <b>${fm(q3)}</b> · Máx ${Math.max(...p)}<br>DI = ${fm(q3)} − ${fm(q1)} = <b>${fm(di)}</b> · limites: [${fm(lo)} ; ${fm(hi)}]<br>`+(out.length?`<b style="color:#ff7b7b">Outliers: ${out.join(', ')}</b>`:'Nenhum outlier.')}});
+
+W.mediana=function(el){
+  const {c,s,r}=mk(el,'Digite números e veja a mediana');
+  const inp=X('input','vin','',c);inp.value='7, 2, 9, 4, 5';inp.style.flex='1 1 220px';
+  function go(){const a=nums(inp.value);if(!a.length){r.innerHTML='Digite números separados por vírgula.';s.innerHTML='';return}
+    const o=srt(a),n=o.length;s.innerHTML='<div class="chips2">'+o.map((v,i)=>`<span class="ch${n%2?(i===(n-1)/2?' mid':''):(i===n/2-1||i===n/2?' mid':'')}">${fm(v)}</span>`).join('')+'</div>';
+    r.innerHTML=`<b>1)</b> Ordene (feito acima). <b>2)</b> n = ${n} é <b>${n%2?'ímpar':'par'}</b>.<br>`+(n%2?`<b>3)</b> Pegue o valor da posição (n+1)/2 = ${(n+1)/2}: mediana = <b>${fm(median(a))}</b>.`:`<b>3)</b> Pegue os dois do meio (posições ${n/2} e ${n/2+1}) e faça a média: (${fm(o[n/2-1])} + ${fm(o[n/2])}) ÷ 2 = <b>${fm(median(a))}</b>.`)+`<br><small>Média, para comparar: ${fm(mean(a))}</small>`}
+  inp.oninput=go;go();
+};
+
+W.moda=function(el){
+  const {c,s,r}=mk(el,'Digite valores e veja quem mais se repete');
+  const inp=X('input','vin','',c);inp.value='2, 3, 3, 3, 5, 5, 7';inp.style.flex='1 1 220px';
+  function go(){const a=nums(inp.value);if(!a.length){r.innerHTML='Digite números separados por vírgula.';s.innerHTML='';return}
+    const cnt={};a.forEach(v=>cnt[v]=(cnt[v]||0)+1);const mx=Math.max(...Object.values(cnt)),ks=Object.keys(cnt).map(Number).sort((p,q)=>p-q),modes=ks.filter(k=>cnt[k]===mx);
+    s.innerHTML='<div class="chips2">'+ks.map(k=>`<span class="ch${cnt[k]===mx&&mx>1?' mid':''}">${fm(k)}<small> ×${cnt[k]}</small></span>`).join('')+'</div>';
+    r.innerHTML=mx===1?'<b>Amodal</b>: nenhum valor se repete, então não há moda.':`Moda${modes.length>1?'s':''}: <b>${modes.map(v=>fm(v)).join(' e ')}</b> (aparece${modes.length>1?'m':''} ${mx} vezes). `+(modes.length===2?'<b>Bimodal</b>.':modes.length>2?'<b>Multimodal</b>.':'<b>Unimodal</b>.')}
+  inp.oninput=go;go();
+};
+
+W.assimetria=function(el){
+  const {c,s,r}=mk(el,'Formato da distribuição: onde ficam a média e a mediana?');
+  const z=normals(400,11),svg=mkSvg(s,215);
+  const D={'Simétrica':z.map(v=>50+10*v),'Assimétrica à direita (cauda à direita)':z.map(v=>20+10*Math.exp(0.55*v+0.9)/2.5),'Assimétrica à esquerda (cauda à esquerda)':z.map(v=>100-(20+10*Math.exp(0.55*v+0.9)/2.5))};
+  function go(k){[...c.children].forEach(b=>b.classList.toggle('on',b.textContent===k));const d=D[k],lo=Math.min(...d),hi=Math.max(...d),e=evenEdges(lo,hi,14),cn=bins(d,e),g=drawHist(svg,e,cn,d.length,'freq');
+    const m=mean(d),md=median(d);[[m,'#ff6b6b','média'],[md,'#4aa3ff','mediana']].forEach(([v,col,tx],i)=>{S('line',{x1:g.px(v),x2:g.px(v),y1:14,y2:190,stroke:col,'stroke-width':3},svg);const t=S('text',{x:g.px(v)+(i?-6:6),y:28+i*14,fill:col,'text-anchor':i?'end':'start'},svg);t.textContent=tx});
+    r.innerHTML=`Média = <b>${fm(m,1)}</b> · Mediana = <b>${fm(md,1)}</b> → `+(Math.abs(m-md)<1.2?'quase iguais: distribuição <b>simétrica</b>.':m>md?'média <b>maior</b> que a mediana: a cauda longa à direita puxa a média para cima (assimetria <b>positiva</b>).':'média <b>menor</b> que a mediana: a cauda longa à esquerda puxa a média para baixo (assimetria <b>negativa</b>).')}
+  Object.keys(D).forEach(k=>btn(c,k,()=>go(k)));go('Simétrica');
+};
+
+W.quartis=function(el){
+  const {c,s,r}=mk(el,'Digite os dados: o método do curso × o padrão do R');
+  const inp=X('input','vin','',c);inp.value='2, 3, 4, 5, 6, 7, 8, 9, 10, 40';inp.style.flex='1 1 240px';
+  function go(){const a=nums(inp.value);if(a.length<2){r.innerHTML='Digite pelo menos 2 números.';s.innerHTML='';return}
+    const o=srt(a),n=o.length,P=[.25,.5,.75];
+    const mark=q2(a,.25),mm=q2(a,.5),mq3=q2(a,.75);
+    s.innerHTML='<div class="chips2">'+o.map((v,i)=>{let t='';[[.25,'Q1'],[.5,'Q2'],[.75,'Q3']].forEach(([p,l])=>{const np=n*p;if(Math.abs(np-Math.round(np))<1e-9){if(i+1===Math.round(np)||i===Math.round(np))t+=' '+l+'~'}else if(i+1===Math.ceil(np))t+=' '+l});return `<span class="ch${t?' mid':''}">${fm(v)}${t?'<small>'+t+'</small>':''}</span>`}).join('')+'</div>';
+    let h='<table class="tb"><tr><th></th><th>n·p</th><th>Método do curso (type = 2)</th><th>Padrão do R (type = 7)</th></tr>';
+    P.forEach((p,i)=>{const np=n*p;h+=`<tr><td>Q${i+1} (${p*100}%)</td><td>${fm(np)}</td><td><b>${fm(q2(a,p))}</b></td><td>${fm(q7(a,p))}</td></tr>`});
+    r.innerHTML=h+`</table><b>Regra do curso:</b> calcule n·p. Se <b>não</b> for inteiro, arredonde para cima e pegue o valor dessa posição. Se <b>for</b> inteiro, tire a média do valor dessa posição e do seguinte (marcados com ~ acima).<br><small>No R: <code>quantile(x, type = 2)</code> reproduz o método do curso; <code>quantile(x)</code> usa o type 7.</small>`}
+  inp.oninput=go;go();
+};
+
+W.percentil=function(el){
+  const {c,s,r}=mk(el,'Percentil: deslize e veja quem fica abaixo');
+  const svg=mkSvg(s,215),d=srt(PESOS),n=d.length;let p=50;
+  sl(c,'Percentil (%):',1,99,50,1,v=>{p=v;go()});
+  function go(){svg.innerHTML='';const L=48,R=620,T=14,B=190,lo=d[0]-50,hi=d[n-1]+50,px=v=>L+(R-L)*(v-lo)/(hi-lo),py=v=>B-(B-T)*v;
+    [0,.25,.5,.75,1].forEach(v=>{S('line',{x1:L,x2:R,y1:py(v),y2:py(v),stroke:'#2a2f3d'},svg);const t=S('text',{x:L-6,y:py(v)+4,'text-anchor':'end'},svg);t.textContent=v*100+'%'});
+    let pts=`${px(lo)},${py(0)}`;d.forEach((v,i)=>{pts+=` ${px(v)},${py(i/n)} ${px(v)},${py((i+1)/n)}`});pts+=` ${px(hi)},${py(1)}`;S('polyline',{points:pts,fill:'none',stroke:'#4aa3ff','stroke-width':2.5},svg);
+    const v=q2(PESOS,p/100);S('line',{x1:L,x2:px(v),y1:py(p/100),y2:py(p/100),stroke:'#ffd166','stroke-dasharray':'4 3'},svg);S('line',{x1:px(v),x2:px(v),y1:py(p/100),y2:B,stroke:'#ffd166','stroke-dasharray':'4 3'},svg);S('circle',{cx:px(v),cy:py(p/100),r:6,fill:'#ffd166'},svg);
+    [d[0],d[n-1]].forEach(x=>{const t=S('text',{x:px(x),y:B+16,'text-anchor':'middle'},svg);t.textContent=x});
+    r.innerHTML=`<b>P${p}</b> = <b>${fm(v,0)} g</b>: cerca de ${p}% dos ${n} bebês pesam esse valor ou menos.<br><small>P25 = Q1, P50 = mediana, P75 = Q3. A escada azul é a frequência acumulada de cada bebê.</small>`}
+  go();
+};
+
+W.cv=function(el){
+  const {c,s,r}=mk(el,'Quem varia mais? Compare desvio padrão e CV');
+  const A={n:'Peso do bebê (g)',m:3200,sd:450},B={n:'Idade da mãe (anos)',m:27,sd:6.5};
+  sl(c,'DP do peso:',100,1500,450,10,v=>{A.sd=v;go()});sl(c,'DP da idade:',1,20,6.5,.5,v=>{B.sd=v;go()});
+  const svg=mkSvg(s,130);
+  function go(){svg.innerHTML='';[A,B].forEach((q,i)=>{const cv=q.sd/q.m*100,y=18+i*58;const t=S('text',{x:10,y:y+12},svg);t.textContent=q.n+' · média '+fm(q.m,0)+' · DP '+fm(q.sd,1);S('rect',{x:10,y:y+20,width:Math.min(cv*10,610),height:18,fill:cv>30?'#ff7b7b':cv>15?'#ffd166':'#7ee07e',rx:4},svg);const t2=S('text',{x:16+Math.min(cv*10,610),y:y+34},svg);t2.textContent='CV = '+fm(cv,1)+'%'});
+    const c1=A.sd/A.m*100,c2=B.sd/B.m*100;r.innerHTML=`O DP do peso (${fm(A.sd,0)}) parece enorme perto do da idade (${fm(B.sd,1)}), mas isso é só por causa da <b>unidade</b> (gramas × anos). Em termos relativos: CV do peso = <b>${fm(c1,1)}%</b> e CV da idade = <b>${fm(c2,1)}%</b> → <b>${c1>c2?'o peso':'a idade'}</b> varia mais em relação à sua média.<br><small>Verde &lt; 15% · amarelo 15–30% · vermelho &gt; 30% (regra prática).</small>`}
+  go();
+};
+
+W.empirica=function(el){
+  const {c,s,r}=mk(el,'Regra empírica (68 – 95 – 99,7)');
+  const svg=mkSvg(s,200);let k=1,mu=50,sg=10;
+  [1,2,3].forEach(v=>btn(c,'± '+v+' desvio'+(v>1?'s':''),()=>{k=v;go()}));
+  sl(c,'Média:',20,80,50,1,v=>{mu=v;go()});sl(c,'Desvio padrão:',2,20,10,1,v=>{sg=v;go()});
+  function go(){[...c.querySelectorAll('.vb')].forEach((b,i)=>b.classList.toggle('on',i===k-1));svg.innerHTML='';const L=20,R=620,B=170,T=20,px=v=>L+(R-L)*(v-(-10))/(110),f=v=>Math.exp(-0.5*((v-mu)/sg)**2)/(sg*Math.sqrt(2*Math.PI)),mx=f(mu),py=v=>B-(B-T)*v/mx;
+    let area=`M${px(mu-k*sg)},${B}`,line='';for(let v=-10;v<=100;v+=.5){line+=(line?' L':'M')+px(v)+','+py(f(v));if(v>=mu-k*sg&&v<=mu+k*sg)area+=` L${px(v)},${py(f(v))}`}area+=` L${px(mu+k*sg)},${B} Z`;
+    S('path',{d:area,fill:'#4aa3ff66'},svg);S('path',{d:line,fill:'none',stroke:'#4aa3ff','stroke-width':2.5},svg);S('line',{x1:L,x2:R,y1:B,y2:B,stroke:'#6b7389'},svg);
+    for(let i=-3;i<=3;i++){const x=px(mu+i*sg);S('line',{x1:x,x2:x,y1:B,y2:B+5,stroke:'#6b7389'},svg);const t=S('text',{x:x,y:B+19,'text-anchor':'middle'},svg);t.textContent=i===0?'x̄':(i>0?'+':'−')+Math.abs(i)+'dp'}
+    const p=erf(k/Math.SQRT2)*100;r.innerHTML=`Entre <b>${fm(mu-k*sg,0)}</b> e <b>${fm(mu+k*sg,0)}</b> (média ± ${k} dp) ficam, aproximadamente, <b>${[68,95,99.7][k-1].toString().replace('.',',')}%</b> dos dados <small>(valor exato da curva normal: ${fm(p,2)}%)</small>.<br><small>Vale para distribuições em forma de sino (aproximadamente simétricas). Em distribuições muito assimétricas, não vale.</small>`}
+  go();
+};
+
+/* ---- Duas variáveis ---- */
+W.cruzada=function(el,def){
+  const {c,s,r}=mk(el,'Tabela cruzada: mude as contagens e o tipo de percentual');
+  const v=[3,2,1,2],inp=[];let mode=def||'n';
+  [['F e fuma',0],['F e não fuma',1],['M e fuma',2],['M e não fuma',3]].forEach(([l,i])=>{const w=X('label','vsl',l+' ',c);const e=X('input','vin','',w);e.type='number';e.min=0;e.value=v[i];e.style.width='56px';e.oninput=go;inp.push(e)});
+  const row=X('div','vctl','',c.parentNode);c.parentNode.insertBefore(row,s);
+  [['n','Contagens'],['t','% do total'],['l','% da linha'],['c','% da coluna']].forEach(([k,l])=>btn(row,l,()=>{mode=k;go()}));
+  function go(){const a=inp.map(e=>Math.max(0,+e.value||0)),N=sum(a),rl=[a[0]+a[1],a[2]+a[3]],cl=[a[0]+a[2],a[1]+a[3]];
+    [...row.querySelectorAll('.vb')].forEach((b,i)=>b.classList.toggle('on','ntlc'[i]===mode));
+    const den=(i,j)=>mode==='t'?N:mode==='l'?rl[i]:cl[j],val=(i,j)=>{const x=a[i*2+j];return mode==='n'?x:fm(den(i,j)?x/den(i,j)*100:0,1)+'%'};
+    const tot=(x,d)=>mode==='n'?x:fm(d?x/d*100:0,1)+'%';
+    const rt=i=>mode==='n'?rl[i]:(mode==='l'?'100%':tot(rl[i],N)),ct=j=>mode==='n'?cl[j]:(mode==='c'?'100%':tot(cl[j],N));
+    s.innerHTML=`<table class="tb cx"><tr><th></th><th>Fuma</th><th>Não fuma</th><th>Total</th></tr><tr><th>Feminino</th><td>${val(0,0)}</td><td>${val(0,1)}</td><td class="tt">${rt(0)}</td></tr><tr><th>Masculino</th><td>${val(1,0)}</td><td>${val(1,1)}</td><td class="tt">${rt(1)}</td></tr><tr><th>Total</th><td class="tt">${ct(0)}</td><td class="tt">${ct(1)}</td><td class="tt">${mode==='n'?N:'100%'}</td></tr></table>`;
+    r.innerHTML={n:'Contagens: quantas pessoas em cada combinação. Os totais (margens) dizem quantos há em cada categoria sozinha.',t:`Cada célula ÷ total geral (${N}). Responde: “do conjunto todo, que parte é mulher e fuma?”.`,l:`Cada célula ÷ total da <b>linha</b>. Cada linha soma 100%. Responde: “<b>entre as mulheres</b>, quantas fumam?” → ${fm(rl[0]?a[0]/rl[0]*100:0,1)}%.`,c:`Cada célula ÷ total da <b>coluna</b>. Cada coluna soma 100%. Responde: “<b>entre as fumantes</b>, quantas são mulheres?” → ${fm(cl[0]?a[0]/cl[0]*100:0,1)}%.`}[mode]}
+  go();
+};
+W.cruzada2=el=>W.cruzada(el,'l');
+
+W.dispersao=function(el){
+  const {c,s,r}=mk(el,'Arraste os pontos: a nuvem muda, e o r também');
+  const svg=mkSvg(s,260);let pts=[[1,2],[2,3],[3,3.5],[4,5],[5,5],[6,7],[7,6.5],[8,8.5]],drag=-1;const L=40,R=620,T=10,B=230,px=v=>L+(R-L)*v/10,py=v=>B-(B-T)*v/10;
+  function render(){svg.innerHTML='';S('line',{x1:L,x2:R,y1:B,y2:B,stroke:'#6b7389'},svg);S('line',{x1:L,x2:L,y1:T,y2:B,stroke:'#6b7389'},svg);for(let i=0;i<=10;i+=2){const t=S('text',{x:px(i),y:B+16,'text-anchor':'middle'},svg);t.textContent=i;const t2=S('text',{x:L-8,y:py(i)+4,'text-anchor':'end'},svg);t2.textContent=i}
+    pts.forEach((p,i)=>{const ci=S('circle',{cx:px(p[0]),cy:py(p[1]),r:8,fill:i===drag?'#ffd166':'#7ee07e',stroke:'#0b0d13',style:'cursor:grab'},svg);ci.addEventListener('pointerdown',e=>{drag=i;svg.setPointerCapture(e.pointerId);e.preventDefault()})});
+    const rr=corr(pts.map(p=>p[0]),pts.map(p=>p[1]));r.innerHTML=`Correlação r = <b>${fm(rr,2)}</b> → `+(isNaN(rr)?'(pontos alinhados na vertical/horizontal)':Math.abs(rr)>=.7?'relação <b>forte</b>':Math.abs(rr)>=.4?'relação <b>moderada</b>':'relação <b>fraca</b>')+(rr>0.1?' e <b>positiva</b> (x sobe, y sobe).':rr<-0.1?' e <b>negativa</b> (x sobe, y desce).':' (praticamente nenhuma relação linear).')}
+  svg.addEventListener('pointermove',e=>{if(drag<0)return;const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(svg.getScreenCTM().inverse());pts[drag]=[Math.max(0,Math.min(10,Math.round((q.x-L)/(R-L)*100)/10)),Math.max(0,Math.min(10,Math.round((B-q.y)/(B-T)*100)/10))];render()});
+  const end=()=>{drag=-1;render()};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+  btn(c,'↺ Reiniciar',()=>{pts=[[1,2],[2,3],[3,3.5],[4,5],[5,5],[6,7],[7,6.5],[8,8.5]];render()});
+  btn(c,'Formar um “U”',()=>{pts=[[1,9],[2,6],[3,3.5],[4,1.5],[5,1],[6,1.5],[7,3.5],[8,6],[9,9]];render()});
+  render();
+};
+
+W.correlacao=function(el){
+  const {c,s,r}=mk(el,'Escolha a força da relação e veja a nuvem');
+  const z1=normals(50,21),z2=normals(50,22),svg=mkSvg(s,260);let rho=0.8,out=false;
+  sl(c,'Correlação desejada:',-1,1,0.8,0.1,v=>{rho=v;go()});
+  const b=btn(c,'Adicionar 1 outlier',()=>{out=!out;b.classList.toggle('on',out);go()});
+  function go(){svg.innerHTML='';const x=z1.slice(),y=z1.map((v,i)=>rho*v+Math.sqrt(Math.max(0,1-rho*rho))*z2[i]);if(out){x.push(3);y.push(-3)}
+    const L=40,R=620,T=10,B=240,px=v=>L+(R-L)*(v+4)/8,py=v=>B-(B-T)*(v+4)/8;S('line',{x1:L,x2:R,y1:py(0),y2:py(0),stroke:'#2a2f3d'},svg);S('line',{x1:px(0),x2:px(0),y1:T,y2:B,stroke:'#2a2f3d'},svg);
+    x.forEach((v,i)=>S('circle',{cx:px(v),cy:py(y[i]),r:5,fill:(out&&i===x.length-1)?'#ff7b7b':'#7ee07e',opacity:.85},svg));
+    const rr=corr(x,y);r.innerHTML=`r calculado = <b>${fm(rr,2)}</b><br>`+(Math.abs(rho)>.95?'Quase uma reta perfeita.':Math.abs(rho)<.15?'Nuvem “redonda”: sem relação linear.':'')+(out?'<br><small>Um único ponto fora do padrão pode mudar bastante o r: correlação é sensível a outliers.</small>':'<br><small>r varia de −1 (reta descendente perfeita) a +1 (reta ascendente perfeita). Perto de 0: sem relação em linha reta.</small>')}
+  go();
+};
+
+W.comparativo=function(el){
+  const {c,s,r}=mk(el,'Compare dois grupos com box-plots');
+  const z=normals(40,31),w=normals(40,32),svg=mkSvg(s,200);let sh=0,sp=1;
+  sl(c,'Deslocar o grupo B:',-30,30,0,1,v=>{sh=v;go()});sl(c,'Espalhamento de B:',.4,2.5,1,.1,v=>{sp=v;go()});
+  function go(){svg.innerHTML='';const A=z.map(v=>50+8*v),Bv=w.map(v=>50+sh+8*sp*v),L=50,R=620,px=v=>L+(R-L)*(v-0)/100;axis(svg,L,R,175,0,100,10,px);
+    [[A,'Grupo A',45,'#4aa3ff'],[Bv,'Grupo B',105,'#ff9f43']].forEach(([d,n,y,col])=>{const q1=q2(d,.25),m=q2(d,.5),q3=q2(d,.75),di=q3-q1,lo=q1-1.5*di,hi=q3+1.5*di,inn=d.filter(v=>v>=lo&&v<=hi),wl=Math.min(...inn),wh=Math.max(...inn);
+      const t=S('text',{x:4,y:y+22,fill:col},svg);t.textContent=n;S('line',{x1:px(wl),x2:px(q1),y1:y+18,y2:y+18,stroke:'#cfd5e3','stroke-width':2},svg);S('line',{x1:px(q3),x2:px(wh),y1:y+18,y2:y+18,stroke:'#cfd5e3','stroke-width':2},svg);S('rect',{x:px(q1),y:y,width:px(q3)-px(q1),height:36,fill:col+'55',stroke:col,'stroke-width':2},svg);S('line',{x1:px(m),x2:px(m),y1:y,y2:y+36,stroke:'#ffd166','stroke-width':3},svg);d.filter(v=>v<lo||v>hi).forEach(v=>S('circle',{cx:px(v),cy:y+18,r:4,fill:'none',stroke:'#ff7b7b','stroke-width':2},svg))});
+    const mA=q2(A,.5),mB=q2(Bv,.5),dA=q2(A,.75)-q2(A,.25),dB=q2(Bv,.75)-q2(Bv,.25);r.innerHTML=`Mediana A = <b>${fm(mA,1)}</b> · mediana B = <b>${fm(mB,1)}</b> → ${Math.abs(mB-mA)<2?'<b>posição parecida</b>':mB>mA?'B tem valores <b>maiores</b>':'B tem valores <b>menores</b>'}.<br>DI de A = ${fm(dA,1)} · DI de B = ${fm(dB,1)} → ${Math.abs(dB-dA)<2?'<b>dispersão parecida</b>':dB>dA?'B é <b>mais espalhado</b>':'B é <b>mais concentrado</b>'}.<br><small>Ao comparar grupos olhe 3 coisas: onde está o centro, quão larga é a caixa e se há outliers.</small>`}
+  go();
+};
+
+</script>
+<script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-const ML=new Set(['e','r','s']);
+const ML=new Set(['e','r','s','x']);
 function parse(txt){
   const groups=[];let g=null,e=null,f=null;
   txt.replace(/\r/g,'').split('\n').forEach(line=>{
@@ -6292,16 +8078,17 @@ function parse(txt){
       return}
     if(f&&ML.has(f))e[f].push(line);
   });
-  groups.forEach(g=>g.items.forEach(e=>{ML.forEach(k=>{if(e[k]){while(e[k].length&&!e[k][e[k].length-1].trim())e[k].pop();e[k]=e[k].join('\n')}});e._s=norm([e.name,e.o,e.q,e.s,e.e,e.c,e.k,e.p.map(x=>x.join(' ')).join(' '),e.a.join(' '),g.title].join(' '))}));
+  groups.forEach(g=>g.items.forEach(e=>{ML.forEach(k=>{if(e[k]){while(e[k].length&&!e[k][e[k].length-1].trim())e[k].pop();e[k]=e[k].join('\n')}});e._s=norm([e.name,e.o,e.q,e.s,e.e,e.c,e.k,e.p.map(x=>x.join(' ')).join(' '),e.a.join(' '),e.x,e.i,g.title].join(' '))}));
   return groups;
 }
 const D={R:parse($('d-rcmd').textContent),Q:parse($('d-qcmd').textContent)};
 const P={R:parse($('d-rprob').textContent),Q:parse($('d-qprob').textContent)};
 const GL=parse($('d-glos').textContent);
+const CO=parse($('d-conc').textContent);
 let lang='R',mode='D',cur=null;
 
 function L(l){lang=l;$('tR').className=l=='R'?'on':'';$('tQ').className='sql'+(l=='Q'?' on':'');draw();window.scrollTo({top:0,behavior:'instant'})}
-function G(x){mode=x;['S','D','P','G'].forEach(k=>$('n'+k).className=k==x?'on':'');$('tabs').style.display=(x=='S'||x=='G')?'none':'flex';draw();window.scrollTo({top:0,behavior:'instant'})}
+function G(x){mode=x;['S','C','D','P','G'].forEach(k=>$('n'+k).className=k==x?'on':'');$('tabs').style.display=(x=='S'||x=='G'||x=='C')?'none':'flex';draw();window.scrollTo({top:0,behavior:'instant'})}
 function pkgLabel(p){
   if(!p||p==='base')return 'R base · já vem pronto';
   if(p==='SQL')return 'Linguagem SQL · roda dentro do dbGetQuery()/dbExecute()';
@@ -6327,6 +8114,7 @@ function draw(){
   const qv=norm($('q').value.trim());$('qx').style.display=qv?'block':'none';
   if(mode==='S'){$('chips').innerHTML='';$('m').innerHTML='<div class="st">'+$('t-start').innerHTML+'</div>';return}
   if(mode==='G'){$('chips').innerHTML='';drawG(qv);return}
+  if(mode==='C'){drawC(qv);return}
   const src=mode==='D'?D[lang]:P[lang];chips(src);
   let h='';
   if(qv){ // busca: lista única, melhores resultados primeiro
@@ -6395,7 +8183,7 @@ function O(i,j){
     if(e.k==='SQL'&&!/dbGetQuery|dbExecute/.test(e.e))h+=`<div class="lb">Como rodar esse SQL dentro do R ${cpBtn('exr')}</div><pre id="exr">${hl(wrapSQL(e.e))}</pre>`;}
   if(e.r)h+=`<div class="lb">${++n} · O que aparece no Console</div><pre class="out">${esc(e.r)}</pre>`;
   if(e.a.length)h+=`<div class="lb">⚠️ Atenção, erros comuns e dicas</div><ul class="warn">${e.a.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
-  if(e.v.length)h+=`<div class="lb">🔗 Veja também</div><div class="see">${e.v.map(x=>`<button onclick="ver('${esc(x).replace(/'/g,"\\'")}')">${esc(x)}</button>`).join('')}</div>`;
+  if(e.v.length)h+=`<div class="lb">🔗 Veja também</div><div class="see">${e.v.map(seeBtn).join('')}</div>`;
   h+=`</div>`+navBtns(i,j,D[lang],'O');
   abrir(h,g.color);
 }
@@ -6412,7 +8200,40 @@ function OP(i,j){
   h+=`</div>`+navBtns(i,j,P[lang],'OP');
   abrir(h,g.color);
 }
-function ver(nome){ // procura um comando pelo nome, em R e SQL
+function drawC(qv){
+  let h='',any=false;
+  $('chips').innerHTML=qv?'':CO.map((g,i)=>`<a href="#c${i}" style="border-color:${g.color}55">${esc(g.title)}</a>`).join('');
+  CO.forEach((g,i)=>{
+    const f=g.items.map((e,j)=>[e,j]).filter(([e])=>!qv||qv.split(/\s+/).every(w=>e._s.includes(w)));
+    if(!f.length)return;any=true;
+    h+=`<section id="c${i}" style="--a:${g.color}"><h2>${esc(g.title)}</h2>${g.intro?`<p class="gi">${esc(g.intro)}</p>`:''}<div class="cgrid">`;
+    f.forEach(([e,j])=>{h+=`<div class="cc" onclick="OC(${i},${j})"><h4>${esc(e.name)}</h4><p>${esc(e.o)}</p>${e.w?'<span class="pk">🎮 tem figura interativa</span>':''}</div>`});
+    h+='</div></section>';
+  });
+  $('m').innerHTML=(!qv?'<p class="gi" style="text-align:center">💡 Explicações passo a passo, com analogias, exemplos resolvidos e figuras em que você pode mexer. Clique num conceito.</p>':'')+(any?h:'<p class="empty">Nenhum conceito encontrado. Tente outra palavra (ex.: "mediana", "desvio", "outlier").</p>');
+}
+function seeBtn(x){const c=x.startsWith('C:');return `<button class="${c?'cl':''}" onclick="ver('${esc(x).replace(/'/g,"\\'")}')">${c?'💡 '+esc(x.slice(2)):esc(x)}</button>`}
+function OC(i,j){
+  const g=CO[i],e=g.items[j];cur={t:'C',i,j};
+  let h=`<div class="mh"><button class="x" onclick="fechar()" title="Fechar (Esc)">×</button><h3 style="font:800 21px system-ui">${esc(e.name)}</h3><div class="mtags"><span class="tag">${esc(g.title.split(' (')[0])}</span>${e.f?`<span class="tag">📚 ${esc(e.f)}</span>`:''}</div></div><div class="mb">`;
+  h+=`<div class="what">${esc(e.o)}</div>`;
+  if(e.q)h+=`<div class="think">💡 <b>Pense assim:</b> ${esc(e.q)}</div>`;
+  let n=0;
+  if(e.w)h+=`<div class="viz" id="viz"></div>`;
+  if(e.p.length)h+=`<div class="lb">${++n} · As peças</div><table class="pp">${e.p.map(([a,b])=>`<tr><td><code>${esc(a)}</code></td><td>${esc(b)}</td></tr>`).join('')}</table>`;
+  if(e.s)h+=`<div class="lb">${++n} · Como calcular, passo a passo</div><pre style="color:#ffd9a0">${esc(e.s)}</pre>`;
+  if(e.x)h+=`<div class="lb">${++n} · Exemplo resolvido</div><div class="fx">${esc(e.x)}</div>`;
+  if(e.e){h+=`<div class="lb">${++n} · No R ${cpBtn('ex')}</div><pre id="ex">${hl(e.e)}</pre>`}
+  if(e.r)h+=`<div class="lb">O que aparece no Console</div><pre class="out">${esc(e.r)}</pre>`;
+  if(e.i)h+=`<div class="lb">${++n} · Como interpretar</div><div class="ia">${esc(e.i)}</div>`;
+  if(e.a.length)h+=`<div class="lb">⚠️ Cuidados e erros comuns</div><ul class="warn">${e.a.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
+  if(e.v.length)h+=`<div class="lb">🔗 Veja também</div><div class="see">${e.v.map(seeBtn).join('')}</div>`;
+  h+=`</div>`+navBtns(i,j,CO,'OC');
+  const old=lang;lang='R';abrir(h,g.color);lang=old;
+  if(e.w){try{W[e.w]($('viz'))}catch(err){$('viz').innerHTML='<p class="empty">Não foi possível carregar a figura ('+esc(err.message)+').</p>';console.error(err)}}
+}
+function ver(nome){
+  if(nome.startsWith('C:')){const n=norm(nome.slice(2));for(let i=0;i<CO.length;i++)for(let j=0;j<CO[i].items.length;j++)if(norm(CO[i].items[j].name)===n){if(mode!=='C')G('C');OC(i,j);return}return} // procura um comando pelo nome, em R e SQL
   const n=norm(nome).replace(/\(\)$/,'');
   for(const L2 of [lang,lang==='R'?'Q':'R']){
     const src=D[L2];
